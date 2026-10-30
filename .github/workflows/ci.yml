@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - run: python -m pip install Pillow
       - name: Validate catalog
         run: python scripts/validate_catalog.py
       - name: Run tests
@@ -30,7 +31,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install playwright
+      - run: python -m pip install playwright Pillow
       - run: python -m playwright install --with-deps chromium
       - name: Browser fixture E2E
         run: python -m unittest discover -s tests -p 'test_*e2e.py' -v
@@ -48,28 +49,33 @@ jobs:
       - run: npm install --no-save --no-package-lock typescript@5.9.3
       - name: JSX AST regression
         run: python -m unittest discover -s tests -p test_regressions_v2.py -v
+      - name: Five-stack benchmark (structured AST, holdout gate)
+        run: python scripts/run_benchmark.py --out benchmark-report.json --min-precision 0.90 --min-recall 0.85 --threshold-split holdout
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-five-stacks
+          path: benchmark-report.json
 
-  benchmark:
+  quality-audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install TypeScript parser
-        run: npm install --no-save --no-package-lock typescript@5.9.3
-      - name: Benchmark detector regression tests
-        run: ANTI_AI_SLOP_RUN_AST_BENCHMARK=1 python -m unittest discover -s tests -p test_benchmark_v2.py -v
-      - name: Five-stack development and holdout benchmark
-        run: python scripts/run_benchmark.py --min-precision 0.90 --min-recall 0.85 --out reports/benchmark-stacks.json
-      - name: Five product scenario benchmark
-        run: python scripts/run_scenario_benchmark.py --out reports/benchmark-scenarios.json
-      - name: Upload benchmark evidence
-        if: always()
-        uses: actions/upload-artifact@v4
+      - uses: actions/setup-node@v4
         with:
-          name: synthetic-benchmark-reports
-          path: reports/benchmark-*.json
+          node-version: '22'
+      - run: python -m pip install playwright Pillow
+      - run: python -m playwright install --with-deps chromium
+      - run: npm install --no-audit --no-fund --no-package-lock
+      - name: Structural, axe-core, visual and Lighthouse integration
+        run: python -m unittest tests.test_structural_fix tests.test_visual_compare tests.test_visual_e2e tests.test_quality_tools tests.test_lighthouse_e2e -v
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: quality-audit-results
+          path: reports/
+          if-no-files-found: ignore

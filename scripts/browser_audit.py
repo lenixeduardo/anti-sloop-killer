@@ -82,11 +82,16 @@ def _inspect(page):
     }''')
 
 
-def run(url: str|None, out: Path, *, browser_path: str|None=None, timeout_ms: int=15000, reduced_motion: bool=False, html_path: Path|None=None, interaction_spec: list|None=None) -> dict:
+def run(url: str|None, out: Path, *, browser_path: str|None=None, timeout_ms: int=15000, reduced_motion: bool=False, html_path: Path|None=None, interaction_spec: list|None=None, axe: bool=False, axe_path: Path|None=None, fail_on_axe: bool=False) -> dict:
     from playwright.sync_api import sync_playwright
     if not url and html_path is None: raise ValueError('Informe URL ou --html de fixture.')
     if url:validate_url(url)
     if html_path is not None and not html_path.is_file(): raise FileNotFoundError(html_path)
+    if axe or axe_path is not None:
+        axe=True
+        axe_path=axe_path or Path(__file__).resolve().parents[1]/'node_modules'/'axe-core'/'axe.min.js'
+        if not axe_path.is_file():
+            raise RuntimeError('axe-core unavailable; run npm install in the skill root or pass --axe-path')
     out.mkdir(parents=True, exist_ok=True)
     report={'auditor':'anti-ai-slop/browser-1.1','url':url,'fixture_html':str(html_path) if html_path else None,'timestamp_utc':datetime.now(timezone.utc).isoformat(),
             'viewport_results':{},'status':'completed','warning':'Candidates only; screenshots require human/agent review.'}
@@ -107,6 +112,16 @@ def run(url: str|None, out: Path, *, browser_path: str|None=None, timeout_ms: in
                         resp=page.goto(url,wait_until='domcontentloaded',timeout=timeout_ms)
                     page.wait_for_timeout(300)
                     state=_inspect(page)
+                    axe_result=None
+                    if axe:
+                        page.add_script_tag(path=str(axe_path))
+                        axe_result=page.evaluate('''async () => {
+                          if (!window.axe || !window.axe.run) throw Error('axe.run unavailable');
+                          const r = await window.axe.run(document, {runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa','best-practice']}});
+                          return {violations:r.violations.map(v=>({id:v.id,impact:v.impact,description:v.description,
+                            help:v.help,help_url:v.helpUrl,nodes:v.nodes.slice(0,15).map(n=>({target:n.target,html:n.html.slice(0,250),failure_summary:n.failureSummary}))})),
+                            incomplete_count:r.incomplete.length,passes_count:r.passes.length};
+                        }''')
                     interactions=[]
                     for check in interaction_spec or []:
                         entry={'selector':check['selector'],'passed':False}
@@ -127,8 +142,10 @@ def run(url: str|None, out: Path, *, browser_path: str|None=None, timeout_ms: in
                     screenshot=str((out/f'{name}.png').resolve())
                     page.screenshot(path=screenshot,full_page=True,animations='disabled',timeout=timeout_ms)
                     if any(not item['passed'] for item in interactions): report['status']='failed_checks'
+                    if fail_on_axe and axe_result and any(v['impact'] in ('critical','serious') for v in axe_result['violations']):
+                        report['status']='failed_checks'
                     report['viewport_results'][name]={'http_status':resp.status if resp else None,
-                        'screenshot':screenshot,'js_errors':errors,'checks':state,'interactions':interactions}
+                        'screenshot':screenshot,'js_errors':errors,'checks':state,'interactions':interactions, 'axe_core':axe_result}
                 except Exception as exc:
                     report['viewport_results'][name]={'error':str(exc)}
                     report['status']='incomplete'
@@ -147,10 +164,13 @@ def main()->int:
     parser.add_argument('--timeout-ms',type=int,default=15000)
     parser.add_argument('--reduced-motion',action='store_true')
     parser.add_argument('--interaction-spec',type=Path,help='JSON com checks explícitos de interações não destrutivas de teste')
+    parser.add_argument('--axe',action='store_true',help='Executar axe-core real via node_modules/axe-core/axe.min.js')
+    parser.add_argument('--axe-path',type=Path,help='Caminho para a distribuição JS axe-core')
+    parser.add_argument('--fail-on-axe',action='store_true',help='Falhar se axe-core encontrar violações serious/critical')
     args=parser.parse_args()
     try:
         spec=json.loads(args.interaction_spec.read_text(encoding='utf-8'))['checks'] if args.interaction_spec else None
-        result=run(args.url,args.out,browser_path=args.browser_path,timeout_ms=args.timeout_ms,reduced_motion=args.reduced_motion,html_path=args.html,interaction_spec=spec)
+        result=run(args.url,args.out,browser_path=args.browser_path,timeout_ms=args.timeout_ms,reduced_motion=args.reduced_motion,html_path=args.html,interaction_spec=spec,axe=args.axe,axe_path=args.axe_path,fail_on_axe=args.fail_on_axe)
     except ImportError:
         print('Playwright ausente. Instale com: python -m pip install playwright',file=sys.stderr)
         return 2

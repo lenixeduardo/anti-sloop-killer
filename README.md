@@ -13,6 +13,8 @@
 - **228 verificações catalogadas:** 87 Sailop, 37 Impeccable, 13 tópicos Unslop UI, 35 sinais complementares e 56 verificações adicionais. São identificadores do catálogo; parte dos conceitos se sobrepõe entre fontes.
 - **14 paletas de referência:** roxo, índigo, laranja, pêssego, coral, âmbar, terracota, bege e outras composições. São heurísticas, **não cores proibidas**.
 - **Scanner estático v2:** cobertura identificada por regra; reconhece Astro, Next Image, JSX, Vue, Svelte, HTML e CSS, filtra comentários e ignora symlinks. **Não automatiza todas as 228 verificações.**
+- **Correção estrutural controlada:** opera por ID literal de elemento em HTML, Vue, Astro, Svelte e JSX/TSX, com `set_attribute`, `remove_attribute` ou `replace_element` e rollback por testes. Não cria layouts automaticamente.
+- **axe-core, Lighthouse e diff visual:** acessibilidade real no Chromium, indicadores de performance em uma URL HTTP(S) de teste e comparações de screenshots contra baseline aprovado (ferramentas opcionais).
 - **Aplicador de patches auditáveis:** edição exata com SHA-256 do baseline, preview diff, testes de aceitação e rollback ao falhar; o agente propõe as mudanças e o operador aprova `--apply`.
 - **Gate rigoroso de evidências:** bloqueia pontuações ≥9,5 quando faltam artefatos verificáveis, revisão dos 228 IDs ou comprovantes de execução.
 - **Playbook para agentes:** levantamento do baseline, triagem por severidade, correção contextual, validação em navegador e relatório com evidências.
@@ -162,6 +164,63 @@ python3 scripts/browser_audit.py --html tests/fixtures/site/index.html --out rep
 
 O auditor registra capturas desktop/tablet/mobile, erros JavaScript, overflow, imagens quebradas, controles sem rótulo e links placeholders. O parâmetro `--interaction-spec` executa **somente** ações descritas explicitamente pelo usuário e reprova o comando quando as verificações falham; adapte o JSON ao fluxo do projeto (o exemplo é para a fixture). Não opera ações destrutivas nem submete formulários. Quando o navegador não conseguir abrir a URL, a auditoria fica incompleta. Para homologar processos específicos (login, pagamento, APIs), acrescente testes do sistema-alvo.
 
+## Correção estrutural e homologação visual (v1.5)
+
+A correção estrutural precisa de um elemento com `id` literal único, SHA-256 do arquivo original e um `finding_id`. O agente fornece a proposta explícita em JSON; a skill **não inventa alterações automaticamente**.
+
+```json
+{
+  "edits": [{
+    "path": "src/index.html",
+    "id": "contact-cta",
+    "finding_id": "NX-021",
+    "expected_sha256": "<SHA-256 atual do arquivo>",
+    "operation": "set_attribute",
+    "attribute": "href",
+    "value": "/contato"
+  }]
+}
+```
+
+```bash
+# Pré-visualização sem escrita
+python scripts/structural_fix.py /caminho/do/projeto proposta.json
+# Aplicação SOMENTE após revisão, com testes reais para habilitar applied_verified
+python scripts/structural_fix.py /caminho/do/projeto proposta.json --apply --check "python -m unittest discover -s tests"
+```
+
+`remove_attribute` requer atributo estático existente. `replace_element` exige markup completo e preservação do ID. JSX/TSX depende de TypeScript; atributos dinâmicos não são reescritos com segurança. Editar a composição inteira exige revisão do agente e testes de regressão adicionais.
+
+### Testes de acessibilidade reais com axe-core
+
+```bash
+npm install --no-audit --no-fund --no-package-lock
+python -m pip install playwright Pillow
+python -m playwright install chromium
+python scripts/browser_audit.py https://seu-preview.example --axe --fail-on-axe --out reports/axe-browser
+```
+
+O relatório inclui violações do axe por viewport, seus seletores e impacto. Violações críticas ou graves bloqueiam o gate com `--fail-on-axe`. A análise não comprova sozinha conformidade integral com WCAG.
+
+### Lighthouse
+
+```bash
+python scripts/lighthouse_audit.py https://seu-preview.example --out reports/lighthouse
+```
+
+O Lighthouse utiliza a instalação **local** em `node_modules/.bin/lighthouse` e Chrome/Chromium. Exige HTTP(S); para HTML local, publique em servidor de teste antes. Os limiares padrão são: performance 80, acessibilidade 90, boas práticas 90 e SEO 80. As notas são medidas pela ferramenta, não pela skill.
+
+### Comparação visual por screenshots
+
+```bash
+# Primeiro execute browser_audit.py duas vezes, em baseline e versão atual
+python scripts/visual_compare.py --before reports/baseline --after reports/atual --out reports/diff --max-changed-ratio 0.01
+```
+
+São comparadas as imagens `desktop.png`, `tablet.png` e `mobile.png` e produzidos mapas de diferença. O limite de alteração é **um alerta de regressão**, não uma avaliação estética; mudanças aprovadas podem alterar muitos pixels legitimamente. Baselines ausentes, dimensões incompatíveis ou mudanças acima do limite não passam automaticamente.
+
+**Dependências:** Python 3.9+, Node 22+ para Lighthouse 13.5.0, pacote npm `axe-core`, pacote `lighthouse`, Playwright Python e Pillow. O instalador da skill não instala essas dependências automaticamente e não executa downloads ao auditar um projeto.
+
 ## Auditoria estática — execução manual
 
 Se estiver na pasta da skill baixada:
@@ -304,14 +363,19 @@ Por padrão, além das notas e estados, o gate requer `artifacts` para build, te
 
 O pacote realiza instalação, auditoria parcial, planejamento, aplicação de edições autorizadas, testes e coleta de evidências. **Não promete 100% de detecção automática das 228 regras, criatividade humana ou conserto automático de fluxos complexos.** As regras são heurísticas; código, marca e acessibilidade decidem se um sinal é um defeito. O alvo de 9,5 depende da execução em um projeto específico.
 
-## Benchmark reproduzível de detecção (v1.4)
+## Benchmark de detecção — cinco stacks
 
-Incluímos duas suites **sintéticas**: cinco stacks HTML/Next/Vue/Astro/Svelte com development/holdout público e cinco cenários de portfólio, frontend React, Vue/Astro, e-commerce e dashboard. A avaliação reporta TP/FP/FN, precisão e recall por caso, sem confundir candidatos estáticos com os 228 padrões do catálogo.
+A partir da versão 1.4, o repositório inclui fixtures com gabarito explícito em `benchmarks/gold.json`: HTML, React/Next TSX, Vue, Astro e Svelte. O benchmark conta verdadeiros positivos, falsos positivos e falsos negativos por (arquivo, detector), com subconjuntos de desenvolvimento e holdout visíveis. **Não é um benchmark independente ou produção.**
 
 ```bash
-npm install --no-save --no-package-lock typescript@5.9.3
-python scripts/run_benchmark.py --min-precision 0.90 --min-recall 0.85 --out reports/benchmark-stacks.json
-python scripts/run_scenario_benchmark.py --out reports/benchmark-scenarios.json
+# Com TypeScript instalado, AST estrutural para JSX/TSX:
+python scripts/run_benchmark.py --out reports/benchmark.json --min-precision 0.90 --min-recall 0.85
+
+# Modo lexical sem AST (resultado e limitações separados):
+python scripts/run_benchmark.py --no-ast --out reports/benchmark-fallback.json
+
+# Testes de regressão e benchmark:
+python -m unittest discover -s tests -v
 ```
 
-O scanner passou a inspecionar templates usando parser HTML, detectar campos sem rótulo, contrastes de cores literais no mesmo seletor CSS, foco suprimido sem alternativa local e campos JSX sem nome estático. Erros continuam sendo **candidatos** a revisar no navegador. A existência de cinco cenários locais **não valida** aplicações externas nem os dois sites HTTPS exigidos na meta 9,5/10. Consulte [metodologia e pendências](benchmarks/README.md).
+Os detectores estruturais de templates têm natureza de **pré-varredura**, não substituem avaliação de conteúdo dinâmico, DOM renderizado ou revisão visual. A expansão de 29 para 32 IDs com candidatos estáticos não equivale a automatizar o catálogo de 228 padrões. O status das verificações está em `references/coverage-matrix.md`.
