@@ -35,7 +35,8 @@ python scripts/run_structural_benchmark.py --browser --out reports/structural-br
 ```
 
 `structural/` é um conjunto separado de cinco fontes controladas (HTML, TSX,
-Vue, Astro e Svelte). Cada teste deve apresentar falha inicial, proposta, diff
+Vue, Astro e Svelte). Cada caso inclui **duas correções** (link e substituição de `div` clicável por
+`button` preservando o handler), com falha inicial, proposta, diff
 sem mutação, aplicação com teste de aceitação, ausência posterior do problema,
 preservação literal da identidade e conteúdo, mais dois casos negativos de
 hash desatualizado e rollback. Com `--browser`, só **HTML puro** recebe

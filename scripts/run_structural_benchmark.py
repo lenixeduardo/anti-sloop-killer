@@ -31,25 +31,27 @@ def run(browser=False,out_dir=None):
             before=file.read_bytes(); before_source=before.decode('utf-8')
             expected_sha=digest(before)
             original_audit=audit(file,use_ast=file.suffix in ('.jsx','.tsx'))
-            assert case['finding'] in [f['key'] for f in original_audit['findings']], case['file']
+            assert {case['finding'],case['semantic_finding']}.issubset({f['key'] for f in original_audit['findings']}), case['file']
             proposal={'edits':[{'path':file.name,'id':case['id'],'expected_sha256':expected_sha,
-                      'operation':'set_attribute','attribute':'href','value':'#projects'}]}
+                      'operation':'set_attribute','attribute':'href','value':'#projects'},
+                     {'path':file.name,'id':'action','expected_sha256':expected_sha,
+                      'operation':'replace_element','markup':case['semantic_new']}]}
             changes=plan(project,proposal)
             preview=apply(project,changes)
             preview_clean=preview['status']=='preview' and digest(file.read_bytes())==expected_sha and 'href="#projects"' in preview['diff']
             # Acceptance check is independent of the patch mechanism, and runs before output is considered verified.
             check=[sys.executable,'-c',
-                'from pathlib import Path; s=Path('+repr(file.name)+').read_text(); assert s.count(\'href="#projects"\')==1; assert \'href="#"\' not in s']
+                'from pathlib import Path; s=Path('+repr(file.name)+').read_text(); assert s.count(\'href="#projects"\')==1; assert \'href="#"\' not in s; assert \'<button id="action"\' in s']
             applied=apply(project,changes,approved=True,checks=[check])
             after=file.read_text(encoding='utf-8')
             final_audit=audit(file,use_ast=file.suffix in ('.jsx','.tsx'))
             preserved=all(v in before_source and v in after for v in case['preserve'])
-            minimal_diff=(before_source.replace(case['old'],case['new'],1)==after)
-            removed=case['finding'] not in {f['key'] for f in final_audit['findings']}
+            minimal_diff=(before_source.replace(case['old'],case['new'],1).replace(case['semantic_old'],case['semantic_new'],1)==after)
+            removed={case['finding'],case['semantic_finding']}.isdisjoint({f['key'] for f in final_audit['findings']})
             passed=all((preview_clean,applied['status']=='applied_verified',preserved,minimal_diff,removed))
             row={'framework':case['framework'],'passed':passed,'preview_no_mutation':preview_clean,
                  'acceptance_status':applied['status'],'brand_and_copy_preserved':preserved,
-                 'exactly_one_targeted_attribute_changed':minimal_diff,'finding_removed':removed,
+                 'only_approved_edits_changed':minimal_diff,'finding_removed':removed,
                  'baseline_sha256':expected_sha,'result_sha256':digest(file.read_bytes()),
                  'before_count':len(original_audit['findings']),'after_count':len(final_audit['findings'])}
             if browser and case['framework']=='html':
@@ -60,8 +62,10 @@ def run(browser=False,out_dir=None):
                         for name,width,height in [('desktop',1440,900),('tablet',768,1024),('mobile',390,844)]:
                             page=b.new_page(viewport={'width':width,'height':height})
                             page.set_content(after,wait_until='load')
+                            page.locator('#action').click()
+                            activated=page.evaluate("document.body.dataset.activated === '1'")
                             page.locator('#cta').click()
-                            ok=page.evaluate('location.hash')=='#projects' and page.locator('#projects').is_visible()
+                            ok=activated and page.evaluate('location.hash')=='#projects' and page.locator('#projects').is_visible()
                             capture=None
                             if out_dir:
                                 p=Path(out_dir)/f'structural-{name}.png';p.parent.mkdir(parents=True,exist_ok=True)

@@ -13,10 +13,10 @@ Data: 30/10/2026. Commit: a determinar na publicação.
 
 ## Correção estrutural: cinco formatos controlados
 
-- Alterações pontuais no `href` de elemento identificado por ID literal: 5/5 propostas verificadas.
+- Duas correções estruturais por fonte: atualizar um `href` placeholder e substituir `div` clicável por `button` sem perder seu handler. **10/10 defeitos removidos em 5/5 propostas verificadas.**
 - Cada cenário tem estado defeituoso inicial detectável, prévia sem mutação, modificação exata, teste de aceitação, varredura posterior sem o defeito e preservação de texto/marca.
 - Testes negativos: rollback após falha da aceitação e rejeição de baseline SHA-256 adulterado, 2/2.
-- HTML puro: clique e navegação para âncora real no Chromium em desktop (1440), tablet (768) e mobile (390), 3/3. As capturas reais são geradas pelo job `quality-audit` do CI como artefatos.
+- HTML puro: clique com handler original preservado e navegação para âncora real no Chromium em desktop (1440), tablet (768) e mobile (390), 3/3. As capturas reais são geradas pelo job `quality-audit` do CI como artefatos.
 - Os demais quatro formatos recebem verificação estrutural em fonte, **não** build/deploy real do framework.
 
 ## Critérios de publicação

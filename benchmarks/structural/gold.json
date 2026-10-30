@@ -13,7 +13,10 @@
         "data-brand=\"SEVEN\"",
         "data-asset=\"brand-logo.svg\"",
         "PORTUS, KAIROS e AVAL"
-      ]
+      ],
+      "semantic_old": "<div id=\"action\" onclick=\"document.body.dataset.activated='1'\">Abrir</div>",
+      "semantic_new": "<button id=\"action\" type=\"button\" onclick=\"document.body.dataset.activated='1'\">Abrir</button>",
+      "semantic_finding": "NON_SEMANTIC_CLICK"
     },
     {
       "framework": "react",
@@ -26,7 +29,10 @@
         "data-brand=\"SEVEN\"",
         "data-asset=\"brand-logo.svg\"",
         "PORTUS, KAIROS e AVAL"
-      ]
+      ],
+      "semantic_old": "<div id=\"action\" onClick={()=>open()}>Abrir</div>",
+      "semantic_new": "<button id=\"action\" type=\"button\" onClick={()=>open()}>Abrir</button>",
+      "semantic_finding": "NON_SEMANTIC_CLICK"
     },
     {
       "framework": "vue",
@@ -39,7 +45,10 @@
         "data-brand=\"SEVEN\"",
         "data-asset=\"brand-logo.svg\"",
         "PORTUS, KAIROS e AVAL"
-      ]
+      ],
+      "semantic_old": "<div id=\"action\" @click=\"open\">Abrir</div>",
+      "semantic_new": "<button id=\"action\" type=\"button\" @click=\"open\">Abrir</button>",
+      "semantic_finding": "NON_SEMANTIC_CLICK"
     },
     {
       "framework": "astro",
@@ -52,7 +61,10 @@
         "data-brand=\"SEVEN\"",
         "data-asset=\"brand-logo.svg\"",
         "PORTUS, KAIROS e AVAL"
-      ]
+      ],
+      "semantic_old": "<div id=\"action\" onclick=\"document.body.dataset.activated='1'\">Abrir</div>",
+      "semantic_new": "<button id=\"action\" type=\"button\" onclick=\"document.body.dataset.activated='1'\">Abrir</button>",
+      "semantic_finding": "NON_SEMANTIC_CLICK"
     },
     {
       "framework": "svelte",
@@ -65,7 +77,10 @@
         "data-brand=\"SEVEN\"",
         "data-asset=\"brand-logo.svg\"",
         "PORTUS, KAIROS e AVAL"
-      ]
+      ],
+      "semantic_old": "<div id=\"action\" on:click={open}>Abrir</div>",
+      "semantic_new": "<button id=\"action\" type=\"button\" on:click={open}>Abrir</button>",
+      "semantic_finding": "NON_SEMANTIC_CLICK"
     }
   ]
 }

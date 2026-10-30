@@ -26,7 +26,7 @@
 Três tipos objetivos de problemas foram incluídos nos detectores estáticos:
 `POSITIVE_TABINDEX`, `UNLABELED_SELECT` e `UNLABELED_TEXTAREA`.
 Há dez arquivos de benchmark rotulados em cinco frameworks, sendo cinco
-negativos; um benchmark separado testa correção estrutural com verificação
+negativos; um benchmark separado testa **duas correções por stack** (link e elemento clicável semântico), com verificação
 pré/pós, preservação da marca, rollback e navegação real em Chromium (HTML).
 
 ```bash

@@ -43,7 +43,7 @@ class StructuralFixBenchmark(unittest.TestCase):
         report=structural_run()
         self.assertEqual(report['status'],'passed')
         self.assertEqual((report['passed'],report['tested']),(5,5))
-        self.assertTrue(all(row['brand_and_copy_preserved'] and row['exactly_one_targeted_attribute_changed'] and row['finding_removed'] for row in report['results']))
+        self.assertTrue(all(row['brand_and_copy_preserved'] and row['only_approved_edits_changed'] and row['finding_removed'] for row in report['results']))
     @unittest.skipUnless(has_ts(), "TypeScript AST module unavailable")
     def test_rollback_and_baseline_integrity(self):
         report=structural_run()
