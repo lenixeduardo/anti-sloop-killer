@@ -1,0 +1,1784 @@
+{
+  "skill": "anti-ai-slop",
+  "version": "1.0.0",
+  "language": "pt-BR",
+  "notice": "Rastreador de heurísticas, não prova de origem por IA nem proibição de cor/fonte/efeito.",
+  "catalog_source": "references/catalogo-completo.md",
+  "total_rules": 228,
+  "counts": {
+    "IM": 37,
+    "NX": 56,
+    "SA": 87,
+    "UC": 35,
+    "UH": 13
+  },
+  "total_palettes": 14,
+  "rules": [
+    {
+      "id": "SA-001",
+      "name": "Azul Tailwind como primária",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 41
+    },
+    {
+      "id": "SA-002",
+      "name": "Índigo em excesso",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 45
+    },
+    {
+      "id": "SA-003",
+      "name": "Violeta como acento automático",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 49
+    },
+    {
+      "id": "SA-004",
+      "name": "Texto em preto puro",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 53
+    },
+    {
+      "id": "SA-005",
+      "name": "Fundos brancos puros por padrão",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 57
+    },
+    {
+      "id": "SA-006",
+      "name": "Domínio de cinzas slate",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 61
+    },
+    {
+      "id": "SA-007",
+      "name": "Uma única cor de destaque",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 65
+    },
+    {
+      "id": "SA-008",
+      "name": "Ausência de cor secundária",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 69
+    },
+    {
+      "id": "SA-009",
+      "name": "Neutros sem temperatura",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 73
+    },
+    {
+      "id": "SA-010",
+      "name": "Sem variáveis CSS para cor",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 77
+    },
+    {
+      "id": "SA-011",
+      "name": "Hexadecimais rígidos por todo o código",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 81
+    },
+    {
+      "id": "SA-012",
+      "name": "Sem tratamento de seleção de texto",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 85
+    },
+    {
+      "id": "SA-013",
+      "name": "Gradiente azul para roxo recorrente",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 89
+    },
+    {
+      "id": "SA-014",
+      "name": "Direção de gradiente sempre para a direita",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 93
+    },
+    {
+      "id": "SA-015",
+      "name": "Sem consideração por tema escuro",
+      "source": "Sailop",
+      "category": "A.1 Cores (15)",
+      "catalog_line": 97
+    },
+    {
+      "id": "SA-016",
+      "name": "Inter como escolha automática",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 103
+    },
+    {
+      "id": "SA-017",
+      "name": "Roboto como fallback estético",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 107
+    },
+    {
+      "id": "SA-018",
+      "name": "Poppins para parecer amigável",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 111
+    },
+    {
+      "id": "SA-019",
+      "name": "Ausência de fonte display",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 115
+    },
+    {
+      "id": "SA-020",
+      "name": "Pouca variação de pesos",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 119
+    },
+    {
+      "id": "SA-021",
+      "name": "Sem ajuste de tracking",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 123
+    },
+    {
+      "id": "SA-022",
+      "name": "Sem text-wrap balance em títulos adequados",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 127
+    },
+    {
+      "id": "SA-023",
+      "name": "Escala tipográfica Tailwind intacta",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 131
+    },
+    {
+      "id": "SA-024",
+      "name": "Carregamento de fontes sem font-display",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 135
+    },
+    {
+      "id": "SA-025",
+      "name": "Sem pilha de fallback",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 139
+    },
+    {
+      "id": "SA-026",
+      "name": "Fontes variáveis não consideradas",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 143
+    },
+    {
+      "id": "SA-027",
+      "name": "Ausência de itálico quando útil",
+      "source": "Sailop",
+      "category": "A.2 Tipografia (12)",
+      "catalog_line": 147
+    },
+    {
+      "id": "SA-028",
+      "name": "Hero centralizada com slogan",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 153
+    },
+    {
+      "id": "SA-029",
+      "name": "Grid de três colunas em todo lugar",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 157
+    },
+    {
+      "id": "SA-030",
+      "name": "Metades iguais para qualquer composição",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 161
+    },
+    {
+      "id": "SA-031",
+      "name": "Container max-w-7xl universal",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 165
+    },
+    {
+      "id": "SA-032",
+      "name": "Sequência hero-features-pricing",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 169
+    },
+    {
+      "id": "SA-033",
+      "name": "Padding igual em todas as seções",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 173
+    },
+    {
+      "id": "SA-034",
+      "name": "HTML pouco semântico",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 177
+    },
+    {
+      "id": "SA-035",
+      "name": "Ausência de grids assimétricos",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 181
+    },
+    {
+      "id": "SA-036",
+      "name": "Nenhum deslocamento da grade",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 185
+    },
+    {
+      "id": "SA-037",
+      "name": "Raio único para todos os cantos",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 189
+    },
+    {
+      "id": "SA-038",
+      "name": "CSS Grid sem áreas nomeadas",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 193
+    },
+    {
+      "id": "SA-039",
+      "name": "Subgrid nunca considerado",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 197
+    },
+    {
+      "id": "SA-040",
+      "name": "Sem container queries",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 201
+    },
+    {
+      "id": "SA-041",
+      "name": "Tudo é div",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 205
+    },
+    {
+      "id": "SA-042",
+      "name": "CSS columns ignorado",
+      "source": "Sailop",
+      "category": "A.3 Layout (15)",
+      "catalog_line": 209
+    },
+    {
+      "id": "SA-043",
+      "name": "Fade-up em todos os elementos",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 215
+    },
+    {
+      "id": "SA-044",
+      "name": "Pulse para todo loading",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 219
+    },
+    {
+      "id": "SA-045",
+      "name": "Duração fixa de 300 ms",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 223
+    },
+    {
+      "id": "SA-046",
+      "name": "Apenas ease-in-out",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 227
+    },
+    {
+      "id": "SA-047",
+      "name": "Ausência de keyframes próprios",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 231
+    },
+    {
+      "id": "SA-048",
+      "name": "Stagger linear repetitivo",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 235
+    },
+    {
+      "id": "SA-049",
+      "name": "Navegação sempre com backdrop-blur",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 239
+    },
+    {
+      "id": "SA-050",
+      "name": "Ausência de :active",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 243
+    },
+    {
+      "id": "SA-051",
+      "name": "Cards sem feedback quando clicáveis",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 247
+    },
+    {
+      "id": "SA-052",
+      "name": "transition-all como padrão",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 251
+    },
+    {
+      "id": "SA-053",
+      "name": "Sem prefers-reduced-motion",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 255
+    },
+    {
+      "id": "SA-054",
+      "name": "Nenhuma animação vinculada à rolagem considerada",
+      "source": "Sailop",
+      "category": "A.4 Animação (12)",
+      "catalog_line": 259
+    },
+    {
+      "id": "SA-055",
+      "name": "Terminal falso com três bolinhas",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 265
+    },
+    {
+      "id": "SA-056",
+      "name": "Feature cards idênticos",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 269
+    },
+    {
+      "id": "SA-057",
+      "name": "Faixa de estatísticas genéricas",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 273
+    },
+    {
+      "id": "SA-058",
+      "name": "FAQ em acordeão automático",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 277
+    },
+    {
+      "id": "SA-059",
+      "name": "CTA genérico Get Started",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 281
+    },
+    {
+      "id": "SA-060",
+      "name": "Botões sempre pill",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 285
+    },
+    {
+      "id": "SA-061",
+      "name": "Cards sempre rounded-2xl",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 289
+    },
+    {
+      "id": "SA-062",
+      "name": "Seção de passos numerados genérica",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 293
+    },
+    {
+      "id": "SA-063",
+      "name": "Três testemunhos em grid",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 297
+    },
+    {
+      "id": "SA-064",
+      "name": "Badge pulsante sobre a hero",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 301
+    },
+    {
+      "id": "SA-065",
+      "name": "Rodapé Built with Love",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 305
+    },
+    {
+      "id": "SA-066",
+      "name": "Cards de ícone-título-frase",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 309
+    },
+    {
+      "id": "SA-067",
+      "name": "Dashboard de demonstração fictício",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 313
+    },
+    {
+      "id": "SA-068",
+      "name": "Três planos de preço idênticos",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 317
+    },
+    {
+      "id": "SA-069",
+      "name": "Barra de logos de clientes fictícios",
+      "source": "Sailop",
+      "category": "A.5 Componentes (15)",
+      "catalog_line": 321
+    },
+    {
+      "id": "SA-070",
+      "name": "Div soup",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 327
+    },
+    {
+      "id": "SA-071",
+      "name": "Sem ::selection",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 331
+    },
+    {
+      "id": "SA-072",
+      "name": "Sem :focus-visible",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 335
+    },
+    {
+      "id": "SA-073",
+      "name": "Sem respeito a reduced motion",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 339
+    },
+    {
+      "id": "SA-074",
+      "name": "Sem CSS custom properties",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 343
+    },
+    {
+      "id": "SA-075",
+      "name": "Elemento HTML errado para função",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 347
+    },
+    {
+      "id": "SA-076",
+      "name": "Sem aria-labels onde necessários",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 351
+    },
+    {
+      "id": "SA-077",
+      "name": "Sem skip link",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 355
+    },
+    {
+      "id": "SA-078",
+      "name": "Somente className, sem abstração de estilo",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 359
+    },
+    {
+      "id": "SA-079",
+      "name": "Sem text-wrap moderno onde ajuda",
+      "source": "Sailop",
+      "category": "A.6 Estrutura (10)",
+      "catalog_line": 363
+    },
+    {
+      "id": "SA-080",
+      "name": "py-20 em todas as seções",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 369
+    },
+    {
+      "id": "SA-081",
+      "name": "Grade de 4 px aplicada rigidamente",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 373
+    },
+    {
+      "id": "SA-082",
+      "name": "Ausência total de valores ópticos",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 377
+    },
+    {
+      "id": "SA-083",
+      "name": "Mesmo gap em todos os componentes",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 381
+    },
+    {
+      "id": "SA-084",
+      "name": "Padding de seção sem variação",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 385
+    },
+    {
+      "id": "SA-085",
+      "name": "Sem clamp() para espaço fluido",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 389
+    },
+    {
+      "id": "SA-086",
+      "name": "Sem estratégia de espaçamento responsivo",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 393
+    },
+    {
+      "id": "SA-087",
+      "name": "px-4 para tudo no mobile",
+      "source": "Sailop",
+      "category": "A.7 Espaçamento (8)",
+      "catalog_line": 397
+    },
+    {
+      "id": "IM-001",
+      "name": "Borda de acento em elemento arredondado",
+      "source": "Impeccable",
+      "category": "B.1 Detalhes visuais (6)",
+      "catalog_line": 407
+    },
+    {
+      "id": "IM-002",
+      "name": "Glassmorphism por toda parte",
+      "source": "Impeccable",
+      "category": "B.1 Detalhes visuais (6)",
+      "catalog_line": 412
+    },
+    {
+      "id": "IM-003",
+      "name": "Modais como padrão de solução",
+      "source": "Impeccable",
+      "category": "B.1 Detalhes visuais (6)",
+      "catalog_line": 417
+    },
+    {
+      "id": "IM-004",
+      "name": "Retângulos arredondados e sombras genéricas",
+      "source": "Impeccable",
+      "category": "B.1 Detalhes visuais (6)",
+      "catalog_line": 422
+    },
+    {
+      "id": "IM-005",
+      "name": "Borda lateral tipo aba",
+      "source": "Impeccable",
+      "category": "B.1 Detalhes visuais (6)",
+      "catalog_line": 427
+    },
+    {
+      "id": "IM-006",
+      "name": "Sparklines puramente decorativos",
+      "source": "Impeccable",
+      "category": "B.1 Detalhes visuais (6)",
+      "catalog_line": 432
+    },
+    {
+      "id": "IM-007",
+      "name": "Hierarquia tipográfica achatada",
+      "source": "Impeccable",
+      "category": "B.2 Tipografia (6)",
+      "catalog_line": 439
+    },
+    {
+      "id": "IM-008",
+      "name": "Ícone empilhado acima do título",
+      "source": "Impeccable",
+      "category": "B.2 Tipografia (6)",
+      "catalog_line": 444
+    },
+    {
+      "id": "IM-009",
+      "name": "Monoespaçada usada só para parecer técnica",
+      "source": "Impeccable",
+      "category": "B.2 Tipografia (6)",
+      "catalog_line": 449
+    },
+    {
+      "id": "IM-010",
+      "name": "Fonte superutilizada sem decisão",
+      "source": "Impeccable",
+      "category": "B.2 Tipografia (6)",
+      "catalog_line": 454
+    },
+    {
+      "id": "IM-011",
+      "name": "Fonte única para todas as funções",
+      "source": "Impeccable",
+      "category": "B.2 Tipografia (6)",
+      "catalog_line": 459
+    },
+    {
+      "id": "IM-012",
+      "name": "Corpo de texto em caixa alta",
+      "source": "Impeccable",
+      "category": "B.2 Tipografia (6)",
+      "catalog_line": 464
+    },
+    {
+      "id": "IM-013",
+      "name": "Paleta cromática de IA",
+      "source": "Impeccable",
+      "category": "B.3 Cores e contraste (6)",
+      "catalog_line": 471
+    },
+    {
+      "id": "IM-014",
+      "name": "Dark mode com brilhos coloridos",
+      "source": "Impeccable",
+      "category": "B.3 Cores e contraste (6)",
+      "catalog_line": 476
+    },
+    {
+      "id": "IM-015",
+      "name": "Dark mode escolhido por segurança",
+      "source": "Impeccable",
+      "category": "B.3 Cores e contraste (6)",
+      "catalog_line": 481
+    },
+    {
+      "id": "IM-016",
+      "name": "Texto com gradiente",
+      "source": "Impeccable",
+      "category": "B.3 Cores e contraste (6)",
+      "catalog_line": 486
+    },
+    {
+      "id": "IM-017",
+      "name": "Texto cinza sobre superfície colorida",
+      "source": "Impeccable",
+      "category": "B.3 Cores e contraste (6)",
+      "catalog_line": 491
+    },
+    {
+      "id": "IM-018",
+      "name": "Fundo preto puro",
+      "source": "Impeccable",
+      "category": "B.3 Cores e contraste (6)",
+      "catalog_line": 496
+    },
+    {
+      "id": "IM-019",
+      "name": "Tudo centralizado",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 503
+    },
+    {
+      "id": "IM-020",
+      "name": "Hero de métricas genéricas",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 508
+    },
+    {
+      "id": "IM-021",
+      "name": "Grades de cards idênticos",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 513
+    },
+    {
+      "id": "IM-022",
+      "name": "Espaçamento monótono",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 518
+    },
+    {
+      "id": "IM-023",
+      "name": "Cards dentro de cards",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 523
+    },
+    {
+      "id": "IM-024",
+      "name": "Tudo dentro de cards",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 528
+    },
+    {
+      "id": "IM-025",
+      "name": "Linhas de texto compridas demais",
+      "source": "Impeccable",
+      "category": "B.4 Layout e espaço (7)",
+      "catalog_line": 533
+    },
+    {
+      "id": "IM-026",
+      "name": "Bounce e easing elástico automático",
+      "source": "Impeccable",
+      "category": "B.5 Movimento (2)",
+      "catalog_line": 540
+    },
+    {
+      "id": "IM-027",
+      "name": "Animação de propriedades de layout",
+      "source": "Impeccable",
+      "category": "B.5 Movimento (2)",
+      "catalog_line": 545
+    },
+    {
+      "id": "IM-028",
+      "name": "Todos os botões são primários",
+      "source": "Impeccable",
+      "category": "B.6 Interação (2)",
+      "catalog_line": 552
+    },
+    {
+      "id": "IM-029",
+      "name": "Informação redundante",
+      "source": "Impeccable",
+      "category": "B.6 Interação (2)",
+      "catalog_line": 557
+    },
+    {
+      "id": "IM-030",
+      "name": "Cortar recursos essenciais do mobile",
+      "source": "Impeccable",
+      "category": "B.7 Responsividade (1)",
+      "catalog_line": 564
+    },
+    {
+      "id": "IM-031",
+      "name": "Padding apertado",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 571
+    },
+    {
+      "id": "IM-032",
+      "name": "Texto justificado inadequado",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 576
+    },
+    {
+      "id": "IM-033",
+      "name": "Contraste textual baixo",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 581
+    },
+    {
+      "id": "IM-034",
+      "name": "Pulo de nível em headings",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 586
+    },
+    {
+      "id": "IM-035",
+      "name": "Entrelinha comprimida",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 591
+    },
+    {
+      "id": "IM-036",
+      "name": "Texto de corpo minúsculo",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 596
+    },
+    {
+      "id": "IM-037",
+      "name": "Letter-spacing excessivo no corpo",
+      "source": "Impeccable",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 601
+    },
+    {
+      "id": "UH-001",
+      "name": "Novo default “sofisticado” creme + serifa + verde sálvia",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 612
+    },
+    {
+      "id": "UH-002",
+      "name": "shadcn e Tailwind sem personalização",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 617
+    },
+    {
+      "id": "UH-003",
+      "name": "Roxo/índigo de IA",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 622
+    },
+    {
+      "id": "UH-004",
+      "name": "Gradientes e texto em gradiente",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 627
+    },
+    {
+      "id": "UH-005",
+      "name": "Animação excessiva",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 632
+    },
+    {
+      "id": "UH-006",
+      "name": "Arredondamento universal",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 637
+    },
+    {
+      "id": "UH-007",
+      "name": "Neon e glow não solicitados",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 642
+    },
+    {
+      "id": "UH-008",
+      "name": "Emojis como ícones de interface",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 647
+    },
+    {
+      "id": "UH-009",
+      "name": "Fontes genéricas automáticas",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 652
+    },
+    {
+      "id": "UH-010",
+      "name": "Esqueleto hero + três cards + CTA",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 657
+    },
+    {
+      "id": "UH-011",
+      "name": "Problemas reais de layout",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 662
+    },
+    {
+      "id": "UH-012",
+      "name": "Sinais de texto e baixa confiança",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 667
+    },
+    {
+      "id": "UH-013",
+      "name": "Sinais pouco comprovados (não penalizar automaticamente)",
+      "source": "Unslop UI (Herbert-Labs)",
+      "category": "B.8 Qualidade geral (7)",
+      "catalog_line": 672
+    },
+    {
+      "id": "UC-001",
+      "name": "Mistura Space Grotesk + serif itálica + Inter",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 702
+    },
+    {
+      "id": "UC-002",
+      "name": "Palavra única em itálico no H1",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 706
+    },
+    {
+      "id": "UC-003",
+      "name": "Tracking negativo aplicado ao corpo",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 710
+    },
+    {
+      "id": "UC-004",
+      "name": "Quebra artificial com br em títulos",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 714
+    },
+    {
+      "id": "UC-005",
+      "name": "Eyebrow em todas as seções",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 718
+    },
+    {
+      "id": "UC-006",
+      "name": "Numerais não tabulares em tabelas",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 722
+    },
+    {
+      "id": "UC-007",
+      "name": "Títulos longos e órfãos",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 726
+    },
+    {
+      "id": "UC-008",
+      "name": "Texto sem dados concretos",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.1 Tipografia e copy",
+      "catalog_line": 730
+    },
+    {
+      "id": "UC-009",
+      "name": "Gradiente quente âmbar-rosa como novo default",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 736
+    },
+    {
+      "id": "UC-010",
+      "name": "Paleta sem dominante",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 740
+    },
+    {
+      "id": "UC-011",
+      "name": "Faixa cromática sem âncoras",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 744
+    },
+    {
+      "id": "UC-012",
+      "name": "Tons de status diretos do framework",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 748
+    },
+    {
+      "id": "UC-013",
+      "name": "Focus ring de cor fora da marca",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 752
+    },
+    {
+      "id": "UC-014",
+      "name": "Fundo aurora/blobs automático",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 756
+    },
+    {
+      "id": "UC-015",
+      "name": "Grade pontilhada escura decorativa",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 760
+    },
+    {
+      "id": "UC-016",
+      "name": "Sombras homogêneas sem elevação",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 764
+    },
+    {
+      "id": "UC-017",
+      "name": "Separadores wave em toda transição",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.2 Paleta e fundo",
+      "catalog_line": 768
+    },
+    {
+      "id": "UC-018",
+      "name": "Rodapé SaaS inchado",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 774
+    },
+    {
+      "id": "UC-019",
+      "name": "CTA final espelha a hero",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 778
+    },
+    {
+      "id": "UC-020",
+      "name": "Zigue-zague 50/50 obrigatório",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 782
+    },
+    {
+      "id": "UC-021",
+      "name": "Mobile vira fila infinita de cards",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 786
+    },
+    {
+      "id": "UC-022",
+      "name": "Badge “Now with AI” sem notícia real",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 790
+    },
+    {
+      "id": "UC-023",
+      "name": "Pricing com scale-105 no plano central",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 794
+    },
+    {
+      "id": "UC-024",
+      "name": "Estado vazio sem orientação",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 798
+    },
+    {
+      "id": "UC-025",
+      "name": "Toast padrão para qualquer evento",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 802
+    },
+    {
+      "id": "UC-026",
+      "name": "Hover lift em todos os cards",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 806
+    },
+    {
+      "id": "UC-027",
+      "name": "Card com tira colorida lateral",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.3 Layout e componentes",
+      "catalog_line": 810
+    },
+    {
+      "id": "UC-028",
+      "name": "Pessoas sintéticas com artefatos",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 816
+    },
+    {
+      "id": "UC-029",
+      "name": "Texto ilegível dentro de imagem",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 820
+    },
+    {
+      "id": "UC-030",
+      "name": "Depoimentos com avatares falsos",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 824
+    },
+    {
+      "id": "UC-031",
+      "name": "Arte 3D genérica de esfera cromada",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 828
+    },
+    {
+      "id": "UC-032",
+      "name": "Mockup de navegador inclinado em gradiente",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 832
+    },
+    {
+      "id": "UC-033",
+      "name": "Logos de terceiros distorcidos",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 836
+    },
+    {
+      "id": "UC-034",
+      "name": "Emojis simulando ícones",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 840
+    },
+    {
+      "id": "UC-035",
+      "name": "Lucide universal com chips",
+      "source": "Unslop UI (claudiusararu)",
+      "category": "D.4 Imagens e ícones",
+      "catalog_line": 844
+    },
+    {
+      "id": "NX-001",
+      "name": "Editorial de jornal sem justificativa",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 973
+    },
+    {
+      "id": "NX-002",
+      "name": "Serifa de alto contraste com destaque terracota",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 980
+    },
+    {
+      "id": "NX-003",
+      "name": "Separadores com ponto médio como template",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 987
+    },
+    {
+      "id": "NX-004",
+      "name": "Seta automática no fim de todos os links",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 994
+    },
+    {
+      "id": "NX-005",
+      "name": "Borda espessa combinada com cantos arredondados",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 1001
+    },
+    {
+      "id": "NX-006",
+      "name": "Borda, sombra, tint e glow acumulados no mesmo elemento",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 1008
+    },
+    {
+      "id": "NX-007",
+      "name": "Cartões brancos sobre fundo cinza por inércia",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 1015
+    },
+    {
+      "id": "NX-008",
+      "name": "Alternância mecânica de fundos seção a seção",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 1022
+    },
+    {
+      "id": "NX-009",
+      "name": "Hero 100vh vazia",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 1029
+    },
+    {
+      "id": "NX-010",
+      "name": "Excesso de padrões de grid no background",
+      "source": "Extensões pesquisadas",
+      "category": "G.1 Composição, superfícies e paleta",
+      "catalog_line": 1036
+    },
+    {
+      "id": "NX-011",
+      "name": "Headline com tríade de adjetivos desconectados",
+      "source": "Extensões pesquisadas",
+      "category": "G.2 Tipografia e conteúdo",
+      "catalog_line": 1045
+    },
+    {
+      "id": "NX-012",
+      "name": "Oferta genérica “para X ou Y, funciona para todos”",
+      "source": "Extensões pesquisadas",
+      "category": "G.2 Tipografia e conteúdo",
+      "catalog_line": 1052
+    },
+    {
+      "id": "NX-013",
+      "name": "Vocabulário do produto inconsistente entre seções",
+      "source": "Extensões pesquisadas",
+      "category": "G.2 Tipografia e conteúdo",
+      "catalog_line": 1059
+    },
+    {
+      "id": "NX-014",
+      "name": "Restrições e custos escondidos pela composição",
+      "source": "Extensões pesquisadas",
+      "category": "G.2 Tipografia e conteúdo",
+      "catalog_line": 1066
+    },
+    {
+      "id": "NX-015",
+      "name": "Narrativa empresarial autobiográfica automática",
+      "source": "Extensões pesquisadas",
+      "category": "G.2 Tipografia e conteúdo",
+      "catalog_line": 1073
+    },
+    {
+      "id": "NX-016",
+      "name": "Colagem de dashboard como papel de parede",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1082
+    },
+    {
+      "id": "NX-017",
+      "name": "Ilustração isométrica genérica de foguete ou laptop",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1089
+    },
+    {
+      "id": "NX-018",
+      "name": "Pessoas e produtos mudam entre imagens da mesma página",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1096
+    },
+    {
+      "id": "NX-019",
+      "name": "Stock photo escolhida só por harmonizar com a cor",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1103
+    },
+    {
+      "id": "NX-020",
+      "name": "Fotografias com direção inconsistente",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1110
+    },
+    {
+      "id": "NX-021",
+      "name": "Texto alternativo descreve a IA e não a imagem",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1117
+    },
+    {
+      "id": "NX-022",
+      "name": "Gráfico inteiro ornamental sem relação com dados",
+      "source": "Extensões pesquisadas",
+      "category": "G.3 Imagens e dados",
+      "catalog_line": 1124
+    },
+    {
+      "id": "NX-023",
+      "name": "Ausência de estados de sucesso e permissões",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1133
+    },
+    {
+      "id": "NX-024",
+      "name": "Offline e perda de conexão sem tratamento",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1140
+    },
+    {
+      "id": "NX-025",
+      "name": "Formulário com campos desnecessários",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1147
+    },
+    {
+      "id": "NX-026",
+      "name": "Erro sem instrução de recuperação",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1154
+    },
+    {
+      "id": "NX-027",
+      "name": "Navegação do navegador Voltar quebra a tarefa",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1161
+    },
+    {
+      "id": "NX-028",
+      "name": "Ação destrutiva sem desfazer ou confirmação contextual",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1168
+    },
+    {
+      "id": "NX-029",
+      "name": "Cadastro obrigatório antes de demonstrar valor",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1175
+    },
+    {
+      "id": "NX-030",
+      "name": "Informações críticas escondidas só em tooltip",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1182
+    },
+    {
+      "id": "NX-031",
+      "name": "Indicador de progresso artificial",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1189
+    },
+    {
+      "id": "NX-032",
+      "name": "Carousel com autoplay não interrompível",
+      "source": "Extensões pesquisadas",
+      "category": "G.4 UX e estados",
+      "catalog_line": 1196
+    },
+    {
+      "id": "NX-033",
+      "name": "Tablet ignorado apesar de mobile/desktop aprovados",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1205
+    },
+    {
+      "id": "NX-034",
+      "name": "Orientação horizontal rompe a interface",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1212
+    },
+    {
+      "id": "NX-035",
+      "name": "Modal briga com teclado virtual",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1219
+    },
+    {
+      "id": "NX-036",
+      "name": "Estado comunicado somente por cor",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1226
+    },
+    {
+      "id": "NX-037",
+      "name": "Ordem de foco diferente da ordem visual",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1233
+    },
+    {
+      "id": "NX-038",
+      "name": "Foco não restaurado ao fechar diálogo",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1240
+    },
+    {
+      "id": "NX-039",
+      "name": "Zoom de texto provoca cortes e perda de ações",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1247
+    },
+    {
+      "id": "NX-040",
+      "name": "ARIA decorativo sem comportamento correspondente",
+      "source": "Extensões pesquisadas",
+      "category": "G.5 Responsividade e acessibilidade",
+      "catalog_line": 1254
+    },
+    {
+      "id": "NX-041",
+      "name": "HTML/CSS inline concentrado sem estrutura",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1263
+    },
+    {
+      "id": "NX-042",
+      "name": "Componentes chamados Section1/Card2 sem domínio",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1270
+    },
+    {
+      "id": "NX-043",
+      "name": "Framework/rotas placeholder publicados",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1277
+    },
+    {
+      "id": "NX-044",
+      "name": "Importações ou endpoints inventados",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1284
+    },
+    {
+      "id": "NX-045",
+      "name": "Regras !important e z-index extremos em cascata",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1291
+    },
+    {
+      "id": "NX-046",
+      "name": "Atraso artificial com setTimeout em vez de estado real",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1298
+    },
+    {
+      "id": "NX-047",
+      "name": "Tratador de erro amplo mascara defeito de integração",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1305
+    },
+    {
+      "id": "NX-048",
+      "name": "Código inchado para efeito visual simples",
+      "source": "Extensões pesquisadas",
+      "category": "G.6 Código e build",
+      "catalog_line": 1312
+    },
+    {
+      "id": "NX-049",
+      "name": "Hero com loading lazy atrasa o LCP",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1321
+    },
+    {
+      "id": "NX-050",
+      "name": "Layout shift por mídia/font sem dimensões",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1328
+    },
+    {
+      "id": "NX-051",
+      "name": "Mídia decorativa bloqueia conteúdo significativo",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1335
+    },
+    {
+      "id": "NX-052",
+      "name": "Metadados ou Open Graph não correspondem à página",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1342
+    },
+    {
+      "id": "NX-053",
+      "name": "Páginas de confiança superficiais ou ausentes",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1349
+    },
+    {
+      "id": "NX-054",
+      "name": "Provas de urgência ou escassez inventadas",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1356
+    },
+    {
+      "id": "NX-055",
+      "name": "Conteúdo massivo SEO sem valor novo",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1363
+    },
+    {
+      "id": "NX-056",
+      "name": "Página funcional apenas na captura, sem QA renderizado",
+      "source": "Extensões pesquisadas",
+      "category": "G.7 Performance, SEO e confiança",
+      "catalog_line": 1370
+    }
+  ],
+  "palettes": [
+    {
+      "id": "P01",
+      "name": "AI Purple Gradient",
+      "colors": [
+        "#0F172A",
+        "#2563EB",
+        "#6366F1",
+        "#8B5CF6",
+        "#A855F7"
+      ],
+      "raw": "| P01 | AI Purple Gradient | `#0F172A`, `#2563EB`, `#6366F1`, `#8B5CF6`, `#A855F7` | Azul → violeta → roxo em landing SaaS; alto quando acompanhado de gradient text e glows. |"
+    },
+    {
+      "id": "P02",
+      "name": "Cyber Neon AI",
+      "colors": [
+        "#050816",
+        "#00D4FF",
+        "#7C3AED",
+        "#FF3CAC",
+        "#EDE9FE"
+      ],
+      "raw": "| P02 | Cyber Neon AI | `#050816`, `#00D4FF`, `#7C3AED`, `#FF3CAC`, `#EDE9FE` | Ciano/violeta/rosa fluorescentes e efeitos glow no fundo escuro. |"
+    },
+    {
+      "id": "P03",
+      "name": "Lavender SaaS",
+      "colors": [
+        "#F8FAFC",
+        "#EEF2FF",
+        "#C7D2FE",
+        "#8B5CF6",
+        "#1F2937"
+      ],
+      "raw": "| P03 | Lavender SaaS | `#F8FAFC`, `#EEF2FF`, `#C7D2FE`, `#8B5CF6`, `#1F2937` | Lavanda clara, botões violetas e cards arredondados. |"
+    },
+    {
+      "id": "P04",
+      "name": "Tailwind Default Blue",
+      "colors": [
+        "#FFFFFF",
+        "#EFF6FF",
+        "#3B82F6",
+        "#2563EB",
+        "#0F172A"
+      ],
+      "raw": "| P04 | Tailwind Default Blue | `#FFFFFF`, `#EFF6FF`, `#3B82F6`, `#2563EB`, `#0F172A` | Azuis de preset sem sistema cromático próprio. |"
+    },
+    {
+      "id": "P05",
+      "name": "Beige Editorial",
+      "colors": [
+        "#F5EFE6",
+        "#E7D6C1",
+        "#C5AD8B",
+        "#8B735B",
+        "#28241F"
+      ],
+      "raw": "| P05 | Beige Editorial | `#F5EFE6`, `#E7D6C1`, `#C5AD8B`, `#8B735B`, `#28241F` | Bege editorial repetitivo sem vínculo à marca. |"
+    },
+    {
+      "id": "P06",
+      "name": "Pastel AI Friendly",
+      "colors": [
+        "#FFF7ED",
+        "#FBCFE8",
+        "#DDD6FE",
+        "#BBF7D0",
+        "#6D28D9"
+      ],
+      "raw": "| P06 | Pastel AI Friendly | `#FFF7ED`, `#FBCFE8`, `#DDD6FE`, `#BBF7D0`, `#6D28D9` | Pêssego, rosa, lavanda e menta com aparência de template. |"
+    },
+    {
+      "id": "P07",
+      "name": "Fake Luxury Gold",
+      "colors": [
+        "#111110",
+        "#383024",
+        "#C29B5B",
+        "#EDE0C7",
+        "#F5F2EB"
+      ],
+      "raw": "| P07 | Fake Luxury Gold | `#111110`, `#383024`, `#C29B5B`, `#EDE0C7`, `#F5F2EB` | Preto/champanhe/dourado usados para sugerir luxo sem direção de arte. |"
+    },
+    {
+      "id": "P08",
+      "name": "Dark Neon Minimal",
+      "colors": [
+        "#09090B",
+        "#18181B",
+        "#27272A",
+        "#A3E635",
+        "#FAFAFA"
+      ],
+      "raw": "| P08 | Dark Neon Minimal | `#09090B`, `#18181B`, `#27272A`, `#A3E635`, `#FAFAFA` | Off-black e lima neon; risco sobretudo quando há glow e visual genérico. |"
+    },
+    {
+      "id": "P09",
+      "name": "Orange SaaS Gradient",
+      "colors": [
+        "#FFF7ED",
+        "#FDBA74",
+        "#FB923C",
+        "#F97316",
+        "#EA580C"
+      ],
+      "raw": "| P09 | Orange SaaS Gradient | `#FFF7ED`, `#FDBA74`, `#FB923C`, `#F97316`, `#EA580C` | Escala laranja Tailwind, CTA saturado e fundo creme. |"
+    },
+    {
+      "id": "P10",
+      "name": "Peach & Coral AI",
+      "colors": [
+        "#FFF1E6",
+        "#FFD6BA",
+        "#FFB38A",
+        "#FF805C",
+        "#F45D48"
+      ],
+      "raw": "| P10 | Peach & Coral AI | `#FFF1E6`, `#FFD6BA`, `#FFB38A`, `#FF805C`, `#F45D48` | Pêssego/coral em superfícies suaves e cards arredondados. |"
+    },
+    {
+      "id": "P11",
+      "name": "Warm Amber & Beige",
+      "colors": [
+        "#FAF6EF",
+        "#FDE68A",
+        "#F59E0B",
+        "#D97706",
+        "#78350F"
+      ],
+      "raw": "| P11 | Warm Amber & Beige | `#FAF6EF`, `#FDE68A`, `#F59E0B`, `#D97706`, `#78350F` | Âmbar e bege usados para substituir o gradiente roxo automaticamente. |"
+    },
+    {
+      "id": "P12",
+      "name": "Dark Orange Glow",
+      "colors": [
+        "#09090B",
+        "#27211E",
+        "#9A3412",
+        "#F97316",
+        "#FFEDD5"
+      ],
+      "raw": "| P12 | Dark Orange Glow | `#09090B`, `#27211E`, `#9A3412`, `#F97316`, `#FFEDD5` | Preto com sombra brilhante laranja, estética tech de template. |"
+    },
+    {
+      "id": "P13",
+      "name": "Terracotta Editorial",
+      "colors": [
+        "#F5F0E9",
+        "#D8B7A1",
+        "#C46B45",
+        "#743D2D",
+        "#1E1C19"
+      ],
+      "raw": "| P13 | **Terracotta Editorial** | `#F5F0E9` `#D8B7A1` `#C46B45` `#743D2D` `#1E1C19` | Observar **combinação** de hero serifado, acento terracota e template editorial; não penalizar cor isolada. | [Falia](https://falia.co/en/insights/web-design/spot-ai-built-website/) |"
+    },
+    {
+      "id": "P14",
+      "name": "Vermilion on Near-Black",
+      "colors": [
+        "#090909",
+        "#242424",
+        "#E34234",
+        "#FF6A3D",
+        "#FAF7F4"
+      ],
+      "raw": "| P14 | **Vermilion on Near-Black** | `#090909` `#242424` `#E34234` `#FF6A3D` `#FAF7F4` | Avaliar acento ácido monocromático em fundo muito escuro como default, quando não há brand rationale. | [Falia](https://falia.co/en/insights/web-design/spot-ai-built-website/) |"
+    }
+  ]
+}

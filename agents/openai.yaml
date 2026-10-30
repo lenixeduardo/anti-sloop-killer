@@ -1,0 +1,7 @@
+interface:
+  display_name: "Anti-AI-Slop"
+  short_description: "Auditoria e correção de padrões genéricos em interfaces web."
+  icon_small: "./assets/icon-small.png"
+  icon_large: "./assets/icon.png"
+  brand_color: "#F97316"
+  default_prompt: "Use a skill anti-ai-slop para auditar este frontend, corrigir problemas confirmados, preservar o design aprovado e homologar em desktop, tablet e mobile."
