@@ -90,12 +90,12 @@ class ProvenanceTests(unittest.TestCase):
                 (root/dirname).mkdir()
                 if dirname.startswith('agent-compat-'):
                     agent=dirname.split('-')[-1]
-                    (root/dirname/f'agent-{agent}.json').write_text(json.dumps({'real_agent_runtime':False}))
+                    (root/dirname/f'agent-{agent}.json').write_text(json.dumps({'schema':'anti-ai-slop/agent-compat-report/v1','approved_for_compatibility':True,'approved_for_real_agent_runtime':False,'results':[{'agent':agent,'status':'compatible_not_executed','runtime_executed':False}]}))
                 else:(root/dirname/'result.txt').write_text('synthetic')
             manifest=build(root,self.SHA,'101')
             self.assertFalse(manifest['real_agent_runtime'])
             self.assertEqual(len(manifest['files']),5)
-            (root/'agent-compat-claude'/'agent-claude.json').write_text(json.dumps({'real_agent_runtime':True}))
+            (root/'agent-compat-claude'/'agent-claude.json').write_text(json.dumps({'schema':'anti-ai-slop/agent-compat-report/v1','approved_for_compatibility':True,'approved_for_real_agent_runtime':True,'results':[{'agent':'claude','status':'passed','runtime_executed':True}]}))
             with self.assertRaises(ValueError):build(root,self.SHA,'101')
 
 if __name__=='__main__':unittest.main()

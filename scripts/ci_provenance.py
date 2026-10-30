@@ -37,7 +37,17 @@ def build(source: Path, sha: str, run_id: str) -> dict:
         if dirname.startswith('agent-compat-'):
             agent=dirname.removeprefix('agent-compat-')
             reports=[json.loads(p.read_text(encoding='utf-8')) for p in files if p.name==f'agent-{agent}.json']
-            if len(reports)!=1 or reports[0].get('real_agent_runtime') is not False:
+            if len(reports) != 1:
+                raise ValueError(f'Missing or duplicated compatibility report: {agent}')
+            record=reports[0]
+            matches=record.get('results',[])
+            if (record.get('schema') != 'anti-ai-slop/agent-compat-report/v1' or
+                record.get('approved_for_compatibility') is not True or
+                record.get('approved_for_real_agent_runtime') is not False or
+                not isinstance(matches,list) or len(matches) != 1 or
+                matches[0].get('agent') != agent or
+                matches[0].get('status') != 'compatible_not_executed' or
+                matches[0].get('runtime_executed') is not False):
                 raise ValueError(f'Compatibility must be marked as unexecuted: {agent}')
     return {'schema':'anti-ai-slop/ci-evidence-manifest/v1',
             'scope':'synthetic-regressions-and-agent-installation-only',
