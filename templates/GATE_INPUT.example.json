@@ -1,0 +1,12 @@
+{
+  "scores": {"identity": 0, "layout": 0, "functionality": 0, "accessibility": 0, "motion": 0, "content": 0},
+  "evidence": {
+    "build": false, "unit_tests": false, "browser_desktop": false,
+    "browser_tablet": false, "browser_mobile": false,
+    "functional_flows": false, "assets_preserved": false
+  },
+  "findings": [],
+  "catalog_review_complete": false,
+  "manual_visual_review": false,
+  "unreviewed_candidates": 0
+}

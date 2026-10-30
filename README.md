@@ -12,7 +12,7 @@
 
 - **228 verificações catalogadas:** 87 Sailop, 37 Impeccable, 13 tópicos Unslop UI, 35 sinais complementares e 56 verificações adicionais. São identificadores do catálogo; parte dos conceitos se sobrepõe entre fontes.
 - **14 paletas de referência:** roxo, índigo, laranja, pêssego, coral, âmbar, terracota, bege e outras composições. São heurísticas, **não cores proibidas**.
-- **Scanner estático em Python:** encontra candidatos em código frontend, sem modificar arquivos. **Não automatiza todas as 228 verificações.**
+- **Scanner estático v2:** cobertura identificada por regra; reconhece Astro, Next Image, JSX, Vue, Svelte, HTML e CSS, filtra comentários e ignora symlinks; opcionalmente usa a AST do TypeScript para JSX/TSX. **Não automatiza todas as 228 verificações.**
 - **Playbook para agentes:** levantamento do baseline, triagem por severidade, correção contextual, validação em navegador e relatório com evidências.
 - **Preservação obrigatória:** mantém logotipos, fotos, tokens, fontes e layouts aprovados; não inventa imagens, depoimentos ou integrações.
 - **Instalação por projeto ou usuário:** Codex, Claude Code, Cursor e diretório genérico `.agents/skills/`.
@@ -133,6 +133,35 @@ Use a skill anti-ai-slop neste repositório.
 7. Não declare 9,5/10 sem evidências e sem eliminar falhas críticas.
 ```
 
+## Ferramentas de auditoria e homologação
+
+O kit inclui a matriz de cobertura por regra, plano revisável de correções e um **gate que reprova evidências incompletas**, além do scanner de código. As ferramentas não fazem alterações automáticas na aplicação.
+
+```bash
+# Inventário de todas as regras e canais de detecção
+python3 scripts/coverage_report.py --out reports/coverage.json
+# Pré-varredura segura
+python3 scripts/audit_slop.py /caminho/do/site --format json --out reports/static.json
+# Com Node.js + TypeScript instalado: análise AST precisa para JSX/TSX
+python3 scripts/audit_slop.py /caminho/do/site --ast --format json --out reports/static-ast.json
+# Plano que exige confirmação e testes de aceitação
+python3 scripts/remediation_plan.py reports/static.json --out reports/fix-plan.md
+# Validar nota apenas após preencher o template com evidências verdadeiras
+python3 scripts/evaluate_gate.py reports/gate-input.json --out reports/gate-result.json
+```
+
+Auditoria no navegador (dependência **opcional**, fora do instalador):
+
+```bash
+python3 -m pip install playwright
+python3 -m playwright install chromium
+python3 scripts/browser_audit.py http://localhost:3000 --out reports/browser --interaction-spec tests/fixtures/interaction-spec.json
+# Fixture offline apenas para teste do próprio auditor, não prova de app em produção
+python3 scripts/browser_audit.py --html tests/fixtures/site/index.html --out reports/fixture
+```
+
+O auditor registra capturas desktop/tablet/mobile, erros JavaScript, overflow, imagens quebradas, controles sem rótulo e links placeholders. O parâmetro `--interaction-spec` executa **somente** ações descritas explicitamente pelo usuário e reprova o comando quando as verificações falham; adapte o JSON ao fluxo do projeto (o exemplo é para a fixture). Não opera ações destrutivas nem submete formulários. Quando o navegador não conseguir abrir a URL, a auditoria fica incompleta. Para homologar processos específicos (login, pagamento, APIs), acrescente testes do sistema-alvo.
+
 ## Auditoria estática — execução manual
 
 Se estiver na pasta da skill baixada:
@@ -180,6 +209,7 @@ anti-ai-slop/
 │   ├── icon.png                   # ícone em alta resolução
 │   └── icon-small.png             # ícone reduzido
 ├── references/
+│   ├── coverage-matrix.md
 │   ├── catalogo-completo.md
 │   ├── rules.json
 │   └── criterios-e-correcao.md
@@ -187,11 +217,17 @@ anti-ai-slop/
 │   ├── install.py                 # instalação multiagente
 │   ├── install.sh                 # atalho Bash
 │   ├── install.ps1                # atalho PowerShell
-│   ├── audit_slop.py              # scanner estático parcial
+│   ├── audit_slop.py              # scanner estático parcial v2
+│   ├── audit_jsx_ast.cjs           # parser JSX/TSX com TypeScript (opcional)
+│   ├── browser_audit.py           # auditor Playwright opcional
+│   ├── coverage_report.py         # inventário dos 228 IDs
+│   ├── remediation_plan.py        # plano revisável de alterações
+│   ├── evaluate_gate.py           # bloqueio de aprovação sem evidências
 │   ├── validate_catalog.py
 │   └── generate_rules.py
 ├── templates/
-│   └── RELATORIO_AUDITORIA.md
+│   ├── RELATORIO_AUDITORIA.md
+│   └── GATE_INPUT.example.json
 └── tests/
     ├── test_skill.py
     └── test_installer.py
@@ -210,3 +246,7 @@ A lista contém regras compiladas e descrições reescritas para fins de auditor
 - [Cursor — Skills](https://cursor.com/docs/skills)
 
 **Sobre o repositório:** consulte [`ABOUT.md`](ABOUT.md).
+
+## Status comprovado da v1.2
+
+A versão v1.2 adiciona testes de regressão e screenshots de fixture em navegador real. A cobertura estática é **parcial**; a skill, por definição, não pode provar 9,5/10 sem avaliação de um frontend real com evidências de identidade, performance, acessibilidade, UX e fluxos específicos. O teste offline de fixture não substitui essa homologação.

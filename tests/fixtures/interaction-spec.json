@@ -1,0 +1,7 @@
+{
+  "checks": [{
+    "selector": "button[aria-label=\"Abrir menu\"]",
+    "expect_selector": "#answer",
+    "expect_text": "OK"
+  }]
+}

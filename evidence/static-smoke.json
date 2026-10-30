@@ -1,0 +1,63 @@
+{
+  "scanner": "anti-ai-slop/static-prescreen-2.0",
+  "timestamp_utc": "2026-10-30T04:53:12.798826+00:00",
+  "path": "/mnt/data/anti-ai-slop/tests/fixtures/site",
+  "files_scanned": 1,
+  "oversized_files_skipped": 0,
+  "unsafe_symlinks_skipped": 0,
+  "read_errors": [],
+  "candidate_count": 1,
+  "static_rule_ids": [
+    "IM-002",
+    "IM-013",
+    "IM-016",
+    "IM-019",
+    "IM-026",
+    "NX-021",
+    "NX-022",
+    "NX-031",
+    "NX-038",
+    "NX-043",
+    "NX-044",
+    "NX-045",
+    "NX-047",
+    "NX-048",
+    "NX-056",
+    "SA-013",
+    "SA-028",
+    "SA-029",
+    "SA-034",
+    "SA-037",
+    "SA-044",
+    "UC-026",
+    "UC-034",
+    "UH-003",
+    "UH-004",
+    "UH-006",
+    "UH-008",
+    "UH-010",
+    "UH-013"
+  ],
+  "static_rule_count": 29,
+  "counts_by_key": {
+    "PLACEHOLDER_HREF": 1
+  },
+  "findings": [
+    {
+      "key": "PLACEHOLDER_HREF",
+      "file": "index.html",
+      "line": 1,
+      "occurrences": 1,
+      "source_rules": [
+        "NX-043",
+        "NX-056"
+      ],
+      "severity": "P0_CANDIDATE",
+      "confidence": "medium",
+      "note": "Link parece placeholder; # pode ser âncora de topo legítima.",
+      "status": "candidate_not_verified",
+      "id": "STATIC-0001"
+    }
+  ],
+  "warning": "Heuristic candidates only. No files changed; use browser and agent triage before repairs."
+}

@@ -1,0 +1,25 @@
+{
+  "score": 0.0,
+  "approved": false,
+  "blockers": [
+    "Evidência obrigatória ausente ou reprovada: build",
+    "Evidência obrigatória ausente ou reprovada: unit_tests",
+    "Evidência obrigatória ausente ou reprovada: browser_desktop",
+    "Evidência obrigatória ausente ou reprovada: browser_tablet",
+    "Evidência obrigatória ausente ou reprovada: browser_mobile",
+    "Evidência obrigatória ausente ou reprovada: functional_flows",
+    "Evidência obrigatória ausente ou reprovada: assets_preserved",
+    "Revisão contextual dos IDs aplicáveis pendente.",
+    "Revisão visual comparativa pendente.",
+    "Nota ponderada abaixo de 9,5 ou ausente."
+  ],
+  "weights": {
+    "identity": 25,
+    "layout": 20,
+    "functionality": 20,
+    "accessibility": 15,
+    "motion": 10,
+    "content": 10
+  },
+  "warning": "Somente evidências fornecidas; confirme links, logs e screenshots externamente antes de aceitar qualquer declaração."
+}

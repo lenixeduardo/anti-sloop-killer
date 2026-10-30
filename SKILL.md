@@ -42,7 +42,8 @@ Transformar **um projeto web existente** em uma interface distintiva, funcional,
 
 - Ler `references/catalogo-completo.md` por categoria e consultar `references/rules.json` para avaliar **todos os IDs aplicáveis**: `SA-001..087`, `IM-001..037`, `UH-001..013`, `UC-001..035`, `NX-001..056`, e paletas `P01..P14`.
 - `UH-013` é **exceção contra falsos positivos**: bento, glassmorphism e aurora/mesh não são falhas automáticas.
-- Rodar `python3 scripts/audit_slop.py <projeto> --format json --out reports/static.json` para **candidatos estáticos**, nunca como veredito. O scanner é deliberadamente parcial; os demais IDs exigem análise de código, DOM, screenshot, conteúdo e fluxo.
+- Rodar `python3 scripts/audit_slop.py <projeto> --format json --out reports/static.json` para **candidatos estáticos**, nunca como veredito. Quando Node.js e TypeScript estiverem disponíveis, repetir com `--ast` para análise estruturada de JSX/TSX, reduzindo falsos positivos de código comentado ou strings; o fallback léxico permanece parcial. Gerar `python3 scripts/coverage_report.py --out reports/coverage.json` para explicitar a cobertura por ID; a revisão manual contextual dos 228 IDs é mandatória. Ler `references/coverage-matrix.md`.
+- Criar plano não destrutivo: `python3 scripts/remediation_plan.py reports/static.json --out reports/fix-plan.md` com teste de aceitação para cada achado confirmado. O scanner é deliberadamente parcial; os demais IDs exigem análise de código, DOM, screenshot, conteúdo e fluxo.
 - Para cada achado, registrar regra(s), arquivo/linha ou URL/seletor, evidência, dano concreto, confiança, severidade e estado. Consolidar aliases: várias fontes podem descrever o mesmo defeito.
 - Tratar paletas azul/roxo, laranja/coral/âmbar, terracota, bege, neon e dark como **sinais compostos**, nunca proibição por HEX. Um contraste WCAG insuficiente é problema objetivo; usar limiar 4,5:1 para texto normal e 3:1 para texto grande, salvo exceções normativas.
 - Proibir alegações sem evidência: `muitos cards`, `fonte genérica`, `parece IA` não justificam alteração isoladamente.
@@ -69,7 +70,7 @@ Corrigir P0 e P1 antes dos ajustes cosméticos. Alocar a cada achado um `fix_id`
 
 **Execução técnica:** `install` quando necessário; lint, typecheck, testes unitários/integrados, build de produção. Corrigir falhas causadas pelas mudanças. Não alegar execução de comando não rodado.
 
-**Browser e interação:** carregar cada rota sob HTTP/HTTPS apropriado, testar links/CTAs, menus, formulários, modais, autenticação quando houver conta de teste, carrosséis e scroll. Inspecionar erros JS, console/network, overlays, dimensões, overflow horizontal, fontes, fallbacks e estados vazio/erro/loading.
+**Browser e interação:** `python3 scripts/browser_audit.py http://localhost:3000 --out reports/browser` com Playwright instalado para screenshots e inspeção de DOM nos três viewports. O comando de fixture offline `--html tests/fixtures/site/index.html` comprova somente HTML local, não navegação de produção. Os resultados são candidatos e não constituem teste de autenticação ou pagamento. Carregar cada rota sob HTTP/HTTPS apropriado, testar links/CTAs, menus, formulários, modais, autenticação quando houver conta de teste, carrosséis e scroll. Inspecionar erros JS, console/network, overlays, dimensões, overflow horizontal, fontes, fallbacks e estados vazio/erro/loading.
 
 **Motion:** para GSAP/Three.js/parallax comprovar alteração de frames ou propriedades ao longo do tempo, checar interação touch e `prefers-reduced-motion`. Um screenshot único **não prova** que a animação funciona. Se recurso precisar HTTPS ou origem segura, testar sob contexto adequado antes de culpar código.
 
@@ -97,6 +98,8 @@ Avaliar com critérios observáveis e pesos abaixo. Conferir rubrica em `referen
 
 Fórmula: `nota = soma(peso × nota_da_dimensao) / 100`, com cada nota de 0 a 10. **Não declarar aprovação** se: houver P0/P1 aberto, testes críticos não executados, assets alterados sem autorização, capturas obrigatórias ausentes ou fluxo crítico quebrado. `≥9,5` somente com comprovantes e todos os gates satisfeitos. Uma nota subjetiva não compensa defeito real.
 
+**Gate executável:** preencha uma cópia de `templates/GATE_INPUT.example.json` com notas, evidências de build, teste e browser, triagem dos achados e revisão visual, depois rode `python3 scripts/evaluate_gate.py reports/gate-input.json --out reports/gate-result.json`. O gate retorna código de erro se faltarem evidências, houver problemas P0/P1 ou a nota for menor que 9,5; ele valida o preenchimento, não autentica a veracidade dos anexos, que precisam ser revisados.
+
 **Laço de melhoria:** se a nota ficar abaixo de 9,5/10, priorizar os achados remanescentes de maior impacto, repetir Fases 2–5, recalcular o score a partir de novas evidências e interromper apenas quando homologado ou quando existir um bloqueio externo documentado. Não forçar nota aumentando pontuações sem correções reais.
 
 ### Fase 6 — Relatar e entregar
@@ -119,3 +122,9 @@ python3 -m unittest discover -s tests -v
 ```
 
 A inspeção estática sinaliza apenas algumas heurísticas implementáveis por regex; **não cobre as 228 regras automaticamente**. Conferir `references/rules.json` e executar revisão manual e browser para a cobertura integral. Nunca inferir aprovação a partir da ausência de alertas.
+
+## Segurança da automação
+
+- O scanner v2 ignora symlinks e diretórios de dependências, limita tamanho, preserva código e não executa o conteúdo escaneado. `static_rule_count` informa somente o subconjunto com suporte; os demais permanecem pendentes.
+- Não modificar arquivos sem primeiro confirmar o defeito e preservar backups/diffs. O scanner e os relatórios nunca alteram o projeto; a correção é feita por agente autorizado com testes reproduzíveis.
+- Uma varredura estática sem achados nunca equivale a auditoria completa. Se navegador não estiver disponível, a evidência é `não executada` e o gate bloqueia.

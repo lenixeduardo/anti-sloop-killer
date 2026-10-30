@@ -1,0 +1,100 @@
+{
+  "auditor": "anti-ai-slop/browser-1.1",
+  "url": null,
+  "fixture_html": "/mnt/data/anti-ai-slop/tests/fixtures/site/index.html",
+  "timestamp_utc": "2026-10-30T04:56:25.663118+00:00",
+  "viewport_results": {
+    "mobile": {
+      "http_status": null,
+      "screenshot": "/mnt/data/anti-ai-slop/evidence/browser/mobile.png",
+      "js_errors": [],
+      "checks": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "horizontal_overflow": false,
+        "missing_image_alt": 0,
+        "broken_images": [
+          "/missing.png"
+        ],
+        "dead_links": [
+          "<a href=\"#\">Comprar agora</a>"
+        ],
+        "unnamed_buttons": [],
+        "unlabeled_controls": [],
+        "focusables": 2,
+        "title": "Site de teste",
+        "lang": "pt-BR"
+      },
+      "interactions": [
+        {
+          "selector": "button[aria-label=\"Abrir menu\"]",
+          "passed": true
+        }
+      ]
+    },
+    "tablet": {
+      "http_status": null,
+      "screenshot": "/mnt/data/anti-ai-slop/evidence/browser/tablet.png",
+      "js_errors": [],
+      "checks": {
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "horizontal_overflow": false,
+        "missing_image_alt": 0,
+        "broken_images": [
+          "/missing.png"
+        ],
+        "dead_links": [
+          "<a href=\"#\">Comprar agora</a>"
+        ],
+        "unnamed_buttons": [],
+        "unlabeled_controls": [],
+        "focusables": 2,
+        "title": "Site de teste",
+        "lang": "pt-BR"
+      },
+      "interactions": [
+        {
+          "selector": "button[aria-label=\"Abrir menu\"]",
+          "passed": true
+        }
+      ]
+    },
+    "desktop": {
+      "http_status": null,
+      "screenshot": "/mnt/data/anti-ai-slop/evidence/browser/desktop.png",
+      "js_errors": [],
+      "checks": {
+        "viewport": {
+          "width": 1440,
+          "height": 900
+        },
+        "horizontal_overflow": false,
+        "missing_image_alt": 0,
+        "broken_images": [
+          "/missing.png"
+        ],
+        "dead_links": [
+          "<a href=\"#\">Comprar agora</a>"
+        ],
+        "unnamed_buttons": [],
+        "unlabeled_controls": [],
+        "focusables": 2,
+        "title": "Site de teste",
+        "lang": "pt-BR"
+      },
+      "interactions": [
+        {
+          "selector": "button[aria-label=\"Abrir menu\"]",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "status": "completed",
+  "warning": "Candidates only; screenshots require human/agent review."
+}
