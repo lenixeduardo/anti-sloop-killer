@@ -97,3 +97,62 @@ jobs:
           name: quality-audit-results
           path: reports/
           if-no-files-found: ignore
+
+  agent-compatibility:
+    name: Agent Skill compatibility (${{ matrix.agent }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        agent: [codex, claude, cursor]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate installed skills without authenticated agent execution
+        run: python scripts/agent_compat.py --agent "${{ matrix.agent }}" --out "reports/agent-${{ matrix.agent }}.json"
+      - name: Summarize and flag unverified runtime
+        if: always()
+        run: |
+          python scripts/ci_summary.py "reports/agent-${{ matrix.agent }}.json" --out "reports/agent-${{ matrix.agent }}-summary.md"
+          cat "reports/agent-${{ matrix.agent }}-summary.md" >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish exact compatibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-compat-${{ matrix.agent }}
+          path: reports/agent-${{ matrix.agent }}*.json
+          if-no-files-found: error
+          retention-days: 30
+
+  gate-contract:
+    name: Evidence gate negative tests and signed outputs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run gate contract regression tests and preserve logs
+        run: python scripts/ci_evidence.py --kind gate_contract --out reports/gate -- python -m unittest tests.test_gate tests.test_gate_hardening tests.test_ci_evidence -v
+      - name: Gate MUST reject unproved 9.5 claims
+        run: |
+          if python scripts/evaluate_gate.py templates/GATE_INPUT.example.json --out reports/gate/unapproved-example.json; then
+            echo "ERROR: gate approved an unverified claim" >&2
+            exit 1
+          fi
+          echo 'Gate correctly rejected an unverified claim' > reports/gate/negative-gate.txt
+      - name: Add truthful CI summary
+        if: always()
+        run: |
+          python scripts/ci_summary.py reports/gate/gate_contract.json --out reports/gate/SUMMARY.md
+          cat reports/gate/SUMMARY.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish negative tests, logs and summaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gate-contract-evidence
+          path: reports/gate/
+          if-no-files-found: error
+          retention-days: 30

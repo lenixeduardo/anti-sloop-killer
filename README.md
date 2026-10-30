@@ -379,3 +379,23 @@ python -m unittest discover -s tests -v
 ```
 
 Os detectores estruturais de templates têm natureza de **pré-varredura**, não substituem avaliação de conteúdo dinâmico, DOM renderizado ou revisão visual. A expansão de 29 para 32 IDs com candidatos estáticos não equivale a automatizar o catálogo de 228 padrões. O status das verificações está em `references/coverage-matrix.md`.
+
+## Compatibilidade de agentes e evidências auditáveis (v1.6)
+
+```bash
+python scripts/agent_compat.py --agent all --out reports/agent-compat.json
+```
+
+Testa instalação por projeto e por usuário, descoberta de `SKILL.md`, manifesto e scanner instalado para **Codex, Claude Code e Cursor**. O relatório diferencia explicitamente `compatible_not_executed` de execução autêntica do modelo; este teste **não comprova** que qualquer agente tenha carregado a skill em uma sessão autenticada. Guia de homologação real: [`references/AGENT_RUNTIME_VALIDATION.md`](references/AGENT_RUNTIME_VALIDATION.md).
+
+O gate estrito `scripts/evaluate_gate.py` passou a exigir relatórios JSON semânticos dos testes e browser (incluindo captura PNG vinculada por SHA-256), revisão contextual dos 228 IDs, revisão visual e transcrições de execução **real** dos três agentes. Um arquivo arbitrário, um `true` e um falso relatório de compatibilidade não podem aprovar uma nota 9,5. O modo `--legacy-bools` existe apenas para diagnóstico e sempre retorna reprovação na CLI.
+
+```bash
+# O exemplo sem evidências DEVE ser reprovado (exit 1)
+python scripts/evaluate_gate.py templates/GATE_INPUT.example.json
+
+# Publicação de logs e atestações no GitHub Actions, sem secretos
+python scripts/ci_evidence.py --kind unit_tests --out reports/ci -- python -m unittest tests.test_gate_hardening -v
+```
+
+O workflow publica artefatos `agent-compat-*`, `gate-contract-evidence`, além dos resultados do benchmark e das ferramentas de qualidade. **CI verde significa que a compatibilidade e as salvaguardas foram verificadas, não que agentes autenticados tenham executado o processo nem que a nota 9,5 foi atingida.**

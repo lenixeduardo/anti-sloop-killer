@@ -144,3 +144,11 @@ A inspeção estática sinaliza apenas algumas heurísticas implementáveis por 
 ## Integridade da própria skill
 
 Antes de divulgar ou instalar uma release, executar `python3 scripts/verify_manifest.py` e `python3 -m unittest discover -s tests -v`. O manifesto deve ser regenerado via `python3 scripts/build_manifest.py` após toda alteração. A suíte inclui teste end-to-end sintético com Chromium e simulação de correção reversível, quando Playwright estiver disponível. Não apresentar a nota da skill como ≥9,5 se instalação, gate, proteção de arquivos ou ciclo detectar→corrigir→validar estiverem sem comprovação.
+
+## Contrato de evidência de CI e validação de agentes (v1.6)
+
+- Invocar `python scripts/agent_compat.py --agent all` para **compatibilidade** de instalação e descoberta em Codex, Claude Code e Cursor. O resultado `compatible_not_executed` **não equivale** a execução de agentes.
+- Para comprovar execução real de cada agente, seguir `references/AGENT_RUNTIME_VALIDATION.md`, em clone de teste com autorização, e guardar transcrições sanitizadas e hashes de arquivos. Não executar agentes externos com tokens de clientes no CI público.
+- `python scripts/evaluate_gate.py <input.json>` é **fail-closed**: exige checks estruturados, PNG com dimensões coerentes, revisão contextual, revisão visual, identidade do commit e atestados de **execução real** dos três agentes. Não preencher o gate com booleanos ou com evidências simuladas.
+- O job verde de compatibilidade não prova qualidade visual 9,5. Falta de qualquer evidência implica nota não homologada, nunca sucesso presumido.
+- Evidências do CI são publicadas por `actions/upload-artifact`; nunca conter dados sensíveis ou dumps completos de produção.

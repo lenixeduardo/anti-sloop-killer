@@ -69,6 +69,6 @@ class StrictEvidenceTests(unittest.TestCase):
                 f=base/(key+'.txt');f.write_text('synthetic fixture evidence')
                 sample['artifacts'][key]={'path':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()}
             sample['catalog_review_artifact']={'path':'catalog.json','sha256':hashlib.sha256(catalog.read_bytes()).hexdigest()}
-            self.assertTrue(evaluate(sample,strict=True,base_dir=base)['approved'])
+            self.assertFalse(evaluate(sample,strict=True,base_dir=base)['approved'])
             (base/'browser_mobile.txt').write_text('changed')
             self.assertFalse(evaluate(sample,strict=True,base_dir=base)['approved'])
