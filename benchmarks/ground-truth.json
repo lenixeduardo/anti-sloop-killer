@@ -1,0 +1,177 @@
+{
+  "version": "1.0",
+  "label": "Benchmark sintético de regressão. O gabarito foi escrito antes da execução dos novos detectores; requer validação externa independente.",
+  "identity_rule": "Cada caso mede (file,key). Não mede estética subjetiva ou autoria por IA.",
+  "thresholds": {
+    "precision_min": 0.9,
+    "recall_min": 0.85
+  },
+  "cases": [
+    {
+      "id": "portfolio-html",
+      "type": "html-css",
+      "runtime": "offline",
+      "expected": [
+        {
+          "file": "index.html",
+          "key": "MISSING_IMG_ALT"
+        },
+        {
+          "file": "index.html",
+          "key": "PLACEHOLDER_HREF"
+        },
+        {
+          "file": "index.html",
+          "key": "UNLABELED_INPUT"
+        },
+        {
+          "file": "index.html",
+          "key": "IFRAME_MISSING_TITLE"
+        },
+        {
+          "file": "index.html",
+          "key": "LOW_STATIC_CONTRAST"
+        }
+      ],
+      "safe_files": [
+        "safe.html"
+      ]
+    },
+    {
+      "id": "next-react",
+      "type": "next-react",
+      "runtime": "offline",
+      "expected": [
+        {
+          "file": "app/page.tsx",
+          "key": "MISSING_IMG_ALT"
+        },
+        {
+          "file": "app/page.tsx",
+          "key": "PLACEHOLDER_HREF"
+        },
+        {
+          "file": "app/page.tsx",
+          "key": "NON_SEMANTIC_CLICK"
+        },
+        {
+          "file": "app/page.tsx",
+          "key": "EMPTY_ONCLICK"
+        },
+        {
+          "file": "app/page.tsx",
+          "key": "UNLABELED_INPUT"
+        }
+      ],
+      "safe_files": [
+        "app/safe.tsx"
+      ]
+    },
+    {
+      "id": "vue-astro",
+      "type": "vue-astro",
+      "runtime": "offline",
+      "expected": [
+        {
+          "file": "src/Feature.vue",
+          "key": "MISSING_IMG_ALT"
+        },
+        {
+          "file": "src/Feature.vue",
+          "key": "PLACEHOLDER_HREF"
+        },
+        {
+          "file": "src/Feature.vue",
+          "key": "NON_SEMANTIC_CLICK"
+        },
+        {
+          "file": "src/Feature.vue",
+          "key": "UNLABELED_INPUT"
+        },
+        {
+          "file": "src/Feature.vue",
+          "key": "LOW_STATIC_CONTRAST"
+        }
+      ],
+      "safe_files": [
+        "src/Safe.astro"
+      ]
+    },
+    {
+      "id": "ecommerce-preview",
+      "type": "astro-commerce",
+      "runtime": "https-slot-not-deployed",
+      "expected": [
+        {
+          "file": "src/index.astro",
+          "key": "MISSING_IMG_ALT"
+        },
+        {
+          "file": "src/index.astro",
+          "key": "EMPTY_ONCLICK"
+        },
+        {
+          "file": "src/index.astro",
+          "key": "PLACEHOLDER_HREF"
+        },
+        {
+          "file": "src/index.astro",
+          "key": "AUTOPLAY_UNMUTED"
+        },
+        {
+          "file": "src/index.astro",
+          "key": "IFRAME_MISSING_TITLE"
+        },
+        {
+          "file": "src/index.astro",
+          "key": "LOW_STATIC_CONTRAST"
+        },
+        {
+          "file": "src/index.astro",
+          "key": "MISSING_VIEWPORT_META"
+        }
+      ],
+      "safe_files": [
+        "src/safe.html"
+      ]
+    },
+    {
+      "id": "dashboard-preview",
+      "type": "svelte-dashboard",
+      "runtime": "https-slot-not-deployed",
+      "expected": [
+        {
+          "file": "src/App.svelte",
+          "key": "NON_SEMANTIC_CLICK"
+        },
+        {
+          "file": "src/App.svelte",
+          "key": "MISSING_IMG_ALT"
+        },
+        {
+          "file": "src/App.svelte",
+          "key": "UNLABELED_INPUT"
+        },
+        {
+          "file": "src/App.svelte",
+          "key": "IFRAME_MISSING_TITLE"
+        },
+        {
+          "file": "src/App.svelte",
+          "key": "PLACEHOLDER_HREF"
+        },
+        {
+          "file": "src/App.svelte",
+          "key": "FOCUS_OUTLINE_REMOVED"
+        },
+        {
+          "file": "src/App.svelte",
+          "key": "LOW_STATIC_CONTRAST"
+        }
+      ],
+      "safe_files": [
+        "src/Safe.svelte"
+      ]
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import subprocess
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+from audit_templates import scan_template, scan_css
 
 SUFFIXES = {'.tsx', '.jsx', '.ts', '.js', '.mjs', '.cjs', '.css', '.scss', '.sass', '.html', '.vue', '.svelte', '.astro', '.mdx'}
 SKIP = {'node_modules', '.next', 'dist', 'build', 'coverage', '.git', 'vendor', '.nuxt', '.svelte-kit', '.turbo', '.astro', '.output', '.vercel', '.cache', '__pycache__', 'playwright-report', 'test-results'}
@@ -149,6 +150,9 @@ def scan_text(src: str, filename: str) -> list[dict]:
             findings.append(finding('AUTOPLAY_UNMUTED',filename,line,('NX-038',),'P1_CANDIDATE','medium','Autoplay com áudio possível; verificar browser, acesso e controle de reprodução.'))
         if tag=='iframe' and not re.search(r'\btitle\s*=',attrs,re.I):
             findings.append(finding('IFRAME_MISSING_TITLE',filename,line,('NX-021',),'P1_CANDIDATE','high','iframe sem título acessível.'))
+    if Path(filename).suffix.lower() in {'.html','.vue','.astro','.svelte'}:
+        from markup_audit import scan_markup
+        findings.extend(scan_markup(src, filename, lambda key,line,rules,sev,conf,note: finding(key,filename,line,rules,sev,conf,note)))
     # Catch empty handlers on multiline non-tag function calls/components too.
     for match in HANDLER_EMPTY.finditer(code):
         if any(x['key']=='EMPTY_ONCLICK' and x['line']==line_of(code,match.start()) for x in findings):
@@ -188,13 +192,30 @@ def audit(path: Path, max_bytes: int=LIMIT_BYTES, use_ast: bool=False) -> dict:
             errors.append({'file':str(candidate.relative_to(root)),'error':str(e)})
             continue
         checked+=1
-        candidates=scan_text(data,str(candidate.relative_to(root)))
+        relative=str(candidate.relative_to(root))
+        candidates=scan_text(data,relative)
+        suffix=candidate.suffix.lower()
+        if suffix in {'.html','.vue','.astro','.svelte'}:
+            template_keys={'MISSING_IMG_ALT','IFRAME_MISSING_TITLE','PLACEHOLDER_HREF',
+                           'EMPTY_ONCLICK','NON_SEMANTIC_CLICK','AUTOPLAY_UNMUTED'}
+            candidates=[f for f in candidates if f['key'] not in template_keys]
+            try:
+                candidates.extend(scan_template(data,relative))
+            except (ValueError,TypeError) as exc:
+                errors.append({'file':relative,'error':f'Template tokenizer: {exc}'})
+        if suffix in {'.css','.scss','.sass'}:
+            candidates.extend(scan_css(data,relative))
+        elif suffix in {'.html','.vue','.astro','.svelte'}:
+            import re
+            for style in re.finditer(r'<style(?:\s[^>]*)?>(.*?)</style\s*>',data,flags=re.S|re.I):
+                prefix='\n'*data[:style.start(1)].count('\n')
+                candidates.extend(scan_css(prefix+style.group(1),relative))
         if use_ast and candidate.suffix.lower() in {'.tsx','.jsx'}:
             try:
                 proc=subprocess.run(['node',str(Path(__file__).with_name('audit_jsx_ast.cjs')),str(candidate)],
                                    capture_output=True,text=True,timeout=15,check=True)
                 parsed=json.loads(proc.stdout)
-                ast_keys={'MISSING_IMG_ALT','PLACEHOLDER_HREF','EMPTY_ONCLICK','NON_SEMANTIC_CLICK','IFRAME_MISSING_TITLE'}
+                ast_keys={'MISSING_IMG_ALT','PLACEHOLDER_HREF','EMPTY_ONCLICK','NON_SEMANTIC_CLICK','IFRAME_MISSING_TITLE','AUTOPLAY_UNMUTED'}
                 candidates=[x for x in candidates if x['key'] not in ast_keys]
                 for item in parsed['findings']:
                     item['file']=str(candidate.relative_to(root))
@@ -203,11 +224,18 @@ def audit(path: Path, max_bytes: int=LIMIT_BYTES, use_ast: bool=False) -> dict:
             except (FileNotFoundError,subprocess.SubprocessError,json.JSONDecodeError,KeyError) as e:
                 errors.append({'file':str(candidate.relative_to(root)),'error':f'AST indisponível: {str(e)[:250]}'})
         findings.extend(candidates)
+    # Multiple scanners can flag the same element. One (file,line,key) is one finding.
+    unique={}
+    for entry in findings:
+        key=(entry['file'],entry['line'],entry['key'])
+        if key not in unique or entry.get('detector_engine')=='html-tokenizer':
+            unique[key]=entry
+    findings=list(unique.values())
     findings.sort(key=lambda f:(f['file'],f['line'],f['key']))
     for i, entry in enumerate(findings,1): entry['id']=f'STATIC-{i:04}'
     counts=dict(Counter(f['key'] for f in findings))
-    static_covered=sorted({r for d in DETECTORS for r in d[3]}|{'NX-021','SA-034','NX-043','NX-056','NX-022','NX-038'})
-    return {'scanner':'anti-ai-slop/static-prescreen-2.0','timestamp_utc':datetime.now(timezone.utc).isoformat(),
+    static_covered=sorted({r for d in DETECTORS for r in d[3]}|{'NX-021','SA-034','NX-043','NX-056','NX-022','NX-038','SA-076','NX-040','IM-033','NX-037'})
+    return {'scanner':'anti-ai-slop/static-prescreen-2.1','timestamp_utc':datetime.now(timezone.utc).isoformat(),
             'path':str(path.resolve()),'files_scanned':checked,'oversized_files_skipped':skipped_large,
             'unsafe_symlinks_skipped':skipped_unsafe,'ast_files_scanned':ast_used,'read_errors':errors,'candidate_count':len(findings),
             'static_rule_ids':static_covered,'static_rule_count':len(static_covered),'counts_by_key':counts,'findings':findings,

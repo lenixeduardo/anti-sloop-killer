@@ -135,3 +135,8 @@ A inspeção estática sinaliza apenas algumas heurísticas implementáveis por 
 ## Integridade da própria skill
 
 Antes de divulgar ou instalar uma release, executar `python3 scripts/verify_manifest.py` e `python3 -m unittest discover -s tests -v`. O manifesto deve ser regenerado via `python3 scripts/build_manifest.py` após toda alteração. A suíte inclui teste end-to-end sintético com Chromium e simulação de correção reversível, quando Playwright estiver disponível. Não apresentar a nota da skill como ≥9,5 se instalação, gate, proteção de arquivos ou ciclo detectar→corrigir→validar estiverem sem comprovação.
+
+
+## Benchmark de regressão da detecção (v1.4)
+
+Antes de declarar ganhos de precisão, executar `python scripts/run_benchmark.py --min-precision 0.90 --min-recall 0.85` e `python scripts/run_scenario_benchmark.py`. Ler `benchmarks/README.md` e reportar separadamente as métricas de desenvolvimento, holdout e cenários. Esses datasets são sintéticos, com rótulos locais; **nunca** usar pontuação das fixtures para afirmar que cinco clientes, dois previews HTTPS ou os 228 critérios foram homologados. Os candidatos de CSS/DOM/AST precisam de triagem manual contextual. Se TypeScript estiver indisponível, registrar bloqueio do parser AST — não declarar aprovação.

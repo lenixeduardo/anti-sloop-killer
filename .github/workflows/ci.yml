@@ -48,3 +48,26 @@ jobs:
       - run: npm install --no-save --no-package-lock typescript@5.9.3
       - name: JSX AST regression
         run: python -m unittest discover -s tests -p test_regressions_v2.py -v
+
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install TypeScript parser
+        run: npm install --no-save --no-package-lock typescript@5.9.3
+      - name: Five-stack development and holdout benchmark
+        run: python scripts/run_benchmark.py --min-precision 0.90 --min-recall 0.85 --out reports/benchmark-stacks.json
+      - name: Five product scenario benchmark
+        run: python scripts/run_scenario_benchmark.py --out reports/benchmark-scenarios.json
+      - name: Upload benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-benchmark-reports
+          path: reports/benchmark-*.json

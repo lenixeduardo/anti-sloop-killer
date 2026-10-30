@@ -1,0 +1,8 @@
+{
+  "status": "pending_external_validation",
+  "reviewer": null,
+  "targets": [
+    {"category": "ecommerce", "url": null, "commit_sha": null, "allowed_test_flows": [], "ground_truth_reviewed": false, "https_verified": false},
+    {"category": "dashboard", "url": null, "commit_sha": null, "allowed_test_flows": [], "ground_truth_reviewed": false, "https_verified": false}
+  ]
+}

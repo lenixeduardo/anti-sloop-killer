@@ -1,0 +1,91 @@
+{
+  "suite": "anti-ai-slop/five-product-scenarios-v1",
+  "scenario_count": 5,
+  "all_synthetic": true,
+  "https_previews_verified": false,
+  "external_reviewer_approved": false,
+  "thresholds": {
+    "precision_min": 0.9,
+    "recall_min": 0.85
+  },
+  "overall": {
+    "tp": 29,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0
+  },
+  "passed": true,
+  "results": [
+    {
+      "case": "portfolio-html",
+      "runtime": "offline",
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "false_positives": [],
+      "false_negatives": [],
+      "safe_files": [
+        "safe.html"
+      ],
+      "safe_files_clean": true
+    },
+    {
+      "case": "next-react",
+      "runtime": "offline",
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "false_positives": [],
+      "false_negatives": [],
+      "safe_files": [
+        "app/safe.tsx"
+      ],
+      "safe_files_clean": true
+    },
+    {
+      "case": "vue-astro",
+      "runtime": "offline",
+      "tp": 5,
+      "fp": 0,
+      "fn": 0,
+      "false_positives": [],
+      "false_negatives": [],
+      "safe_files": [
+        "src/Safe.astro"
+      ],
+      "safe_files_clean": true
+    },
+    {
+      "case": "ecommerce-preview",
+      "runtime": "https-slot-not-deployed",
+      "tp": 7,
+      "fp": 0,
+      "fn": 0,
+      "false_positives": [],
+      "false_negatives": [],
+      "safe_files": [
+        "src/safe.html"
+      ],
+      "safe_files_clean": true
+    },
+    {
+      "case": "dashboard-preview",
+      "runtime": "https-slot-not-deployed",
+      "tp": 7,
+      "fp": 0,
+      "fn": 0,
+      "false_positives": [],
+      "false_negatives": [],
+      "safe_files": [
+        "src/Safe.svelte"
+      ],
+      "safe_files_clean": true
+    }
+  ],
+  "limitations": [
+    "HTTPS preview slots are fixtures only; no public URLs verified.",
+    "Labels authored in-repository; independent adjudication is pending.",
+    "Metrics cover labeled static candidates, not all 228 design rules."
+  ]
+}

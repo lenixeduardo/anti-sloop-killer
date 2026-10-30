@@ -1,0 +1,1874 @@
+{
+  "catalog_count": 228,
+  "static_rule_count": 34,
+  "browser_rule_count": 7,
+  "manual_review_required": 228,
+  "rules": [
+    {
+      "id": "SA-001",
+      "name": "Azul Tailwind como primária",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-002",
+      "name": "Índigo em excesso",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-003",
+      "name": "Violeta como acento automático",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-004",
+      "name": "Texto em preto puro",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-005",
+      "name": "Fundos brancos puros por padrão",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-006",
+      "name": "Domínio de cinzas slate",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-007",
+      "name": "Uma única cor de destaque",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-008",
+      "name": "Ausência de cor secundária",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-009",
+      "name": "Neutros sem temperatura",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-010",
+      "name": "Sem variáveis CSS para cor",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-011",
+      "name": "Hexadecimais rígidos por todo o código",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-012",
+      "name": "Sem tratamento de seleção de texto",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-013",
+      "name": "Gradiente azul para roxo recorrente",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-014",
+      "name": "Direção de gradiente sempre para a direita",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-015",
+      "name": "Sem consideração por tema escuro",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-016",
+      "name": "Inter como escolha automática",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-017",
+      "name": "Roboto como fallback estético",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-018",
+      "name": "Poppins para parecer amigável",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-019",
+      "name": "Ausência de fonte display",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-020",
+      "name": "Pouca variação de pesos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-021",
+      "name": "Sem ajuste de tracking",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-022",
+      "name": "Sem text-wrap balance em títulos adequados",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-023",
+      "name": "Escala tipográfica Tailwind intacta",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-024",
+      "name": "Carregamento de fontes sem font-display",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-025",
+      "name": "Sem pilha de fallback",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-026",
+      "name": "Fontes variáveis não consideradas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-027",
+      "name": "Ausência de itálico quando útil",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-028",
+      "name": "Hero centralizada com slogan",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-029",
+      "name": "Grid de três colunas em todo lugar",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-030",
+      "name": "Metades iguais para qualquer composição",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-031",
+      "name": "Container max-w-7xl universal",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-032",
+      "name": "Sequência hero-features-pricing",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-033",
+      "name": "Padding igual em todas as seções",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-034",
+      "name": "HTML pouco semântico",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-035",
+      "name": "Ausência de grids assimétricos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-036",
+      "name": "Nenhum deslocamento da grade",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-037",
+      "name": "Raio único para todos os cantos",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-038",
+      "name": "CSS Grid sem áreas nomeadas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-039",
+      "name": "Subgrid nunca considerado",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-040",
+      "name": "Sem container queries",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-041",
+      "name": "Tudo é div",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-042",
+      "name": "CSS columns ignorado",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-043",
+      "name": "Fade-up em todos os elementos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-044",
+      "name": "Pulse para todo loading",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-045",
+      "name": "Duração fixa de 300 ms",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-046",
+      "name": "Apenas ease-in-out",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-047",
+      "name": "Ausência de keyframes próprios",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-048",
+      "name": "Stagger linear repetitivo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-049",
+      "name": "Navegação sempre com backdrop-blur",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-050",
+      "name": "Ausência de :active",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-051",
+      "name": "Cards sem feedback quando clicáveis",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-052",
+      "name": "transition-all como padrão",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-053",
+      "name": "Sem prefers-reduced-motion",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-054",
+      "name": "Nenhuma animação vinculada à rolagem considerada",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-055",
+      "name": "Terminal falso com três bolinhas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-056",
+      "name": "Feature cards idênticos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-057",
+      "name": "Faixa de estatísticas genéricas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-058",
+      "name": "FAQ em acordeão automático",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-059",
+      "name": "CTA genérico Get Started",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-060",
+      "name": "Botões sempre pill",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-061",
+      "name": "Cards sempre rounded-2xl",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-062",
+      "name": "Seção de passos numerados genérica",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-063",
+      "name": "Três testemunhos em grid",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-064",
+      "name": "Badge pulsante sobre a hero",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-065",
+      "name": "Rodapé Built with Love",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-066",
+      "name": "Cards de ícone-título-frase",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-067",
+      "name": "Dashboard de demonstração fictício",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-068",
+      "name": "Três planos de preço idênticos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-069",
+      "name": "Barra de logos de clientes fictícios",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-070",
+      "name": "Div soup",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-071",
+      "name": "Sem ::selection",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-072",
+      "name": "Sem :focus-visible",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-073",
+      "name": "Sem respeito a reduced motion",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-074",
+      "name": "Sem CSS custom properties",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-075",
+      "name": "Elemento HTML errado para função",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-076",
+      "name": "Sem aria-labels onde necessários",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-077",
+      "name": "Sem skip link",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-078",
+      "name": "Somente className, sem abstração de estilo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-079",
+      "name": "Sem text-wrap moderno onde ajuda",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-080",
+      "name": "py-20 em todas as seções",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-081",
+      "name": "Grade de 4 px aplicada rigidamente",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-082",
+      "name": "Ausência total de valores ópticos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-083",
+      "name": "Mesmo gap em todos os componentes",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-084",
+      "name": "Padding de seção sem variação",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-085",
+      "name": "Sem clamp() para espaço fluido",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-086",
+      "name": "Sem estratégia de espaçamento responsivo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "SA-087",
+      "name": "px-4 para tudo no mobile",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-001",
+      "name": "Borda de acento em elemento arredondado",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-002",
+      "name": "Glassmorphism por toda parte",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-003",
+      "name": "Modais como padrão de solução",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-004",
+      "name": "Retângulos arredondados e sombras genéricas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-005",
+      "name": "Borda lateral tipo aba",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-006",
+      "name": "Sparklines puramente decorativos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-007",
+      "name": "Hierarquia tipográfica achatada",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-008",
+      "name": "Ícone empilhado acima do título",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-009",
+      "name": "Monoespaçada usada só para parecer técnica",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-010",
+      "name": "Fonte superutilizada sem decisão",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-011",
+      "name": "Fonte única para todas as funções",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-012",
+      "name": "Corpo de texto em caixa alta",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-013",
+      "name": "Paleta cromática de IA",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-014",
+      "name": "Dark mode com brilhos coloridos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-015",
+      "name": "Dark mode escolhido por segurança",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-016",
+      "name": "Texto com gradiente",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-017",
+      "name": "Texto cinza sobre superfície colorida",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-018",
+      "name": "Fundo preto puro",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-019",
+      "name": "Tudo centralizado",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-020",
+      "name": "Hero de métricas genéricas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-021",
+      "name": "Grades de cards idênticos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-022",
+      "name": "Espaçamento monótono",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-023",
+      "name": "Cards dentro de cards",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-024",
+      "name": "Tudo dentro de cards",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-025",
+      "name": "Linhas de texto compridas demais",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-026",
+      "name": "Bounce e easing elástico automático",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-027",
+      "name": "Animação de propriedades de layout",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-028",
+      "name": "Todos os botões são primários",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-029",
+      "name": "Informação redundante",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-030",
+      "name": "Cortar recursos essenciais do mobile",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-031",
+      "name": "Padding apertado",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-032",
+      "name": "Texto justificado inadequado",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-033",
+      "name": "Contraste textual baixo",
+      "channels": [
+        "static_candidate",
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-034",
+      "name": "Pulo de nível em headings",
+      "channels": [
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-035",
+      "name": "Entrelinha comprimida",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-036",
+      "name": "Texto de corpo minúsculo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "IM-037",
+      "name": "Letter-spacing excessivo no corpo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-001",
+      "name": "Novo default “sofisticado” creme + serifa + verde sálvia",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-002",
+      "name": "shadcn e Tailwind sem personalização",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-003",
+      "name": "Roxo/índigo de IA",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-004",
+      "name": "Gradientes e texto em gradiente",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-005",
+      "name": "Animação excessiva",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-006",
+      "name": "Arredondamento universal",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-007",
+      "name": "Neon e glow não solicitados",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-008",
+      "name": "Emojis como ícones de interface",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-009",
+      "name": "Fontes genéricas automáticas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-010",
+      "name": "Esqueleto hero + três cards + CTA",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-011",
+      "name": "Problemas reais de layout",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-012",
+      "name": "Sinais de texto e baixa confiança",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UH-013",
+      "name": "Sinais pouco comprovados (não penalizar automaticamente)",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-001",
+      "name": "Mistura Space Grotesk + serif itálica + Inter",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-002",
+      "name": "Palavra única em itálico no H1",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-003",
+      "name": "Tracking negativo aplicado ao corpo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-004",
+      "name": "Quebra artificial com br em títulos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-005",
+      "name": "Eyebrow em todas as seções",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-006",
+      "name": "Numerais não tabulares em tabelas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-007",
+      "name": "Títulos longos e órfãos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-008",
+      "name": "Texto sem dados concretos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-009",
+      "name": "Gradiente quente âmbar-rosa como novo default",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-010",
+      "name": "Paleta sem dominante",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-011",
+      "name": "Faixa cromática sem âncoras",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-012",
+      "name": "Tons de status diretos do framework",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-013",
+      "name": "Focus ring de cor fora da marca",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-014",
+      "name": "Fundo aurora/blobs automático",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-015",
+      "name": "Grade pontilhada escura decorativa",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-016",
+      "name": "Sombras homogêneas sem elevação",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-017",
+      "name": "Separadores wave em toda transição",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-018",
+      "name": "Rodapé SaaS inchado",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-019",
+      "name": "CTA final espelha a hero",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-020",
+      "name": "Zigue-zague 50/50 obrigatório",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-021",
+      "name": "Mobile vira fila infinita de cards",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-022",
+      "name": "Badge “Now with AI” sem notícia real",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-023",
+      "name": "Pricing com scale-105 no plano central",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-024",
+      "name": "Estado vazio sem orientação",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-025",
+      "name": "Toast padrão para qualquer evento",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-026",
+      "name": "Hover lift em todos os cards",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-027",
+      "name": "Card com tira colorida lateral",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-028",
+      "name": "Pessoas sintéticas com artefatos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-029",
+      "name": "Texto ilegível dentro de imagem",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-030",
+      "name": "Depoimentos com avatares falsos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-031",
+      "name": "Arte 3D genérica de esfera cromada",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-032",
+      "name": "Mockup de navegador inclinado em gradiente",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-033",
+      "name": "Logos de terceiros distorcidos",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-034",
+      "name": "Emojis simulando ícones",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "UC-035",
+      "name": "Lucide universal com chips",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-001",
+      "name": "Editorial de jornal sem justificativa",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-002",
+      "name": "Serifa de alto contraste com destaque terracota",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-003",
+      "name": "Separadores com ponto médio como template",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-004",
+      "name": "Seta automática no fim de todos os links",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-005",
+      "name": "Borda espessa combinada com cantos arredondados",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-006",
+      "name": "Borda, sombra, tint e glow acumulados no mesmo elemento",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-007",
+      "name": "Cartões brancos sobre fundo cinza por inércia",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-008",
+      "name": "Alternância mecânica de fundos seção a seção",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-009",
+      "name": "Hero 100vh vazia",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-010",
+      "name": "Excesso de padrões de grid no background",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-011",
+      "name": "Headline com tríade de adjetivos desconectados",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-012",
+      "name": "Oferta genérica “para X ou Y, funciona para todos”",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-013",
+      "name": "Vocabulário do produto inconsistente entre seções",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-014",
+      "name": "Restrições e custos escondidos pela composição",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-015",
+      "name": "Narrativa empresarial autobiográfica automática",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-016",
+      "name": "Colagem de dashboard como papel de parede",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-017",
+      "name": "Ilustração isométrica genérica de foguete ou laptop",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-018",
+      "name": "Pessoas e produtos mudam entre imagens da mesma página",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-019",
+      "name": "Stock photo escolhida só por harmonizar com a cor",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-020",
+      "name": "Fotografias com direção inconsistente",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-021",
+      "name": "Texto alternativo descreve a IA e não a imagem",
+      "channels": [
+        "static_candidate",
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-022",
+      "name": "Gráfico inteiro ornamental sem relação com dados",
+      "channels": [
+        "static_candidate",
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-023",
+      "name": "Ausência de estados de sucesso e permissões",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-024",
+      "name": "Offline e perda de conexão sem tratamento",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-025",
+      "name": "Formulário com campos desnecessários",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-026",
+      "name": "Erro sem instrução de recuperação",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-027",
+      "name": "Navegação do navegador Voltar quebra a tarefa",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-028",
+      "name": "Ação destrutiva sem desfazer ou confirmação contextual",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-029",
+      "name": "Cadastro obrigatório antes de demonstrar valor",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-030",
+      "name": "Informações críticas escondidas só em tooltip",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-031",
+      "name": "Indicador de progresso artificial",
+      "channels": [
+        "static_candidate",
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-032",
+      "name": "Carousel com autoplay não interrompível",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-033",
+      "name": "Tablet ignorado apesar de mobile/desktop aprovados",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-034",
+      "name": "Orientação horizontal rompe a interface",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-035",
+      "name": "Modal briga com teclado virtual",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-036",
+      "name": "Estado comunicado somente por cor",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-037",
+      "name": "Ordem de foco diferente da ordem visual",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-038",
+      "name": "Foco não restaurado ao fechar diálogo",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-039",
+      "name": "Zoom de texto provoca cortes e perda de ações",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-040",
+      "name": "ARIA decorativo sem comportamento correspondente",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-041",
+      "name": "HTML/CSS inline concentrado sem estrutura",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-042",
+      "name": "Componentes chamados Section1/Card2 sem domínio",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-043",
+      "name": "Framework/rotas placeholder publicados",
+      "channels": [
+        "static_candidate",
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-044",
+      "name": "Importações ou endpoints inventados",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-045",
+      "name": "Regras !important e z-index extremos em cascata",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-046",
+      "name": "Atraso artificial com setTimeout em vez de estado real",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-047",
+      "name": "Tratador de erro amplo mascara defeito de integração",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-048",
+      "name": "Código inchado para efeito visual simples",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-049",
+      "name": "Hero com loading lazy atrasa o LCP",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-050",
+      "name": "Layout shift por mídia/font sem dimensões",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-051",
+      "name": "Mídia decorativa bloqueia conteúdo significativo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-052",
+      "name": "Metadados ou Open Graph não correspondem à página",
+      "channels": [
+        "static_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-053",
+      "name": "Páginas de confiança superficiais ou ausentes",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-054",
+      "name": "Provas de urgência ou escassez inventadas",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-055",
+      "name": "Conteúdo massivo SEO sem valor novo",
+      "channels": [
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    },
+    {
+      "id": "NX-056",
+      "name": "Página funcional apenas na captura, sem QA renderizado",
+      "channels": [
+        "static_candidate",
+        "browser_candidate",
+        "manual_agent_review"
+      ],
+      "review_status": "pending"
+    }
+  ],
+  "note": "Automated channels produce candidates, not verified fixes. Manual agent review applies to every rule."
+}

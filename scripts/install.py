@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 
 NAME = "anti-ai-slop"
 AGENTS = ("codex", "claude", "cursor", "agents")
-PARTS = ("SKILL.md", "README.md", "ABOUT.md", "MANIFEST.sha256", "references", "scripts", "templates", "tests", "assets", "agents")
+PARTS = ("SKILL.md", "README.md", "ABOUT.md", "MANIFEST.sha256", "references", "scripts", "templates", "tests", "benchmarks", "assets", "agents")
 
 
 def skill_source() -> Path:

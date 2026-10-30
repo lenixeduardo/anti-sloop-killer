@@ -303,3 +303,15 @@ Por padrão, além das notas e estados, o gate requer `artifacts` para build, te
 ## Escopo de garantia
 
 O pacote realiza instalação, auditoria parcial, planejamento, aplicação de edições autorizadas, testes e coleta de evidências. **Não promete 100% de detecção automática das 228 regras, criatividade humana ou conserto automático de fluxos complexos.** As regras são heurísticas; código, marca e acessibilidade decidem se um sinal é um defeito. O alvo de 9,5 depende da execução em um projeto específico.
+
+## Benchmark reproduzível de detecção (v1.4)
+
+Incluímos duas suites **sintéticas**: cinco stacks HTML/Next/Vue/Astro/Svelte com development/holdout público e cinco cenários de portfólio, frontend React, Vue/Astro, e-commerce e dashboard. A avaliação reporta TP/FP/FN, precisão e recall por caso, sem confundir candidatos estáticos com os 228 padrões do catálogo.
+
+```bash
+npm install --no-save --no-package-lock typescript@5.9.3
+python scripts/run_benchmark.py --min-precision 0.90 --min-recall 0.85 --out reports/benchmark-stacks.json
+python scripts/run_scenario_benchmark.py --out reports/benchmark-scenarios.json
+```
+
+O scanner passou a inspecionar templates usando parser HTML, detectar campos sem rótulo, contrastes de cores literais no mesmo seletor CSS, foco suprimido sem alternativa local e campos JSX sem nome estático. Erros continuam sendo **candidatos** a revisar no navegador. A existência de cinco cenários locais **não valida** aplicações externas nem os dois sites HTTPS exigidos na meta 9,5/10. Consulte [metodologia e pendências](benchmarks/README.md).

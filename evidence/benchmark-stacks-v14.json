@@ -1,0 +1,273 @@
+{
+  "benchmark": "anti-ai-slop-static-5-stacks-v1",
+  "schema_version": 1,
+  "metric_unit": "par (arquivo, tipo de defeito), não quantidade de ocorrências",
+  "frameworks": 5,
+  "cases": 10,
+  "splits": {
+    "development": {
+      "tp": 27,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "holdout": {
+      "tp": 12,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "overall": {
+    "tp": 39,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "entries": [
+    {
+      "path": "html-portfolio/broken.html",
+      "split": "development",
+      "expected": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "DUPLICATE_ID",
+        "EMPTY_IMAGE_SRC",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "MISSING_IMG_ALT",
+        "MISSING_VIEWPORT_META",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT",
+        "UNNAMED_BUTTON",
+        "UNNAMED_LINK"
+      ],
+      "actual": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "DUPLICATE_ID",
+        "EMPTY_IMAGE_SRC",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "MISSING_IMG_ALT",
+        "MISSING_VIEWPORT_META",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT",
+        "UNNAMED_BUTTON",
+        "UNNAMED_LINK"
+      ],
+      "true_positive": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "DUPLICATE_ID",
+        "EMPTY_IMAGE_SRC",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "MISSING_IMG_ALT",
+        "MISSING_VIEWPORT_META",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT",
+        "UNNAMED_BUTTON",
+        "UNNAMED_LINK"
+      ],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "html-portfolio/clean.html",
+      "split": "holdout",
+      "expected": [],
+      "actual": [],
+      "true_positive": [],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "next-react/broken.tsx",
+      "split": "development",
+      "expected": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "EMPTY_IMAGE_SRC",
+        "EMPTY_ONCLICK",
+        "EXTERNAL_TARGET_REL",
+        "IFRAME_MISSING_TITLE",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_IMG_ALT",
+        "NON_SEMANTIC_CLICK",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT"
+      ],
+      "actual": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "EMPTY_IMAGE_SRC",
+        "EMPTY_ONCLICK",
+        "EXTERNAL_TARGET_REL",
+        "IFRAME_MISSING_TITLE",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_IMG_ALT",
+        "NON_SEMANTIC_CLICK",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT"
+      ],
+      "true_positive": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "EMPTY_IMAGE_SRC",
+        "EMPTY_ONCLICK",
+        "EXTERNAL_TARGET_REL",
+        "IFRAME_MISSING_TITLE",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_IMG_ALT",
+        "NON_SEMANTIC_CLICK",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT"
+      ],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 1
+    },
+    {
+      "path": "next-react/clean.tsx",
+      "split": "holdout",
+      "expected": [],
+      "actual": [],
+      "true_positive": [],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 1
+    },
+    {
+      "path": "vue/broken.vue",
+      "split": "development",
+      "expected": [
+        "EXTERNAL_TARGET_REL",
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT",
+        "UNNAMED_BUTTON"
+      ],
+      "actual": [
+        "EXTERNAL_TARGET_REL",
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT",
+        "UNNAMED_BUTTON"
+      ],
+      "true_positive": [
+        "EXTERNAL_TARGET_REL",
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT",
+        "UNNAMED_BUTTON"
+      ],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "vue/clean.vue",
+      "split": "holdout",
+      "expected": [],
+      "actual": [],
+      "true_positive": [],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "astro/broken.astro",
+      "split": "holdout",
+      "expected": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "EMPTY_IMAGE_SRC",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "UNLABELED_INPUT",
+        "UNNAMED_LINK"
+      ],
+      "actual": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "EMPTY_IMAGE_SRC",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "UNLABELED_INPUT",
+        "UNNAMED_LINK"
+      ],
+      "true_positive": [
+        "ARIA_HIDDEN_FOCUSABLE",
+        "EMPTY_IMAGE_SRC",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "UNLABELED_INPUT",
+        "UNNAMED_LINK"
+      ],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "astro/clean.astro",
+      "split": "development",
+      "expected": [],
+      "actual": [],
+      "true_positive": [],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "svelte/broken.svelte",
+      "split": "holdout",
+      "expected": [
+        "DUPLICATE_ID",
+        "EXTERNAL_TARGET_REL",
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT"
+      ],
+      "actual": [
+        "DUPLICATE_ID",
+        "EXTERNAL_TARGET_REL",
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT"
+      ],
+      "true_positive": [
+        "DUPLICATE_ID",
+        "EXTERNAL_TARGET_REL",
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNLABELED_INPUT"
+      ],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    },
+    {
+      "path": "svelte/clean.svelte",
+      "split": "development",
+      "expected": [],
+      "actual": [],
+      "true_positive": [],
+      "false_positive": [],
+      "false_negative": [],
+      "ast_files_scanned": 0
+    }
+  ],
+  "limitations": [
+    "Fixture corpus is synthetic and small.",
+    "Labels were authored locally, not verified by independent raters.",
+    "Only exact detector keys per file are scored.",
+    "A high score does not prove 228-rule coverage or production efficacy."
+  ]
+}

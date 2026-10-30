@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "benchmark": "anti-ai-slop-static-5-stacks-v1",
+  "provenance": "Casos locais construídos como testes independentes; não representam aplicações de produção.",
+  "metric_unit": "par (arquivo, tipo de defeito), não quantidade de ocorrências",
+  "cases": [
+    {
+      "path": "html-portfolio/broken.html",
+      "split": "development",
+      "expected": [
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "MISSING_VIEWPORT_META",
+        "DUPLICATE_ID",
+        "MISSING_IMG_ALT",
+        "EMPTY_IMAGE_SRC",
+        "PLACEHOLDER_HREF",
+        "UNNAMED_BUTTON",
+        "UNNAMED_LINK",
+        "UNLABELED_INPUT",
+        "IMPLICIT_SUBMIT_BUTTON",
+        "ARIA_HIDDEN_FOCUSABLE"
+      ]
+    },
+    {
+      "path": "html-portfolio/clean.html",
+      "split": "holdout",
+      "expected": []
+    },
+    {
+      "path": "next-react/broken.tsx",
+      "split": "development",
+      "expected": [
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "NON_SEMANTIC_CLICK",
+        "EMPTY_ONCLICK",
+        "IFRAME_MISSING_TITLE",
+        "EMPTY_IMAGE_SRC",
+        "ARIA_HIDDEN_FOCUSABLE",
+        "UNLABELED_INPUT",
+        "EXTERNAL_TARGET_REL",
+        "IMPLICIT_SUBMIT_BUTTON"
+      ]
+    },
+    {
+      "path": "next-react/clean.tsx",
+      "split": "holdout",
+      "expected": []
+    },
+    {
+      "path": "vue/broken.vue",
+      "split": "development",
+      "expected": [
+        "MISSING_IMG_ALT",
+        "PLACEHOLDER_HREF",
+        "UNNAMED_BUTTON",
+        "UNLABELED_INPUT",
+        "EXTERNAL_TARGET_REL"
+      ]
+    },
+    {
+      "path": "vue/clean.vue",
+      "split": "holdout",
+      "expected": []
+    },
+    {
+      "path": "astro/broken.astro",
+      "split": "holdout",
+      "expected": [
+        "MISSING_DOCUMENT_LANG",
+        "MISSING_DOCUMENT_TITLE",
+        "EMPTY_IMAGE_SRC",
+        "ARIA_HIDDEN_FOCUSABLE",
+        "UNNAMED_LINK",
+        "UNLABELED_INPUT",
+        "IMPLICIT_SUBMIT_BUTTON"
+      ]
+    },
+    {
+      "path": "astro/clean.astro",
+      "split": "development",
+      "expected": []
+    },
+    {
+      "path": "svelte/broken.svelte",
+      "split": "holdout",
+      "expected": [
+        "MISSING_IMG_ALT",
+        "DUPLICATE_ID",
+        "UNLABELED_INPUT",
+        "EXTERNAL_TARGET_REL",
+        "PLACEHOLDER_HREF"
+      ]
+    },
+    {
+      "path": "svelte/clean.svelte",
+      "split": "development",
+      "expected": []
+    }
+  ]
+}

@@ -36,3 +36,11 @@ A skill evoluiu de documentação + scanner parcial para um workflow executável
 ## Observação
 
 O teste E2E usa site sintético e Chromium real, não um caso de cliente. O fluxo de patch altera apenas conteúdo explicitamente aprovado, não redesenha interfaces automaticamente. Não criar ou alterar imagens de marca ao executar esta skill sem autorização explícita.
+
+## Atualização v1.4 — etapas 1 e 2 do plano (30/10/2026)
+
+- **Benchmark sintético de cinco stacks**: dez arquivos rotulados (HTML, Next/React, Vue, Astro, Svelte), com divisão development/holdout explícita, 39 pares positivos testados e cinco negativos; métricas em `evidence/benchmark-stacks-v14.json`.
+- **Benchmark de cinco cenários de produto**: portfólio, Next/React, Vue/Astro, e-commerce e dashboard; 29 candidatos objetivos rotulados, controles seguros e métricas em `evidence/benchmark-scenarios-v14.json`.
+- **Ampliação do scanner**: analisadores estruturados de markup, JSX via TypeScript AST, CSS com contraste literal de primeiro nível e foco sem alternativa; deduplicação e validação contra falsos positivos em código comentado e templates. Cobertura candidata do inventário atualizada em `evidence/coverage-v14.json`.
+- **Testes**: 63 testes locais aprovados, integridade SHA-256 confirmada; job de benchmark adicionado ao CI.
+- **PENDÊNCIAS**: os dois sites HTTPS não foram publicados nem testados; os gabaritos não têm avaliação independente; nenhum resultado representa eficácia sobre todas as 228 regras. A nota global de 9,5/10 **não está homologada** por esses testes.
