@@ -4,6 +4,8 @@ The fixture fabricates 12 complete-looking artifacts. Only real GitHub/Sigstore
 verification should be able to lift the provenance blocker in the strict gate.
 """
 import hashlib
+import os
+from unittest.mock import patch
 import json
 import struct
 import sys
@@ -77,7 +79,8 @@ class ForgeryRegression(unittest.TestCase):
                   'manual_visual_review_artifact':visual,'agent_runs':agents,
                   'catalog_review_complete':True,'manual_visual_review':True,
                   'unreviewed_candidates':0,'findings':[]}
-            result=evaluate(data,strict=True,base_dir=root)
+            with patch.dict(os.environ, {'GITHUB_SHA': sha}):
+                result=evaluate(data,strict=True,base_dir=root)
             self.assertEqual(result['score'],10)
             self.assertFalse(result['approved'])
             self.assertTrue(any('Proveniência externa' in s for s in result['blockers']))
@@ -90,7 +93,8 @@ class ForgeryRegression(unittest.TestCase):
                                           'catalog_review':catalog['sha256'],'visual_review':visual['sha256'],
                                           **{f'agent_{k}':v['sha256'] for k,v in agents.items()}}}
             data['signed_evidence_manifest']=js('fake/signed.json',manifest)
-            result2=evaluate(data,strict=True,base_dir=root)
+            with patch.dict(os.environ, {'GITHUB_SHA': sha}):
+                result2=evaluate(data,strict=True,base_dir=root)
             self.assertFalse(result2['approved'])
             self.assertTrue(any('Proveniência externa' in s for s in result2['blockers']))
 
