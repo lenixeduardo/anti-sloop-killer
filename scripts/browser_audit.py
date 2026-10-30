@@ -27,7 +27,7 @@ def validate_url(value: str) -> str:
 
 
 def _inspect(page):
-    return page.evaluate('''() => {
+    return page.evaluate(r'''() => {
       const visible = e => {const r=e.getBoundingClientRect(), s=getComputedStyle(e);
         return r.width>0 && r.height>0 && s.visibility!=='hidden' && s.display!=='none'};
       const buttons=[...document.querySelectorAll('button,[role="button"]')].filter(visible);
@@ -39,6 +39,33 @@ def _inspect(page):
       const noName=buttons.filter(e=> !(e.innerText?.trim() || e.getAttribute('aria-label') || e.getAttribute('aria-labelledby') || e.title));
       const dead=links.filter(e=> ['#','javascript:void(0)','javascript:;'].includes(e.getAttribute('href')||''));
       const broken=imgs.filter(e=>!e.complete || e.naturalWidth===0);
+      const headings=[...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].filter(visible);
+      const order=headings.map(e=>Number(e.tagName[1]));
+      const jumps=order.slice(1).map((n,i)=>n-order[i]).filter(delta=>delta>1);
+      const blankLinks=links.filter(e=> !(e.innerText?.trim() || e.getAttribute('aria-label') || e.getAttribute('aria-labelledby') || e.querySelector('img[alt]')));
+      const unsafeBlankLinks=links.filter(e=>e.target==='_blank' && !/\bnoopener\b/.test(e.rel));
+      const contrastCandidates=[];
+      const rgb=text=>{const m=text.match(/^rgba?\(([^)]+)\)/);if(!m)return null;
+        const values=m[1].split(',').map(v=>parseFloat(v));
+        return values.length>=3?values:null};
+      const lum=values=>{const c=values.slice(0,3).map(n=>{const x=n/255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+      const sampled=[...document.querySelectorAll('p,a,button,label,li,span')].filter(visible).slice(0,200);
+      for(const e of sampled){
+        if(!e.textContent?.trim() || e.querySelector('*'))continue;
+        const s=getComputedStyle(e),fg=rgb(s.color);if(!fg || (fg.length>=4 && fg[3]<.98))continue;
+        let node=e,bg=null,uncertain=false;
+        while(node && node.nodeType===1){
+          const st=getComputedStyle(node);
+          if(st.backgroundImage!=='none' || Number(st.opacity)<.98){uncertain=true;break}
+          const color=rgb(st.backgroundColor);
+          if(color && (color.length<4 || color[3]>=.98)){bg=color;break}
+          node=node.parentElement;
+        }
+        if(!bg || uncertain)continue;
+        const ratio=(Math.max(lum(fg),lum(bg))+.05)/(Math.min(lum(fg),lum(bg))+.05);
+        const large=parseFloat(s.fontSize)>=24 || (parseFloat(s.fontSize)>=18.66 && Number(s.fontWeight)>=700);
+        if(ratio<(large?3:4.5))contrastCandidates.push({tag:e.tagName,text:e.textContent.trim().slice(0,65),ratio:Number(ratio.toFixed(2))});
+      }
       return {viewport:{width:innerWidth,height:innerHeight},
         horizontal_overflow:Math.max(document.documentElement.scrollWidth,document.body?.scrollWidth||0)>innerWidth+2,
         missing_image_alt:imgs.filter(e=>!e.hasAttribute('alt')).length,
@@ -47,7 +74,11 @@ def _inspect(page):
         unnamed_buttons:noName.map(e=>e.outerHTML.slice(0,180)).slice(0,20),
         unlabeled_controls:unlabeled.map(e=>e.outerHTML.slice(0,180)).slice(0,20),
         focusables:document.querySelectorAll('a[href],button,input,select,textarea,[tabindex]').length,
-        title:document.title,lang:document.documentElement.lang || ''};
+        title:document.title,lang:document.documentElement.lang || '',
+        heading_h1_count:order.filter(n=>n===1).length,heading_level_skips:jumps.length,
+        unnamed_links:blankLinks.map(e=>e.outerHTML.slice(0,180)).slice(0,20),
+        blank_target_missing_noopener:unsafeBlankLinks.map(e=>e.outerHTML.slice(0,180)).slice(0,20),
+        potential_text_contrast_failures:contrastCandidates.slice(0,20)};
     }''')
 
 

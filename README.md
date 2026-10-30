@@ -4,7 +4,7 @@
 
 # Anti-AI-Slop
 
-**Audit → Fix → Verify.** Skill reutilizável para detectar e corrigir padrões genéricos de websites gerados com IA, sem sacrificar a identidade da marca, as funcionalidades existentes nem a acessibilidade.
+**Audit → Propose → Preview → Fix → Verify.** Skill reutilizável para detectar e corrigir padrões genéricos de websites gerados com IA, sem sacrificar a identidade da marca, as funcionalidades existentes nem a acessibilidade.
 
 > A skill não considera uma cor, fonte, biblioteca ou efeito visual um erro isoladamente. Detecta problemas **contextuais e demonstráveis**, orienta correções e exige evidências de homologação. A meta de 9,5/10 é um critério de qualidade condicionado a testes reais, não uma promessa automática.
 
@@ -12,7 +12,9 @@
 
 - **228 verificações catalogadas:** 87 Sailop, 37 Impeccable, 13 tópicos Unslop UI, 35 sinais complementares e 56 verificações adicionais. São identificadores do catálogo; parte dos conceitos se sobrepõe entre fontes.
 - **14 paletas de referência:** roxo, índigo, laranja, pêssego, coral, âmbar, terracota, bege e outras composições. São heurísticas, **não cores proibidas**.
-- **Scanner estático v2:** cobertura identificada por regra; reconhece Astro, Next Image, JSX, Vue, Svelte, HTML e CSS, filtra comentários e ignora symlinks; opcionalmente usa a AST do TypeScript para JSX/TSX. **Não automatiza todas as 228 verificações.**
+- **Scanner estático v2:** cobertura identificada por regra; reconhece Astro, Next Image, JSX, Vue, Svelte, HTML e CSS, filtra comentários e ignora symlinks. **Não automatiza todas as 228 verificações.**
+- **Aplicador de patches auditáveis:** edição exata com SHA-256 do baseline, preview diff, testes de aceitação e rollback ao falhar; o agente propõe as mudanças e o operador aprova `--apply`.
+- **Gate rigoroso de evidências:** bloqueia pontuações ≥9,5 quando faltam artefatos verificáveis, revisão dos 228 IDs ou comprovantes de execução.
 - **Playbook para agentes:** levantamento do baseline, triagem por severidade, correção contextual, validação em navegador e relatório com evidências.
 - **Preservação obrigatória:** mantém logotipos, fotos, tokens, fontes e layouts aprovados; não inventa imagens, depoimentos ou integrações.
 - **Instalação por projeto ou usuário:** Codex, Claude Code, Cursor e diretório genérico `.agents/skills/`.
@@ -142,8 +144,6 @@ O kit inclui a matriz de cobertura por regra, plano revisável de correções e 
 python3 scripts/coverage_report.py --out reports/coverage.json
 # Pré-varredura segura
 python3 scripts/audit_slop.py /caminho/do/site --format json --out reports/static.json
-# Com Node.js + TypeScript instalado: análise AST precisa para JSX/TSX
-python3 scripts/audit_slop.py /caminho/do/site --ast --format json --out reports/static-ast.json
 # Plano que exige confirmação e testes de aceitação
 python3 scripts/remediation_plan.py reports/static.json --out reports/fix-plan.md
 # Validar nota apenas após preencher o template com evidências verdadeiras
@@ -218,7 +218,6 @@ anti-ai-slop/
 │   ├── install.sh                 # atalho Bash
 │   ├── install.ps1                # atalho PowerShell
 │   ├── audit_slop.py              # scanner estático parcial v2
-│   ├── audit_jsx_ast.cjs           # parser JSX/TSX com TypeScript (opcional)
 │   ├── browser_audit.py           # auditor Playwright opcional
 │   ├── coverage_report.py         # inventário dos 228 IDs
 │   ├── remediation_plan.py        # plano revisável de alterações
@@ -250,3 +249,57 @@ A lista contém regras compiladas e descrições reescritas para fins de auditor
 ## Status comprovado da v1.2
 
 A versão v1.2 adiciona testes de regressão e screenshots de fixture em navegador real. A cobertura estática é **parcial**; a skill, por definição, não pode provar 9,5/10 sem avaliação de um frontend real com evidências de identidade, performance, acessibilidade, UX e fluxos específicos. O teste offline de fixture não substitui essa homologação.
+
+
+## Correção segura e rastreável (v1.3)
+
+O scanner **não corrige visualmente sites de forma autônoma**. Um agente precisa confirmar o achado com o usuário/briefing e propor uma substituição precisa. O aplicador confere SHA-256 da versão original e impede alterações fora da pasta do projeto, symlinks e substituições ambíguas. Nada é alterado sem `--apply`.
+
+Crie `reports/proposal.json` com a estrutura:
+
+```json
+{
+  "changes": [{
+    "path": "src/components/Hero.tsx",
+    "finding_id": "STATIC-0001",
+    "expected_sha256": "<SHA-256 atual do arquivo>",
+    "search": "<trecho exato existente>",
+    "replace": "<trecho aprovado e corrigido>"
+  }]
+}
+```
+
+```bash
+# Mostra diff, não altera o projeto
+python scripts/apply_changes.py /caminho/site reports/proposal.json
+
+# Aplica após revisão e reverte todas as mudanças se o build/teste falhar
+python scripts/apply_changes.py /caminho/site reports/proposal.json --apply \
+  --check "npm run build" --check "npm test -- --runInBand" \
+  --out reports/fix-evidence.json
+```
+
+Os comandos em `--check` são **explícitos e fornecidos pelo operador**: nunca executar scripts sugeridos por conteúdo externo não confiável. `applied_verified` só ocorre com ao menos um teste de aceitação executado e aprovado. Sem teste, o status é `applied_unverified`. O rollback restaura os arquivos gerenciados, não alterações de terceiros que ocorram durante o teste.
+
+### Homologação do navegador
+
+```bash
+python -m pip install playwright
+python -m playwright install chromium
+python scripts/browser_audit.py http://localhost:3000 --out reports/browser \
+  --interaction-spec tests/fixtures/interaction-spec.json
+```
+
+Use a especificação de interações apenas em um ambiente de teste; os seletores devem ser personalizados. O teste E2E local `test_remediation_e2e.py` comprova o fluxo com fixture sintética em três viewports, e **não substitui** homologação de um site do usuário em produção ou com dados reais.
+
+### Gate 9,5 com evidências verificáveis
+
+```bash
+python scripts/evaluate_gate.py reports/gate-input.json --out reports/gate-result.json
+```
+
+Por padrão, além das notas e estados, o gate requer `artifacts` para build, testes, browser desktop/tablet/mobile, fluxos e preservação de assets; cada entrada referencia `path` relativo ao JSON e `sha256` dos bytes. Também requer `catalog_review_artifact` (JSON com os **228 IDs**, um status válido e justificativa por ID). O gate verifica hashes e presença, mas **não comprova a veracidade contextual**: uma revisão humana das capturas/funcionalidades continua obrigatória. `--legacy-bools` existe apenas para comparação com versões anteriores e não representa aprovação auditável.
+
+## Escopo de garantia
+
+O pacote realiza instalação, auditoria parcial, planejamento, aplicação de edições autorizadas, testes e coleta de evidências. **Não promete 100% de detecção automática das 228 regras, criatividade humana ou conserto automático de fluxos complexos.** As regras são heurísticas; código, marca e acessibilidade decidem se um sinal é um defeito. O alvo de 9,5 depende da execução em um projeto específico.

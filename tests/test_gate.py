@@ -48,3 +48,27 @@ class CoverageAndPlanTests(unittest.TestCase):
         self.assertIn('Teste de aceitação',plan)
         self.assertIn('hashes dos assets',plan)
         self.assertIn('S-1',plan)
+
+class StrictEvidenceTests(unittest.TestCase):
+    def test_booleans_never_pass_strict(self):
+        sample=GateTests().base()
+        self.assertTrue(evaluate(sample)['approved'])  # legacy evaluator, not CLI default
+        self.assertFalse(evaluate(sample,strict=True)['approved'])
+    def test_artifacts_and_catalog_review_must_be_verifiable(self):
+        import tempfile, hashlib, json
+        with tempfile.TemporaryDirectory() as tmp:
+            base=Path(tmp)
+            source=Path(__file__).resolve().parents[1]
+            ids=[r['id'] for r in json.loads((source/'references/rules.json').read_text())['rules']]
+            catalog=base/'catalog.json'
+            catalog.write_text(json.dumps({'reviews':[{'id':k,'status':'not_applicable',
+                'reason':'Not present in this synthetic test fixture'} for k in ids]}))
+            sample=GateTests().base()
+            sample['artifacts']={}
+            for key in ('build','unit_tests','browser_desktop','browser_tablet','browser_mobile','functional_flows','assets_preserved'):
+                f=base/(key+'.txt');f.write_text('synthetic fixture evidence')
+                sample['artifacts'][key]={'path':f.name,'sha256':hashlib.sha256(f.read_bytes()).hexdigest()}
+            sample['catalog_review_artifact']={'path':'catalog.json','sha256':hashlib.sha256(catalog.read_bytes()).hexdigest()}
+            self.assertTrue(evaluate(sample,strict=True,base_dir=base)['approved'])
+            (base/'browser_mobile.txt').write_text('changed')
+            self.assertFalse(evaluate(sample,strict=True,base_dir=base)['approved'])

@@ -1,24 +1,38 @@
-# Auditoria funcional Anti-AI-Slop v1.2 — 2026-10-30
+# Auditoria funcional — Anti-AI-Slop v1.3
 
-## Evidências disponíveis
+Data: 30/10/2026. Escopo: skill no repositório, scanner de pré-varredura, instaladores, patch transacional, browser audit, gate de evidências, testes unitários e E2E sintéticos.
 
-- `python -m unittest discover -s tests -v`: suíte local incluindo instalação, scanner léxico/AST, gate e screenshot de fixture.
-- `python scripts/verify_manifest.py`: valida integridade dos arquivos distribuídos.
-- `python scripts/coverage_report.py`: 228 IDs inventariados; apenas subconjunto com suporte a detecção estática e navegador. Os demais IDs exigem agente/revisão.
-- `python scripts/browser_audit.py --html tests/fixtures/site/index.html`: capturas reais de Chromium em 390×844, 768×1024 e 1440×900, com inspeção de DOM e interação por especificação.
-- `python scripts/evaluate_gate.py templates/GATE_INPUT.example.json`: **deve falhar** sem evidências (controle negativo).
+## Resultado: **8,4/10 — meta 9,5 não homologada**
 
-## Mudanças
+A skill evoluiu de documentação + scanner parcial para um workflow executável e reversível. A nota não deve ser inflada por testes sintéticos: falta avaliação independente de agentes Codex/Claude/Cursor em repositórios externos com critérios humanos de identidade visual e fluxos reais.
 
-1. Scanner inclui suporte a `.astro`, `.mdx`, comentários filtrados e diretórios/symlinks isolados.
-2. Parser AST de TypeScript opcional (`--ast`) melhora precisão de imagens, eventos e links JSX/TSX.
-3. Matriz rastreável de regras e plano de correção por achado com testes de aceitação.
-4. Auditor Playwright opcional: capturas, overflow, acessibilidade básica, erros JS, links, imagens e testes de interação explicitamente configurados.
-5. Gate programático bloqueia declaração de ≥9,5/10 com evidência ausente, P0/P1 aberto, regressão ou pendências.
-6. CI com Python 3.9/3.11/3.13, teste Playwright e regressão TypeScript AST.
+| Pilar | Peso | Avaliação | Evidência |
+|---|---:|---:|---|
+| Instalação e distribuição | 15% | 9,5 | integração local, backup, SHA-256 |
+| Catálogo e rastreabilidade | 10% | 9,0 | 228 regras e 14 paletas inventariadas |
+| Instruções e preservação | 15% | 9,2 | SKILL.md + playbook + aplicação explícita |
+| Detecção automática | 25% | 7,0 | 29 IDs estáticos, 7 IDs DOM, heurísticas restantes manuais |
+| Correção comprovada | 15% | 8,0 | preview, SHA baseline, testes de aceitação e rollback; fixture sintética |
+| Browser/UX | 10% | 8,5 | Chromium, 3 viewports, interações, overflow, labels, contrastes e headings |
+| Segurança e regressões | 10% | 9,0 | testes unitários, CI, proteção de symlinks, gate de evidências |
+| **Ponderada** | **100%** | **8,4** | **Não atende à meta 9,5/10** |
 
-## Limitações de homologação
+## O que está comprovado
 
-Os resultados de browser são de uma **fixture local**, não de um site de produção. O sandbox atual bloqueia navegação HTTP pelo Chromium (`ERR_BLOCKED_BY_ADMINISTRATOR`); por isso a execução de URL real permanece sem comprovação neste ambiente. Os 228 itens são catalogados mas nem todos são automatizáveis; uma correção visual ou comportamental exige análise contextual por agente com acesso ao projeto e execução de testes próprios.
+- `python -m unittest discover -s tests -v` executa a suíte inteira, incluindo instalação e o fluxo real de correção em Chromium quando Playwright está disponível.
+- `python scripts/validate_catalog.py` verifica os 228 IDs, 14 paletas e sincronização dos índices.
+- `python scripts/verify_manifest.py` verifica hashes e a integridade do pacote.
+- `python scripts/apply_changes.py` usa mudanças pontuais propostas por agente: primeiro preview, depois aplicação com autorização e testes; falhas de teste restauram os bytes originais.
+- `python scripts/browser_audit.py` fornece capturas em desktop, tablet e mobile, interações controladas, candidatos de contraste e heading sem autoaprovação.
+- `python scripts/evaluate_gate.py` exige artefatos com SHA-256 e registro de status dos 228 IDs por padrão; não considera apenas booleanos.
 
-**Gate de 9,5/10: não aprovado automaticamente para a skill no ecossistema inteiro.** Não há evidência de remediação comprovada num projeto externo completo, com regressão visual e testes de fluxos de negócio. A skill ficou mais robusta, mas atribuir 9,5/10 agora seria falsificar o critério de aprovação que ela própria estabelece.
+## Lacunas objetivas para 9,5
+
+1. Testar agente real em pelo menos três stacks externas (Next/React, Vue/Astro, HTML) e dois sites de produção/preview com funcionalidades não simuladas. Cada teste deve ter baseline, aceitação, screenshots, integração e regressões.
+2. Ampliar a cobertura de detecção com parsers estruturados onde necessário. Regex/AST parcial e DOM genérico **não cobrem os 228 padrões automaticamente**; medir precisão e recall em amostra representativa de sites.
+3. Exigir revisão independente de identidade, contraste com fundo complexo, animações, acessibilidade WCAG e qualidade de conteúdo, que não são decidíveis apenas por scanner.
+4. Verificar publicamente o workflow de GitHub Actions verde depois do push, não somente testes locais.
+
+## Observação
+
+O teste E2E usa site sintético e Chromium real, não um caso de cliente. O fluxo de patch altera apenas conteúdo explicitamente aprovado, não redesenha interfaces automaticamente. Não criar ou alterar imagens de marca ao executar esta skill sem autorização explícita.

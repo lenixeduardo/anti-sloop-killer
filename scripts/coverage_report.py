@@ -8,7 +8,7 @@ from audit_slop import DETECTORS
 
 ROOT=Path(__file__).resolve().parents[1]
 STATIC_IDS={x for item in DETECTORS for x in item[3]} | {'NX-021','SA-034','NX-043','NX-056','NX-022','NX-038'}
-BROWSER_IDS={'NX-021','NX-022','NX-031','NX-043','NX-056'}
+BROWSER_IDS={'NX-021','NX-022','NX-031','NX-043','NX-056','IM-033','IM-034'}
 
 
 def build():

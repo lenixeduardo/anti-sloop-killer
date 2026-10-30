@@ -13,6 +13,16 @@ from browser_audit import run
 
 @unittest.skipUnless(importlib.util.find_spec('playwright') is not None, 'Playwright não instalado')
 class BrowserE2E(unittest.TestCase):
+    def test_browser_flags_real_low_contrast_and_heading_skips(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/'low.html'
+            path.write_text('<!doctype html><html lang="pt-BR"><head><title>Exemplo</title></head><body style="background:#fff"><h1>Principal</h1><h3>Pulo</h3><p style="color:#ccc;background:#fff">Texto ilegível</p></body></html>',encoding='utf-8')
+            report=run(None,Path(tmp)/'results',html_path=path,browser_path=shutil.which('chromium'))
+            self.assertEqual(report['status'],'completed')
+            checks=report['viewport_results']['mobile']['checks']
+            self.assertEqual(checks['heading_level_skips'],1)
+            self.assertGreater(len(checks['potential_text_contrast_failures']),0)
+
     def test_three_viewports_and_evidence(self):
         folder=ROOT/'tests'/'fixtures'/'site'
         handler=functools.partial(http.server.SimpleHTTPRequestHandler,directory=str(folder))
