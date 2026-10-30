@@ -4,10 +4,10 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from audit_slop import DETECTORS
+from false_positive_guard import MAPPINGS
 
 ROOT=Path(__file__).resolve().parents[1]
-STATIC_IDS={x for item in DETECTORS for x in item[3]} | {'NX-021','SA-034','NX-043','NX-056','NX-022','NX-038','SA-076','NX-040','IM-033','NX-037','NX-052','NX-031'}
+STATIC_IDS={rid for ids in MAPPINGS.values() for rid in ids}
 BROWSER_IDS={'NX-021','NX-022','NX-031','NX-043','NX-056','IM-033','IM-034'}
 
 

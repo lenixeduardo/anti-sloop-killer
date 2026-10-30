@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "id": "EXAMPLE-BRAND-001",
+      "decision": "intentional",
+      "path": "src/components/Hero.tsx",
+      "finding_keys": ["BLUE_VIOLET_GRADIENT"],
+      "rule_ids": ["SA-013"],
+      "reviewed_by": "design-owner",
+      "rationale": "Substitua por justificativa real: aprovação da cor no brand book",
+      "evidence": "docs/brand-book.md",
+      "expires_on": "2027-12-31"
+    }
+  ]
+}

@@ -46,13 +46,13 @@ class TemplateParser(HTMLParser):
         # Only constant positive tabindex values: dynamic bindings need browser review.
         tab=(attrs.get('tabindex') or '').strip()
         if tab.isdecimal() and int(tab)>0 and not any(k.startswith(('v-bind:tabindex', ':tabindex', 'bind:tabindex')) for k in attrs):
-            self.issues.append(issue('POSITIVE_TABINDEX',self.filename,lineno,('NX-037','SA-076'),
+            self.issues.append(issue('POSITIVE_TABINDEX',self.filename,lineno,('NX-037',),
                 'P1_CANDIDATE','high','tabindex positivo sobrepõe a ordem natural de foco.'))
         if tag=='img' and 'alt' not in attrs:
-            self.issues.append(issue('MISSING_IMG_ALT',self.filename,lineno,('NX-021','SA-034'),
+            self.issues.append(issue('MISSING_IMG_ALT',self.filename,lineno,('SA-076',),
                          'P1_CANDIDATE','high','img sem atributo alt; WCAG 1.1.1.'))
         if tag=='iframe' and not attrs.get('title'):
-            self.issues.append(issue('IFRAME_MISSING_TITLE',self.filename,lineno,('NX-021',),
+            self.issues.append(issue('IFRAME_MISSING_TITLE',self.filename,lineno,('SA-076',),
                          'P1_CANDIDATE','high','iframe sem título acessível; WCAG 4.1.2.'))
         if tag=='a' and (attrs.get('href') or '').strip().lower() in PLACEHOLDER:
             self.issues.append(issue('PLACEHOLDER_HREF',self.filename,lineno,('NX-043','NX-056'),
@@ -61,10 +61,10 @@ class TemplateParser(HTMLParser):
             keys={k.lower() for k in attrs}
             if not (attrs.get('role') and ('tabindex' in keys or 'tab-index' in keys) and
                     any(k.startswith(('on:keydown','@keydown','onkeydown','onkeyup','on:keyup','@keyup','v-on:keydown')) for k in keys)):
-                self.issues.append(issue('NON_SEMANTIC_CLICK',self.filename,lineno,('NX-022','NX-056'),
+                self.issues.append(issue('NON_SEMANTIC_CLICK',self.filename,lineno,('SA-075',),
                       'P1_CANDIDATE','medium','Elemento clicável sem teclado/semântica evidentes.'))
         if tag=='video' and 'autoplay' in attrs and 'muted' not in attrs:
-            self.issues.append(issue('AUTOPLAY_UNMUTED',self.filename,lineno,('NX-038',),
+            self.issues.append(issue('AUTOPLAY_UNMUTED',self.filename,lineno,(),
                      'P1_CANDIDATE','medium','Vídeo com autoplay sem muted; verificar comportamento.'))
         if any(k in attrs and (attrs[k] is None or not attrs[k].strip()) for k in ('onclick','@click','v-on:click','on:click')):
             self.issues.append(issue('EMPTY_ONCLICK',self.filename,lineno,('NX-056',),
@@ -86,7 +86,7 @@ class TemplateParser(HTMLParser):
             matching_id=attrs.get('id') in self.labels if attrs.get('id') else False
             if not (named or matching_id or nested):
                 self.issues.append(issue({'input':'UNLABELED_INPUT','select':'UNLABELED_SELECT','textarea':'UNLABELED_TEXTAREA'}[tag],
-                     self.filename,line,('SA-076','NX-040'), 'P1_CANDIDATE','high',
+                     self.filename,line,('SA-076',), 'P1_CANDIDATE','high',
                      'Controle sem nome acessível estático; WCAG 3.3.2/4.1.2.'))
         return sorted(self.issues,key=lambda item:(item['line'],item['key']))
 
@@ -151,7 +151,7 @@ def scan_css(code,filename):
         if ':focus' in selector and re.search(r'^(?:none|0(?:px)?)$',declarations.get('outline','')):
             if not any(k in declarations for k in ('box-shadow','border','background-color','outline-offset')):
                 line=source.count('\n',0,match.start())+1
-                entry=issue('FOCUS_OUTLINE_REMOVED',filename,line,('NX-037','SA-076'),'P1_CANDIDATE','medium',
+                entry=issue('FOCUS_OUTLINE_REMOVED',filename,line,('SA-072',),'P1_CANDIDATE','medium',
                     'Foco sem outline e sem substituição perceptível no mesmo seletor; validar estilo computado.')
                 entry['detector_engine']='css-declarations'
                 results.append(entry)

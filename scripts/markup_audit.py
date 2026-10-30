@@ -65,11 +65,11 @@ class _TemplateParser(HTMLParser):
         if attrs.get('id'):
             key = attrs['id']
             if key in self.ids:
-                self.add('DUPLICATE_ID',line,('SA-034','NX-022'),'P1_CANDIDATE','high',f'id duplicado no template: {key[:64]}')
+                self.add('DUPLICATE_ID',line,('SA-034',),'P1_CANDIDATE','high',f'id duplicado no template: {key[:64]}')
             self.ids[key] = line
         if tag == 'img':
             if attrs.get('src') == '':
-                self.add('EMPTY_IMAGE_SRC',line,('NX-021',),'P1_CANDIDATE','high','Imagem com src vazio não carrega o recurso esperado.')
+                self.add('EMPTY_IMAGE_SRC',line,('NX-056',),'P1_CANDIDATE','high','Imagem com src vazio não carrega o recurso esperado.')
             if (attrs.get('alt') or '').strip():
                 for ancestor in self.stack:
                     ancestor['child_image_alt'] = True
@@ -79,11 +79,11 @@ class _TemplateParser(HTMLParser):
             tabindex = attrs.get('tabindex')
             if (tag in {'a','button','input','select','textarea'} and not (tag == 'a' and 'href' not in attrs)) or (tabindex is not None and tabindex.lstrip('-').isdigit() and int(tabindex)>=0):
                 if tabindex != '-1' and 'disabled' not in attrs:
-                    self.add('ARIA_HIDDEN_FOCUSABLE',line,('NX-022','SA-076'),'P1_CANDIDATE','high','Elemento oculto da árvore de acessibilidade pode continuar focável.')
+                    self.add('ARIA_HIDDEN_FOCUSABLE',line,('NX-040',),'P1_CANDIDATE','high','Elemento oculto da árvore de acessibilidade pode continuar focável.')
         if tag == 'a' and (attrs.get('target') or '').lower() == '_blank' and 'href' in attrs:
             rel = set((attrs.get('rel') or '').lower().split())
             if not rel.intersection({'noopener','noreferrer'}):
-                self.add('EXTERNAL_TARGET_REL',line,('NX-022',),'P3_CANDIDATE','low','Verificar compatibilidade e política de rel=noopener/noreferrer; navegadores modernos já isolam _blank.')
+                self.add('EXTERNAL_TARGET_REL',line,(),'P3_CANDIDATE','low','Verificar compatibilidade e política de rel=noopener/noreferrer; navegadores modernos já isolam _blank.')
         if tag == 'button' and any(n['tag']=='form' for n in self.stack) and 'type' not in attrs:
             self.add('IMPLICIT_SUBMIT_BUTTON',line,('NX-056',),'P2_CANDIDATE','medium','Button em form sem type faz submit implícito; confirmar intenção.')
         if tag not in VOID:
@@ -102,19 +102,19 @@ class _TemplateParser(HTMLParser):
 
     def finish(self):
         if self.document and self.has_html:
-            if not self.lang:self.add('MISSING_DOCUMENT_LANG',self.doc_line,('SA-034','SA-076'),'P1_CANDIDATE','high','Documento HTML sem lang válido.')
-            if not self.has_title:self.add('MISSING_DOCUMENT_TITLE',self.doc_line,('NX-052','SA-034'),'P1_CANDIDATE','high','Documento HTML sem title.')
-            if not self.has_viewport:self.add('MISSING_VIEWPORT_META',self.doc_line,('NX-031',),'P1_CANDIDATE','high','Documento HTML sem meta viewport.')
+            if not self.lang:self.add('MISSING_DOCUMENT_LANG',self.doc_line,('SA-034',),'P1_CANDIDATE','high','Documento HTML sem lang válido.')
+            if not self.has_title:self.add('MISSING_DOCUMENT_TITLE',self.doc_line,(),'P1_CANDIDATE','high','Documento HTML sem title.')
+            if not self.has_viewport:self.add('MISSING_VIEWPORT_META',self.doc_line,(),'P1_CANDIDATE','high','Documento HTML sem meta viewport.')
         for node in self.controls:
             attrs = node['attrs']
             accessible = (attrs.get('aria-label') or attrs.get('aria-labelledby') or attrs.get('title'))
             if not accessible and not node['label_ancestor'] and attrs.get('id') not in self.labels_for:
-                self.add('UNLABELED_INPUT',node['line'],('SA-076','NX-022'),'P1_CANDIDATE','medium','Campo sem label associado; placeholder sozinho também não substitui label.')
+                self.add('UNLABELED_INPUT',node['line'],('SA-076',),'P1_CANDIDATE','medium','Campo sem label associado; placeholder sozinho também não substitui label.')
         for node in self.nodes:
             tag,attrs = node['tag'],node['attrs']
             if tag not in {'button','a'}:continue
             if tag=='a' and not attrs.get('href'):continue
             if node['text'].strip() or node['child_image_alt'] or attrs.get('aria-label') or attrs.get('aria-labelledby') or attrs.get('title'):
                 continue
-            self.add('UNNAMED_BUTTON' if tag=='button' else 'UNNAMED_LINK',node['line'],('SA-076','NX-022'),'P1_CANDIDATE','medium',f'<{tag}> sem nome acessível evidente no HTML estático.')
+            self.add('UNNAMED_BUTTON' if tag=='button' else 'UNNAMED_LINK',node['line'],('SA-076',),'P1_CANDIDATE','medium',f'<{tag}> sem nome acessível evidente no HTML estático.')
         return self.findings
