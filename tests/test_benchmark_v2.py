@@ -1,5 +1,6 @@
 """Benchmark contract tests; also catch metric / labeling regressions."""
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -28,8 +29,8 @@ def has_typescript():
 
 class BenchmarkTests(unittest.TestCase):
     def setUp(self):
-        if self._testMethodName != 'test_five_stacks' and not has_typescript():
-            self.skipTest('TypeScript ausente; benchmark AST é obrigatório no job benchmark')
+        if self._testMethodName != 'test_five_stacks' and os.environ.get('ANTI_AI_SLOP_RUN_AST_BENCHMARK') != '1':
+            self.skipTest('Benchmarks AST executados separadamente no job benchmark com TypeScript instalado')
 
     def test_five_stacks(self):
         data=json.loads((ROOT/'benchmarks/gold.json').read_text())
