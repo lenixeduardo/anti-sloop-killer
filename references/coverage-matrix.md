@@ -12,6 +12,10 @@ Todos os 228 IDs estão no inventário e devem ser classificados em uma auditori
 
 Os IDs não cobertos automaticamente não são considerados aprovados: recebem `pending_manual_review` e explicação. Um detector pode apontar múltiplos IDs equivalentes, e um ID pode exigir mais de uma estratégia de evidência.
 
+## Proteção contra falsos positivos
+
+O `scripts/false_positive_guard.py` é integrado ao scanner: valida IDs e mapeamentos, marca candidatos como não confirmados, impede correção automática e admite apenas exceções justificadas e restritas por arquivo/regra. Veja `references/false-positive-guard.md`. **UH-013 é exclusão**, não violação. 228 regras catalogadas não equivalem a 228 detectores executáveis.
+
 ## Contrato da avaliação
 
 Cada candidato possui `status=candidate_not_verified`. Um agente deve registrar `confirmed`, `intentional`, `false_positive`, `not_applicable` ou `pending` junto à evidência antes de corrigir. Deve utilizar um teste de aceitação que falhe antes e passe após a mudança. É proibido alterar uma decisão aprovada da marca apenas para reduzir contagens.
