@@ -13,9 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      AGENT_LAB_ROOT: ${{ runner.temp }}/anti-sloop-agent-cli-lab
       CI: 'true'
     steps:
+      - name: Configure isolated lab path
+        shell: bash
+        run: echo "AGENT_LAB_ROOT=$RUNNER_TEMP/anti-sloop-agent-cli-lab" >> "$GITHUB_ENV"
       - name: Checkout skill
         uses: actions/checkout@v4
       - name: Set up Node.js 22
