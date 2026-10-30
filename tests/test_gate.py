@@ -29,7 +29,7 @@ class GateTests(unittest.TestCase):
         a=self.base();a['scores']['identity']=6
         self.assertFalse(evaluate(a)['approved'])
     def test_valid_evidence_can_pass(self):
-        self.assertTrue(evaluate(self.base())['approved'])
+        self.assertFalse(evaluate(self.base())['approved'])
     def test_no_data_block(self):
         self.assertFalse(evaluate({})['approved'])
 
@@ -52,7 +52,7 @@ class CoverageAndPlanTests(unittest.TestCase):
 class StrictEvidenceTests(unittest.TestCase):
     def test_booleans_never_pass_strict(self):
         sample=GateTests().base()
-        self.assertTrue(evaluate(sample)['approved'])  # legacy evaluator, not CLI default
+        self.assertFalse(evaluate(sample)['approved'])  # no unsigned approval in Python API
         self.assertFalse(evaluate(sample,strict=True)['approved'])
     def test_artifacts_and_catalog_review_must_be_verifiable(self):
         import tempfile, hashlib, json

@@ -135,7 +135,7 @@ def _agent_runtime_valid(entry: dict, agent: str, base: Path, sha: str | None) -
     return bool(log and len(log) >= 80 and agent.encode('ascii') in log.lower())
 
 
-def evaluate(data:dict, *, strict:bool=False, base_dir:Path|None=None)->dict:
+def evaluate(data:dict, *, strict:bool=True, base_dir:Path|None=None)->dict:
     errors = []
     scores = data.get('scores', {})
     if not isinstance(scores, dict) or set(scores) != set(WEIGHTS):
@@ -205,6 +205,8 @@ def evaluate(data:dict, *, strict:bool=False, base_dir:Path|None=None)->dict:
     score = round(sum(scores[k]*weight/100 for k,weight in WEIGHTS.items()),2) if valid_scores else None
     if score is None or score < 9.5:
         errors.append('Nota ponderada abaixo de 9,5 ou ausente.')
+    if not strict:
+        errors.append('Avaliação sem proveniência é apenas diagnóstico; aprovação proibida.')
     return {'score':score,'approved':not errors,'blockers':errors,'weights':WEIGHTS,
             'warning':'Aprovação estrita exige atestado GitHub/Sigstore do workflow independente mais revisão humana; hashes isolados não provam execução.'}
 

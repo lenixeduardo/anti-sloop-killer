@@ -56,6 +56,6 @@ class GateHardeningTests(unittest.TestCase):
     def test_legacy_mode_is_not_valid_ci_proof(self):
         # Existing Python evaluate(strict=False) is analysis-only;
         # CLI --legacy-bools always fails closed.
-        self.assertTrue(evaluate(self.base(),strict=False)['approved'])
+        self.assertFalse(evaluate(self.base(),strict=False)['approved'])
 
 if __name__=='__main__':unittest.main()
