@@ -399,3 +399,21 @@ python scripts/ci_evidence.py --kind unit_tests --out reports/ci -- python -m un
 ```
 
 O workflow publica artefatos `agent-compat-*`, `gate-contract-evidence`, além dos resultados do benchmark e das ferramentas de qualidade. **CI verde significa que a compatibilidade e as salvaguardas foram verificadas, não que agentes autenticados tenham executado o processo nem que a nota 9,5 foi atingida.**
+
+## Proveniência de evidências e proteção contra relatórios fabricados (v1.7)
+
+O comando de homologação estrita **não aceita** mais relatórios JSON, logs e capturas PNG apenas porque seus hashes SHA-256 conferem. Esses arquivos podem ser fabricados localmente. Agora requer `signed_evidence_manifest`, um manifesto que enumera exatamente os 12 tipos de comprovação (incluindo logs de execução dos três agentes), e uma **atestado GitHub/Sigstore** verificado pela CLI `gh` com repositório, commit, `refs/heads/main`, workflow assinante e SHA-256 do manifesto. O verificador é `scripts/attested_evidence.py` e **falha fechado** quando a CLI, credenciais, assinatura ou proveniência não estão disponíveis.
+
+```bash
+python scripts/evaluate_gate.py reports/gate-input.json --out reports/gate-result.json
+```
+
+O workflow normal do GitHub Actions agora publica **um manifesto com atestado de CI sintético**, que comprova apenas os testes executados no pipeline. O campo `real_agent_runtime=false` é obrigatório, e o manifesto desse job **não é aceito como homologação de 9,5/10**. O gate requer um workflow **separado de validação independente**, identificado em `scripts/attested_evidence.py` como `.github/workflows/independent-validation.yml`; esse workflow deve rodar os três agentes autenticados, auditar aplicações externas e passar por revisão independente antes de assinar qualquer artefato. Até isso acontecer, o gate recusa qualquer alegação final.
+
+Para reproduzir os testes adversariais locais:
+
+```bash
+python -m unittest tests.test_provenance tests.test_gate_hardening -v
+```
+
+**Limitação consciente:** atestados verificam a identidade do workflow e a integridade dos bytes, não o mérito artístico, a honestidade dos avaliadores nem a existência de correção real nos sites. Revisão independente e testes de negócio continuam necessários. Nenhum relatório local autoassinado pode substituir essa revisão.

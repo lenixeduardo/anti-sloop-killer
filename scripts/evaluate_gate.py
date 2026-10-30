@@ -13,6 +13,7 @@ import os
 import re
 import sys
 from pathlib import Path
+from attested_evidence import verify_attestation
 
 WEIGHTS = {'identity':25,'layout':20,'functionality':20,'accessibility':15,'motion':10,'content':10}
 REQUIRED_EVIDENCE = ('build','unit_tests','browser_desktop','browser_tablet','browser_mobile','functional_flows','assets_preserved')
@@ -177,6 +178,9 @@ def evaluate(data:dict, *, strict:bool=False, base_dir:Path|None=None)->dict:
         for agent in REQUIRED_AGENTS:
             if not _agent_runtime_valid(agent_runs.get(agent),agent,base,repo_commit):
                 errors.append(f'Execução real autenticada não comprovada: {agent}')
+        trusted, reason = verify_attestation(data, base, repo_commit)
+        if not trusted:
+            errors.append('Proveniência externa não verificada: ' + reason)
     findings = data.get('findings',[])
     if not isinstance(findings,list):
         errors.append('findings deve ser uma lista')
@@ -202,7 +206,7 @@ def evaluate(data:dict, *, strict:bool=False, base_dir:Path|None=None)->dict:
     if score is None or score < 9.5:
         errors.append('Nota ponderada abaixo de 9,5 ou ausente.')
     return {'score':score,'approved':not errors,'blockers':errors,'weights':WEIGHTS,
-            'warning':'Hashes provam integridade, não veracidade. Requer revisão independente de logs, agentes e imagens.'}
+            'warning':'Aprovação estrita exige atestado GitHub/Sigstore do workflow independente mais revisão humana; hashes isolados não provam execução.'}
 
 
 def main() -> int:

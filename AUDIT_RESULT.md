@@ -37,10 +37,16 @@ A skill evoluiu de documentação + scanner parcial para um workflow executável
 
 O teste E2E usa site sintético e Chromium real, não um caso de cliente. O fluxo de patch altera apenas conteúdo explicitamente aprovado, não redesenha interfaces automaticamente. Não criar ou alterar imagens de marca ao executar esta skill sem autorização explícita.
 
-## Atualização v1.4 — etapas 1 e 2 do plano (30/10/2026)
+## Atualização v1.4 — benchmark de detecção
 
-- **Benchmark sintético de cinco stacks**: dez arquivos rotulados (HTML, Next/React, Vue, Astro, Svelte), com divisão development/holdout explícita, 39 pares positivos testados e cinco negativos; métricas em `evidence/benchmark-stacks-v14.json`.
-- **Benchmark de cinco cenários de produto**: portfólio, Next/React, Vue/Astro, e-commerce e dashboard; 29 candidatos objetivos rotulados, controles seguros e métricas em `evidence/benchmark-scenarios-v14.json`.
-- **Ampliação do scanner**: analisadores estruturados de markup, JSX via TypeScript AST, CSS com contraste literal de primeiro nível e foco sem alternativa; deduplicação e validação contra falsos positivos em código comentado e templates. Cobertura candidata do inventário atualizada em `evidence/coverage-v14.json`.
-- **Testes**: 63 testes locais aprovados, integridade SHA-256 confirmada; job de benchmark adicionado ao CI.
-- **PENDÊNCIAS**: os dois sites HTTPS não foram publicados nem testados; os gabaritos não têm avaliação independente; nenhum resultado representa eficácia sobre todas as 228 regras. A nota global de 9,5/10 **não está homologada** por esses testes.
+Foi criado um corpus local rotulado com 10 arquivos em 5 stacks e candidatos estáticos ampliados de 29 para 32 IDs. No modo TypeScript AST, o corpus sintético apresentou 39 TP, 0 FP e 0 FN (precisão e recall 100% **apenas nessa amostra**); sem AST, 34 TP e 5 FN. A suíte local possui 58 testes; consulte `BENCHMARK_RESULT.md` e `evidence/benchmark-v14.json`. O benchmark é transparente e não constitui avaliação externa independente. **A nota geral permanece 8,4/10 até validação de projetos externos e agentes reais.**
+
+## Atualização de segurança v1.7 — 30/10/2026
+
+**Correção da vulnerabilidade adversarial:** o gate v1.6 aprovava pontuação 10/10 com JSONs, transcrições inventadas e PNGs brancos com SHA-256 correto. O caso foi incorporado em `tests/test_gate_forgery_regression.py`. O teste exige que o resultado permaneça reprovado, com bloqueio específico de proveniência.
+
+O gate estrito v1.7 exige uma **atestação criptográfica GitHub/Sigstore** de um manifesto que contenha exatamente os hashes de todos os comprovantes, vinculado ao commit SHA, repositório, ref e identidade de um workflow **independente**. Ausência da CLI `gh`, falta de atestado, assinatura inválida, artefato não correspondente ou workflow não autorizado produzem reprovação. O modo legado continua sem poder emitir aprovação.
+
+O CI regular passa a gerar **proveniência assinada dos testes sintéticos**, deliberadamente marcados `real_agent_runtime=false` e `independent_validation=false`. Ela nunca é aceita como atestado final. Não foram executadas nem autenticadas sessões reais de Codex, Claude Code e Cursor; o workflow independente ainda precisa ser implantado em infraestrutura autorizada, incluindo revisão humana e testes em projetos externos.
+
+**Validação local:** 91 testes executados, 89 aprovados e 2 ignorados por dependências opcionais; verificação do manifesto e catálogo aprovadas. **Verificação remota:** pendente após publicação deste commit. **Nota global 9,5:** ainda não homologada.

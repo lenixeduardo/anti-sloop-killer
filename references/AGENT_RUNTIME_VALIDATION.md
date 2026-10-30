@@ -34,3 +34,18 @@ Cursor CLI também pode aparecer como `cursor-agent` em certas instalações; se
 ## Limitação importante
 
 CI público não possui login/autorização para esses agentes. Os jobs `agent-compatibility` fazem somente testes de formato e execução dos scripts. Qualquer relatório que atribua sucesso de execução real de Codex, Claude Code ou Cursor com base nesses jobs é inválido. Um arquivo SHA-256 garante apenas integridade, não legitimidade externa do conteúdo.
+
+## Atestação de homologação final (v1.7)
+
+O gate exige um manifesto de evidências assinado por **um workflow diferente do CI de regressão**, com execução comprovada dos três provedores e revisão independente. O workflow gerador deve residir em `.github/workflows/independent-validation.yml` no mesmo commit auditado, usar um runner confiável com CLIs autenticadas, produzir os relatórios e os screenshots durante a execução, e usar `actions/attest@v4` para atestar somente o manifesto gerado dessa execução. Publicar artefatos arbitrários preexistentes como se fossem resultados do runner é proibido.
+
+A verificação obrigatória usa a CLI GitHub:
+
+```bash
+gh attestation verify reports/independent-evidence-manifest.json \
+  --repo lenixeduardo/anti-sloop-killer \
+  --signer-workflow lenixeduardo/anti-sloop-killer/.github/workflows/independent-validation.yml \
+  --source-digest "$AUDITED_SHA" --source-ref refs/heads/main --format json
+```
+
+O CI regular pode produzir atestados **somente para testes sintéticos e compatibilidade**, explicitamente marcados como não sendo execução real de agentes. Mesmo um atestado válido dessa origem **não** libera 9,5/10. Até o workflow independente e as sessões autenticadas estarem implantados, o estado obrigatório é `not_verified`.

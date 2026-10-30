@@ -156,3 +156,48 @@ jobs:
           path: reports/gate/
           if-no-files-found: error
           retention-days: 30
+
+  attested-ci-evidence:
+    name: Signed CI provenance (NOT agent runtime)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [test, browser, jsx-ast, benchmark, quality-audit, agent-compatibility, gate-contract]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Download actual evidence from this run
+        uses: actions/download-artifact@v4
+        with:
+          pattern: '*'
+          path: reports/collected
+          merge-multiple: false
+      - name: Build explicit non-runtime evidence manifest
+        run: |
+          python scripts/ci_provenance.py reports/collected --out reports/ci-provenance-manifest.json
+          python -c 'import json; d=json.load(open("reports/ci-provenance-manifest.json")); assert not d["real_agent_runtime"] and not d["independent_validation"]'
+      - name: Attest exact manifest via GitHub OIDC / Sigstore
+        uses: actions/attest@v4
+        with:
+          subject-path: reports/ci-provenance-manifest.json
+      - name: Independently verify GitHub attestation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh attestation verify reports/ci-provenance-manifest.json \
+            --repo "${{ github.repository }}" \
+            --signer-workflow "${{ github.repository }}/.github/workflows/ci.yml" \
+            --source-digest "$GITHUB_SHA" \
+            --source-ref refs/heads/main
+      - name: Publish signed CI manifest without pretending to run agents
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-ci-evidence-manifest
+          path: reports/ci-provenance-manifest.json
+          retention-days: 90
