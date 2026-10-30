@@ -28,6 +28,22 @@ Transformar **um projeto web existente** em uma interface distintiva, funcional,
 6. **Não ocultar achados.** Quando não houver acesso ao código, navegador, HTTPS, testes, dados ou capturas, registrar `nao_verificado` e a razão. Não simular sucesso.
 7. **Acessibilidade e função são bloqueantes.** Defeitos P0/P1 não podem ser ignorados por uma nota visual alta.
 
+
+## False Positive Guard (obrigatório na pré-varredura)
+
+O scanner integrado executa `scripts/false_positive_guard.py` e mantém **todos** os achados no relatório. Sem evidência, o status continua `candidate_not_verified` e `autofix_permitted=false`. A regra `UH-013` é uma exceção que **não pode ser usada como violação**. Os IDs são conferidos com as 228 entradas de `references/rules.json`, inclusive contra um registro curado de associações detector→regra. Um defeito de acessibilidade/funcionamento não pode ser descartado como "intencional".
+
+Aprovada uma exceção legítima, registre justificativa verificável, revisor e caminho **específico do projeto** em `<projeto>/.anti-ai-slop/false-positive-guard.json` (modelo: `examples/false-positive-guard.policy.example.json`). O scanner aplica esse arquivo automaticamente para varredura da pasta; ou utilize `--policy <arquivo>`. Decisões aceitas: `intentional` ou `false_positive`. Para descartar P0/P1 como falso positivo, além de justificativa e evidência, `runtime_verified=true` só deve ser usado após teste real. Nenhuma exceção pode ter escopo global `*`. Revisões expiradas não são aplicadas, e decisões conflitantes bloqueiam o relatório.
+
+```bash
+python3 scripts/audit_slop.py /caminho/site --format json --out reports/static.json
+python3 scripts/audit_slop.py /caminho/site --policy /caminho/policy.json --format json
+python3 scripts/false_positive_guard.py reports/antigo.json --policy /caminho/policy.json --out reports/guarded.json
+python3 -m unittest tests.test_false_positive_guard -v
+```
+
+**Limite:** isso valida proveniência e governa triagem, mas **não mede automaticamente** verdade, autoria por IA ou qualidade estética. Ver `references/false-positive-guard.md` para o contrato de evidências e resultados de benchmark.
+
 ## Fluxo obrigatório
 
 ### Fase 0 — Levantar contexto e travar baseline
