@@ -14,6 +14,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from audit_templates import scan_template, scan_css
+from false_positive_guard import guard_report, load_json, MAPPINGS
 
 SUFFIXES = {'.tsx', '.jsx', '.ts', '.js', '.mjs', '.cjs', '.css', '.scss', '.sass', '.html', '.vue', '.svelte', '.astro', '.mdx'}
 SKIP = {'node_modules', '.next', 'dist', 'build', 'coverage', '.git', 'vendor', '.nuxt', '.svelte-kit', '.turbo', '.astro', '.output', '.vercel', '.cache', '__pycache__', 'playwright-report', 'test-results'}
@@ -21,21 +22,21 @@ LIMIT_BYTES = 2_000_000
 
 # Explicit provenance: each rule ID exists in references/rules.json.
 DETECTORS = [
-    ('GRADIENT_TEXT', r'(?:bg-clip-text[^\n]{0,120}text-transparent|text-transparent[^\n]{0,120}bg-clip-text|background-clip\s*:\s*text)', 1, ('IM-016', 'UH-004'), 'P2', 'medium', 'Verificar contraste, significado e identidade; não proibir gradientes.'),
+    ('GRADIENT_TEXT', r'(?:bg-clip-text[^\n]{0,120}text-transparent|text-transparent[^\n]{0,120}bg-clip-text|background-clip\s*:\s*text)', 1, ('IM-016','UH-004'), 'P2', 'medium', 'Verificar contraste, significado e identidade; não proibir gradientes.'),
     ('BLUE_VIOLET_GRADIENT', r'(?:from-(?:blue|indigo)-\d{2,3}[^\n]{0,150}to-(?:purple|violet|fuchsia)-\d{2,3}|linear-gradient\([^)]{0,200}#(?:2563eb|6366f1)[^)]{0,160}#(?:8b5cf6|a855f7))', 1, ('SA-013','IM-013','UH-003'), 'P3', 'low', 'Padrão comum; só corrigir se houver evidência de falta de identidade.'),
     ('UNIVERSAL_ROUNDING', r'\brounded-(?:2xl|3xl|full)\b', 4, ('SA-037','UH-006'), 'P3','low','Repetição de raios grandes: avaliar contexto e marca.'),
     ('OVERUSED_CENTERING', r'\btext-center\b', 5, ('IM-019','SA-028'), 'P3','low','Avaliar se centralização prejudica leitura ou hierarquia.'),
     ('REPEATED_THREE_COLUMN_GRID', r'\b(?:grid-cols-3|grid-template-columns\s*:\s*repeat\(3)\b', 3, ('SA-029','UH-010'),'P3','low','Avaliar variedade de layout conforme o conteúdo.'),
     ('ANIMATE_BOUNCE', r'\banimate-bounce\b|cubic-bezier\(\s*0\.68\s*,\s*-0\.55',1,('IM-026',),'P3','low','Checar intenção e movimento reduzido.'),
     ('EXCESSIVE_PULSE',r'\banimate-pulse\b',3,('SA-044',),'P3','low','Confirmar estados de loading reais.'),
-    ('BACKDROP_BLUR_EVERYWHERE',r'\bbackdrop-blur(?:-[a-z0-9]+)?\b|backdrop-filter\s*:\s*blur\(',4,('IM-002','UH-013'),'P3','low','Glassmorphism não é defeito automático.'),
+    ('BACKDROP_BLUR_EVERYWHERE',r'\bbackdrop-blur(?:-[a-z0-9]+)?\b|backdrop-filter\s*:\s*blur\(',4,('IM-002',),'P3','low','Glassmorphism não é defeito automático.'),
     ('EXCESSIVE_IMPORTANT',r'!important\b',4,('NX-045',),'P2','low','Revisar especificidade CSS e manutenção.'),
     ('LIFT_ON_HOVER',r'\bhover:-translate-y-(?:\d+|px)\b|:hover\s*\{[^}]{0,180}translateY\s*\(\s*-',4,('UC-026',),'P3','low','Repetição de lift; comparar com direção aprovada.'),
     ('EMOJI_AS_ICON_CANDIDATE',r'(?:<(?:span|button|div)\b[^>]*>\s*[\U0001F300-\U0001FAFF][^<]{0,6}<|[\'\"][\U0001F300-\U0001FAFF][\'\"])',1,('UH-008','UC-034'),'P2','medium','Ícone em emoji pode violar diretrizes; revisar contexto.'),
-    ('REPEATED_TRANSITION_ALL',r'\btransition-all\b',6,('NX-048',),'P3','low','Animar apenas propriedades necessárias.'),
-    ('FIXED_VIEWPORT_HEIGHT',r'\bh-screen\b|height\s*:\s*100vh',3,('NX-031',),'P2','low','Checar corte de conteúdo e teclado mobile.'),
-    ('EXCESSIVE_Z_INDEX',r'\bz-\[?(?:9999|99999)\]?\b|z-index\s*:\s*9999',2,('NX-044',),'P2','low','Checar contexto de empilhamento e modais.'),
-    ('PLACEHOLDER_TEXT',r'\b(?:lorem ipsum|your (?:amazing |awesome )?(?:tagline|headline) here|coming soon)\b',1,('NX-047',),'P2','medium','Texto provisório pode ter chegado à produção.'),
+    ('REPEATED_TRANSITION_ALL',r'\btransition-all\b',6,('SA-052',),'P3','low','Animar apenas propriedades necessárias.'),
+    ('FIXED_VIEWPORT_HEIGHT',r'\bh-screen\b|height\s*:\s*100vh',3,(),'P2','low','Checar corte de conteúdo e teclado mobile.'),
+    ('EXCESSIVE_Z_INDEX',r'\bz-\[?(?:9999|99999)\]?\b|z-index\s*:\s*9999',2,('NX-045',),'P2','low','Checar contexto de empilhamento e modais.'),
+    ('PLACEHOLDER_TEXT',r'\b(?:lorem ipsum|your (?:amazing |awesome )?(?:tagline|headline) here|coming soon)\b',1,('NX-043',),'P2','medium','Texto provisório pode ter chegado à produção.'),
 ]
 
 # Do not use regex on raw source: comments can contain entire fake JSX/CSS examples.
@@ -139,17 +140,17 @@ def scan_text(src: str, filename: str) -> list[dict]:
     for position, tag, attrs in iter_tags(code):
         line=line_of(code,position)
         if tag in ('img','Image') and not ALT_RE.search(attrs):
-            findings.append(finding('MISSING_IMG_ALT',filename,line,('NX-021','SA-034'),'P1_CANDIDATE','high',f'<{tag}> sem alt; imagem decorativa requer alt="", informativa precisa descrição.'))
+            findings.append(finding('MISSING_IMG_ALT',filename,line,('SA-076',),'P1_CANDIDATE','high',f'<{tag}> sem alt; imagem decorativa requer alt="", informativa precisa descrição.'))
         if tag in ('a','Link') and HREF_RE.search(attrs):
             findings.append(finding('PLACEHOLDER_HREF',filename,line,('NX-043','NX-056'),'P0_CANDIDATE','medium','Link parece placeholder; # pode ser âncora de topo legítima.'))
         if HANDLER_EMPTY.search(attrs):
             findings.append(finding('EMPTY_ONCLICK',filename,line,('NX-056',),'P0_CANDIDATE','high','Handler vazio: funcionalidade incompleta possível.'))
         if tag in ('div','span') and re.search(r'\bonClick\s*=',attrs) and not (ROLE_RE.search(attrs) and KEY_RE.search(attrs)):
-            findings.append(finding('NON_SEMANTIC_CLICK',filename,line,('NX-022','NX-056'),'P1_CANDIDATE','medium','Elementos clicáveis não semânticos: preferir button ou garantir teclado e semântica.'))
+            findings.append(finding('NON_SEMANTIC_CLICK',filename,line,('SA-075',),'P1_CANDIDATE','medium','Elementos clicáveis não semânticos: preferir button ou garantir teclado e semântica.'))
         if tag=='video' and re.search(r'\bautoPlay\b|\bautoplay\b',attrs,re.I) and not re.search(r'\bmuted\b',attrs,re.I):
-            findings.append(finding('AUTOPLAY_UNMUTED',filename,line,('NX-038',),'P1_CANDIDATE','medium','Autoplay com áudio possível; verificar browser, acesso e controle de reprodução.'))
+            findings.append(finding('AUTOPLAY_UNMUTED',filename,line,(),'P1_CANDIDATE','medium','Autoplay com áudio possível; verificar browser, acesso e controle de reprodução.'))
         if tag=='iframe' and not re.search(r'\btitle\s*=',attrs,re.I):
-            findings.append(finding('IFRAME_MISSING_TITLE',filename,line,('NX-021',),'P1_CANDIDATE','high','iframe sem título acessível.'))
+            findings.append(finding('IFRAME_MISSING_TITLE',filename,line,('SA-076',),'P1_CANDIDATE','high','iframe sem título acessível.'))
     if Path(filename).suffix.lower() in {'.html','.vue','.astro','.svelte'}:
         from markup_audit import scan_markup
         findings.extend(scan_markup(src, filename, lambda key,line,rules,sev,conf,note: finding(key,filename,line,rules,sev,conf,note)))
@@ -161,7 +162,7 @@ def scan_text(src: str, filename: str) -> list[dict]:
     return sorted(findings,key=lambda f:(f['line'],f['key']))
 
 
-def audit(path: Path, max_bytes: int=LIMIT_BYTES, use_ast: bool=False) -> dict:
+def audit(path: Path, max_bytes: int=LIMIT_BYTES, use_ast: bool=False, policy=None) -> dict:
     if not path.exists(): raise FileNotFoundError(path)
     if path.is_symlink(): raise ValueError('Pasta/arquivo symlink não permitido como raiz')
     root=path if path.is_dir() else path.parent
@@ -234,16 +235,21 @@ def audit(path: Path, max_bytes: int=LIMIT_BYTES, use_ast: bool=False) -> dict:
     findings.sort(key=lambda f:(f['file'],f['line'],f['key']))
     for i, entry in enumerate(findings,1): entry['id']=f'STATIC-{i:04}'
     counts=dict(Counter(f['key'] for f in findings))
-    static_covered=sorted({r for d in DETECTORS for r in d[3]}|{'NX-021','SA-034','NX-043','NX-056','NX-022','NX-038','SA-076','NX-040','IM-033','NX-037'})
-    return {'scanner':'anti-ai-slop/static-prescreen-2.1','timestamp_utc':datetime.now(timezone.utc).isoformat(),
+    static_covered=sorted({rid for ids in MAPPINGS.values() for rid in ids})
+    report = {'scanner':'anti-ai-slop/static-prescreen-2.2','timestamp_utc':datetime.now(timezone.utc).isoformat(),
             'path':str(path.resolve()),'files_scanned':checked,'oversized_files_skipped':skipped_large,
             'unsafe_symlinks_skipped':skipped_unsafe,'ast_files_scanned':ast_used,'read_errors':errors,'candidate_count':len(findings),
             'static_rule_ids':static_covered,'static_rule_count':len(static_covered),'counts_by_key':counts,'findings':findings,
             'warning':'Heuristic candidates only. No files changed; use browser and agent triage before repairs.'}
+    if policy is None and path.is_dir():
+        automatic = path / '.anti-ai-slop' / 'false-positive-guard.json'
+        if automatic.is_file():
+            policy = load_json(automatic)
+    return guard_report(report, policy=policy)
 
 
 def to_markdown(result:dict)->str:
-    lines=['# Pré-varredura estática Anti-AI-Slop','',f"- Arquivos: **{result['files_scanned']}**",f"- Candidatos: **{result['candidate_count']}**",f"- Symlinks ignorados: **{result['unsafe_symlinks_skipped']}**",'- Achados não são automaticamente defeitos confirmados.','', '| ID | Detector | Fonte | Local | Severidade |','|---|---|---|---|---|']
+    lines=['# Pré-varredura estática Anti-AI-Slop','',f"- Arquivos: **{result['files_scanned']}**",f"- Candidatos: **{result['candidate_count']}**",f"- Symlinks ignorados: **{result['unsafe_symlinks_skipped']}**",'- Achados não são automaticamente defeitos confirmados.',f"- Revisões contextuais: **{result.get('guard',{}).get('reviewed_count',0)}**",'', '| ID | Detector | Fonte | Local | Severidade |','|---|---|---|---|---|']
     for f in result['findings']:
         lines.append(f"| {f['id']} | {f['key']} | {', '.join(f['source_rules'])} | `{f['file']}:{f['line']}` | {f['severity']} |")
     lines+=['','Executar revisão contextual, testes, build e validação de navegador antes de alterar código.','']
@@ -256,8 +262,9 @@ def main():
     p.add_argument('--format',choices=['json','md','text'],default='text')
     p.add_argument('--out',type=Path)
     p.add_argument('--ast',action='store_true',help='Opcional: usa TypeScript AST para JSX/TSX (requer node + typescript)')
+    p.add_argument('--policy', type=Path, help='Revisões justificadas; padrão: <projeto>/.anti-ai-slop/false-positive-guard.json')
     args=p.parse_args()
-    try: result=audit(args.path,use_ast=args.ast)
+    try: result=audit(args.path,use_ast=args.ast,policy=load_json(args.policy) if args.policy else None)
     except (OSError,ValueError) as e: p.error(str(e))
     output=json.dumps(result,indent=2,ensure_ascii=False)+'\n' if args.format=='json' else to_markdown(result)
     if args.out:
