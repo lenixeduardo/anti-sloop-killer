@@ -8,6 +8,12 @@
 
 > A skill não considera uma cor, fonte, biblioteca ou efeito visual um erro isoladamente. Detecta problemas **contextuais e demonstráveis**, orienta correções e exige evidências de homologação. A meta de 9,5/10 é um critério de qualidade condicionado a testes reais, não uma promessa automática.
 
+## False Positive Guard — prevenção de falsos positivos
+
+A pré-varredura agora passa pelo **False Positive Guard**, que confere os IDs do catálogo e as associações detector→regra, mantém candidatos não verificados como pendentes e só aceita exceções de marca com escopo, justificativa, evidência e revisor. **P0/P1 não podem ser descartados como escolhas intencionais**; uma classificação de falso positivo exige confirmação funcional explícita. Nenhuma regra estética isolada gera correção automática.
+
+Use `python3 scripts/audit_slop.py ./meu-projeto --format json --out reports/static.json`. Para exceções previamente aprovadas, consulte [`references/false-positive-guard.md`](references/false-positive-guard.md) e o exemplo `examples/false-positive-guard.policy.example.json`.
+
 ## O que está incluído
 
 - **228 verificações catalogadas:** 87 Sailop, 37 Impeccable, 13 tópicos Unslop UI, 35 sinais complementares e 56 verificações adicionais. São identificadores do catálogo; parte dos conceitos se sobrepõe entre fontes.
