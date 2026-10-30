@@ -224,11 +224,11 @@ def audit(path: Path, max_bytes: int=LIMIT_BYTES, use_ast: bool=False) -> dict:
             except (FileNotFoundError,subprocess.SubprocessError,json.JSONDecodeError,KeyError) as e:
                 errors.append({'file':str(candidate.relative_to(root)),'error':f'AST indisponível: {str(e)[:250]}'})
         findings.extend(candidates)
-    # Multiple scanners can flag the same element. One (file,line,key) is one finding.
+    # The AST and lexical passes can produce the same finding on an element.
     unique={}
     for entry in findings:
         key=(entry['file'],entry['line'],entry['key'])
-        if key not in unique or entry.get('detector_engine')=='html-tokenizer':
+        if key not in unique or entry.get('detector_engine')=='typescript-jsx-ast':
             unique[key]=entry
     findings=list(unique.values())
     findings.sort(key=lambda f:(f['file'],f['line'],f['key']))

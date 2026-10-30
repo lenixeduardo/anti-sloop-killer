@@ -41,8 +41,13 @@ class TemplateParser(HTMLParser):
         inside_label=any(x=='label' for x in self.stack)
         if tag=='label' and attrs.get('for'):
             self.labels.add(attrs['for'])
-        if tag=='input':
-            self.inputs.append((lineno, attrs, inside_label))
+        if tag in ('input', 'select', 'textarea'):
+            self.inputs.append((lineno, attrs, inside_label, tag))
+        # Only constant positive tabindex values: dynamic bindings need browser review.
+        tab=(attrs.get('tabindex') or '').strip()
+        if tab.isdecimal() and int(tab)>0 and not any(k.startswith(('v-bind:tabindex', ':tabindex', 'bind:tabindex')) for k in attrs):
+            self.issues.append(issue('POSITIVE_TABINDEX',self.filename,lineno,('NX-037','SA-076'),
+                'P1_CANDIDATE','high','tabindex positivo sobrepõe a ordem natural de foco.'))
         if tag=='img' and 'alt' not in attrs:
             self.issues.append(issue('MISSING_IMG_ALT',self.filename,lineno,('NX-021','SA-034'),
                          'P1_CANDIDATE','high','img sem atributo alt; WCAG 1.1.1.'))
@@ -74,14 +79,15 @@ class TemplateParser(HTMLParser):
             del self.stack[index:]
 
     def finish(self):
-        for line, attrs, nested in self.inputs:
-            if attrs.get('type','').lower() in {'hidden','button','submit','reset','image'}:
+        for line, attrs, nested, tag in self.inputs:
+            if tag=='input' and attrs.get('type','').lower() in {'hidden','button','submit','reset','image'}:
                 continue
             named=any(attrs.get(key) for key in ('aria-label','aria-labelledby','title'))
             matching_id=attrs.get('id') in self.labels if attrs.get('id') else False
             if not (named or matching_id or nested):
-                self.issues.append(issue('UNLABELED_INPUT',self.filename,line,('SA-076','NX-040'),
-                     'P1_CANDIDATE','high','Campo sem nome acessível estático; WCAG 3.3.2/4.1.2.'))
+                self.issues.append(issue({'input':'UNLABELED_INPUT','select':'UNLABELED_SELECT','textarea':'UNLABELED_TEXTAREA'}[tag],
+                     self.filename,line,('SA-076','NX-040'), 'P1_CANDIDATE','high',
+                     'Controle sem nome acessível estático; WCAG 3.3.2/4.1.2.'))
         return sorted(self.issues,key=lambda item:(item['line'],item['key']))
 
 

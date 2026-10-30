@@ -21,6 +21,25 @@
 - **Preservação obrigatória:** mantém logotipos, fotos, tokens, fontes e layouts aprovados; não inventa imagens, depoimentos ou integrações.
 - **Instalação por projeto ou usuário:** Codex, Claude Code, Cursor e diretório genérico `.agents/skills/`.
 
+## Benchmark adicional de detecção e correção (v1.8)
+
+Três tipos objetivos de problemas foram incluídos nos detectores estáticos:
+`POSITIVE_TABINDEX`, `UNLABELED_SELECT` e `UNLABELED_TEXTAREA`.
+Há dez arquivos de benchmark rotulados em cinco frameworks, sendo cinco
+negativos; um benchmark separado testa correção estrutural com verificação
+pré/pós, preservação da marca, rollback e navegação real em Chromium (HTML).
+
+```bash
+python scripts/run_accessibility_benchmark.py --out reports/benchmark-accessibility.json
+python scripts/run_structural_benchmark.py --out reports/benchmark-structural.json
+# Opcional: requer Playwright e Chromium instalados
+python scripts/run_structural_benchmark.py --browser --out reports/structural-browser.json
+```
+
+**Os resultados são específicos de casos sintéticos**, não comprovam desempenho
+em sites externos nem cobertura completa dos 228 IDs. A execução JSX completa
+requer TypeScript AST; o modo sem AST possui métricas separadas.
+
 ## Requisitos
 
 - **Python 3.9+** para o instalador e scanner. O instalador usa exclusivamente a biblioteca padrão.

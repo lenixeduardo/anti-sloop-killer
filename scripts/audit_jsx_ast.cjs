@@ -22,7 +22,7 @@ const attr=(node,name)=>node.attributes.properties.find(x=>ts.isJsxAttribute(x)&
 const strValue=initializer=>{
   if(!initializer)return null;
   if(ts.isStringLiteral(initializer))return initializer.text;
-  if(ts.isJsxExpression(initializer)&&initializer.expression&&ts.isStringLiteral(initializer.expression))return initializer.expression.text;
+  if(ts.isJsxExpression(initializer)&&initializer.expression&&(ts.isStringLiteral(initializer.expression)||ts.isNumericLiteral(initializer.expression)))return initializer.expression.text;
   return null;
 };
 function emptyHandler(item){
@@ -79,6 +79,10 @@ function visit(node){
       issue('EMPTY_IMAGE_SRC',node,['NX-021'],'P1_CANDIDATE','high','Imagem com src vazio.');
     const hidden=attrString(node,'aria-hidden')==='true';
     const tabindex=attrString(node,'tabIndex')||attrString(node,'tabindex');
+    // Positive literal tabIndex changes expected sequential keyboard navigation.
+    const positiveIndex=attrString(node,'tabIndex') ?? attrString(node,'tabindex');
+    if(positiveIndex!==null && /^\d+$/.test(positiveIndex) && Number(positiveIndex)>0)
+      issue('POSITIVE_TABINDEX',node,['NX-037','SA-076'],'P1_CANDIDATE','high','Ordem de foco alterada por tabIndex positivo.');
     const focusable=['a','button','input','select','textarea'].includes(tag) && !(tag==='a'&&!attr(node,'href'));
     if(hidden && !attr(node,'disabled') && tabindex!=='-1' && (focusable||(tabindex!==null && Number(tabindex)>=0)))
       issue('ARIA_HIDDEN_FOCUSABLE',node,['NX-022','SA-076'],'P1_CANDIDATE','high','Elemento focável oculto da árvore de acessibilidade.');
@@ -87,10 +91,10 @@ function visit(node){
       if(!rel.includes('noopener')&&!rel.includes('noreferrer'))
         issue('EXTERNAL_TARGET_REL',node,['NX-022'],'P3_CANDIDATE','low','Verificar política de rel=noopener; browsers modernos isolam _blank.');
     }
-    if(tag==='input'&&!['hidden','button','submit','reset','image'].includes(attrString(node,'type'))){
+    if(['input','select','textarea'].includes(tag) && (tag!=='input'||!['hidden','button','submit','reset','image'].includes(attrString(node,'type')))){
       const id=attrString(node,'id');
       if(!attr(node,'aria-label')&&!attr(node,'aria-labelledby')&&!attr(node,'title')&&!parentLabel(node)&&!(id&&labelsFor.has(id)))
-        issue('UNLABELED_INPUT',node,['SA-076','NX-022'],'P1_CANDIDATE','medium','Input sem nome acessível evidente.');
+        issue({input:'UNLABELED_INPUT',select:'UNLABELED_SELECT',textarea:'UNLABELED_TEXTAREA'}[tag],node,['SA-076','NX-022'],'P1_CANDIDATE','medium','Controle sem nome acessível evidente.');
     }
     if(tag==='button'){
       if(!attr(node,'aria-label')&&!attr(node,'aria-labelledby')&&!attr(node,'title')&&!nameFromChildren(node.parent))

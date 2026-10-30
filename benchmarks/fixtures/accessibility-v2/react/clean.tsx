@@ -1,0 +1,1 @@
+export default function P(){return <main><label htmlFor="region">Região</label><select id="region"><option>BR</option></select><label>Bio<textarea id="bio" /></label><a href="/ok" tabIndex={0}>Ir</a><a href="/dynamic" tabIndex={order}>Variável</a></main>};const order=1;

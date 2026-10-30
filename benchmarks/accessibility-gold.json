@@ -1,0 +1,86 @@
+{
+  "schema": "anti-ai-slop/high-confidence-v2",
+  "provenance": "Author-controlled synthetic fixtures; not an independent external evaluation.",
+  "cases": [
+    {
+      "framework": "html",
+      "path": "html/broken.html",
+      "split": "development",
+      "expected": [
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA",
+        "POSITIVE_TABINDEX"
+      ]
+    },
+    {
+      "framework": "html",
+      "path": "html/clean.html",
+      "split": "development",
+      "expected": []
+    },
+    {
+      "framework": "react",
+      "path": "react/broken.tsx",
+      "split": "holdout",
+      "expected": [
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA",
+        "POSITIVE_TABINDEX"
+      ]
+    },
+    {
+      "framework": "react",
+      "path": "react/clean.tsx",
+      "split": "holdout",
+      "expected": []
+    },
+    {
+      "framework": "vue",
+      "path": "vue/broken.vue",
+      "split": "development",
+      "expected": [
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA",
+        "POSITIVE_TABINDEX"
+      ]
+    },
+    {
+      "framework": "vue",
+      "path": "vue/clean.vue",
+      "split": "development",
+      "expected": []
+    },
+    {
+      "framework": "astro",
+      "path": "astro/broken.astro",
+      "split": "holdout",
+      "expected": [
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA",
+        "POSITIVE_TABINDEX"
+      ]
+    },
+    {
+      "framework": "astro",
+      "path": "astro/clean.astro",
+      "split": "holdout",
+      "expected": []
+    },
+    {
+      "framework": "svelte",
+      "path": "svelte/broken.svelte",
+      "split": "development",
+      "expected": [
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA",
+        "POSITIVE_TABINDEX"
+      ]
+    },
+    {
+      "framework": "svelte",
+      "path": "svelte/clean.svelte",
+      "split": "development",
+      "expected": []
+    }
+  ]
+}

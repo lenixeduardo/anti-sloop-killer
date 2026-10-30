@@ -1,0 +1,106 @@
+{
+  "benchmark": "anti-ai-slop/structural-v1",
+  "tested": 5,
+  "passed": 5,
+  "negative_tests": [
+    {
+      "name": "failed_acceptance_rolls_back",
+      "passed": true
+    },
+    {
+      "name": "baseline_drift_rejected",
+      "passed": true
+    }
+  ],
+  "browser": [
+    {
+      "viewport": "desktop",
+      "passed": true,
+      "screenshot": "reports/structural-desktop.png"
+    },
+    {
+      "viewport": "tablet",
+      "passed": true,
+      "screenshot": "reports/structural-tablet.png"
+    },
+    {
+      "viewport": "mobile",
+      "passed": true,
+      "screenshot": "reports/structural-mobile.png"
+    }
+  ],
+  "results": [
+    {
+      "framework": "html",
+      "passed": true,
+      "preview_no_mutation": true,
+      "acceptance_status": "applied_verified",
+      "brand_and_copy_preserved": true,
+      "exactly_one_targeted_attribute_changed": true,
+      "finding_removed": true,
+      "baseline_sha256": "b7e1829bf912a695353fbbc2e9a59251c9ac5f2f3ad3a3af88ed5fa2a525f425",
+      "result_sha256": "d137275edc3b5b511eb0701b079052430f9440ee01886991081c440f96c842b4",
+      "before_count": 1,
+      "after_count": 0,
+      "browser_interactions_passed": true
+    },
+    {
+      "framework": "react",
+      "passed": true,
+      "preview_no_mutation": true,
+      "acceptance_status": "applied_verified",
+      "brand_and_copy_preserved": true,
+      "exactly_one_targeted_attribute_changed": true,
+      "finding_removed": true,
+      "baseline_sha256": "bec1aaf5311f0fbaa2995f7b1ec2d66ff01120498bfd837fc3a78cc1f1e5fbd9",
+      "result_sha256": "635c14943efcf8d4fbef4ced7ea0ca5b99ff2fb0699352c267e7f16d800f8e56",
+      "before_count": 1,
+      "after_count": 0
+    },
+    {
+      "framework": "vue",
+      "passed": true,
+      "preview_no_mutation": true,
+      "acceptance_status": "applied_verified",
+      "brand_and_copy_preserved": true,
+      "exactly_one_targeted_attribute_changed": true,
+      "finding_removed": true,
+      "baseline_sha256": "8b0de74702b94b5f999282d6c4b2626be14e59c0a555b7c253129b8819d50eea",
+      "result_sha256": "a1b9ffb11b61688464319abaf40f8725fb776719333c6b381c1e2e2e1e67927b",
+      "before_count": 1,
+      "after_count": 0
+    },
+    {
+      "framework": "astro",
+      "passed": true,
+      "preview_no_mutation": true,
+      "acceptance_status": "applied_verified",
+      "brand_and_copy_preserved": true,
+      "exactly_one_targeted_attribute_changed": true,
+      "finding_removed": true,
+      "baseline_sha256": "882de056c29bf5f9074f505f7aa2c4ea6000a5c1a997694760beac3f3e55ffbd",
+      "result_sha256": "1a177a56fbbdace4f2e15de90ef5ecbbdf4ca1907c0d45e11642bc5ee62cd06a",
+      "before_count": 1,
+      "after_count": 0
+    },
+    {
+      "framework": "svelte",
+      "passed": true,
+      "preview_no_mutation": true,
+      "acceptance_status": "applied_verified",
+      "brand_and_copy_preserved": true,
+      "exactly_one_targeted_attribute_changed": true,
+      "finding_removed": true,
+      "baseline_sha256": "ca6998688a3808cbb7ae5deb9d3c462f7f77c00bc6efeeb7a8edebd826888e21",
+      "result_sha256": "bc744a7f5181cbc714e4c93dae69db07887dd6328c2355ae3097bd6f7f90cfa2",
+      "before_count": 1,
+      "after_count": 0
+    }
+  ],
+  "status": "passed",
+  "limitations": [
+    "Isolated controlled fixtures; compiled SSR/framework apps and external HTTPS sites not tested.",
+    "Tests verify targeted attribute corrections and brand/content preservation, not design originality.",
+    "No authenticated agent execution or independent human adjudication."
+  ]
+}

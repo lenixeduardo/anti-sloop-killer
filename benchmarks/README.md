@@ -1,39 +1,48 @@
-# Benchmark de detecção Anti-AI-Slop
+# Benchmark estático Anti-AI-Slop — cinco formatos
 
-## Escopo e limites (obrigatório antes de interpretar as métricas)
+## Objetivo
 
-Este repositório contém **dois conjuntos sintéticos**, não cinco aplicações externas de produção:
+Estabelecer **rótulos explícitos e reproduzíveis** para o scanner antes da avaliação de sites reais. São dez arquivos (um defeituoso e um limpo por formato): HTML, Next.js/React TSX, Vue SFC, Astro e Svelte. Os casos limpos verificam falsos positivos (inclusive links âncora legítimos, texto com cor de marca, inputs com labels e comentários).
 
-1. `fixtures/` + `gold.json`: dez arquivos rotulados, cinco stacks (HTML, React/Next, Vue, Astro e Svelte), divididos em desenvolvimento e holdout público. Mede a presença de tipos de defeito por arquivo.
-2. `cases/` + `ground-truth.json`: cinco **cenários de produto** (portfólio HTML, Next/React, Vue/Astro, e-commerce e dashboard), cada um com casos defeituosos e seguros. Mede pares `(caminho relativo, detector)`.
+- Gabarito: `gold.json`. Unidade de avaliação: par **(arquivo, identificador de detector)**, não contagem de ocorrências.
+- `development`: 5 arquivos para iteração de detectores.
+- `holdout`: 5 arquivos com avaliação separada. **É um conjunto público e sintético**, não uma amostra oculta nem um teste de produção; não é independente do autor da implementação.
+- Verificação: `python scripts/run_benchmark.py --out reports/benchmark.json --min-precision .90 --min-recall .85` (usa TypeScript AST quando disponível).
+- Fallback sem AST: `python scripts/run_benchmark.py --no-ast`. Não apresentar o recall do fallback como cobertura AST.
+- Nenhum arquivo é modificado pelo scanner nem pelo benchmark.
 
-Os conjuntos não são estatisticamente independentes nem representam distribuição real de produção. O gabarito está versionado junto ao código; **ainda falta revisão humana externa, dois deployments HTTPS reais e casos de fluxos de negócio**. Os números de precisão/recall aqui reportados são somente sobre os defeitos objetivos rotulados nas fixtures, e **não medem** cobertura dos 228 padrões estéticos.
+## Interpretação responsável
 
-## Como reproduzir
+Precisão = TP/(TP+FP), recall = TP/(TP+FN), F1 = média harmônica, avaliados sobre defeitos **objetivos rotulados**. Não mede estética, qualidade de correções, segurança de produção, performance, semelhança entre projetos ou a cobertura integral das 228 heurísticas. Detectores P3 (ex.: `target=_blank` sem `rel`) são **candidatos**; navegadores modernos aplicam isolamento implícito.
 
-Requisitos: Python 3.9+, Node.js e TypeScript resolvível pelo script `audit_jsx_ast.cjs`.
+### Próximas avaliações externas
+
+Congelar os rótulos deste benchmark, adicionar projetos de terceiros com permissão de uso e gabaritos revisados por avaliadores diferentes; medir resultados por framework, severidade e detector; acompanhar casos de falso positivo com exemplos verdadeiros de marca e páginas dinâmicas. Não aumentar a nota geral da skill apenas por passar nestas fixtures.
+
+## Extensão v1.8 — qualidade das correções estruturais e três novos detectores
+
+Os arquivos `fixtures/accessibility-v2/` contêm cinco pares *broken/clean* rotulados
+em `accessibility-gold.json`. Três problemas objetivos novos são avaliados:
+`POSITIVE_TABINDEX`, `UNLABELED_SELECT`, `UNLABELED_TEXTAREA`.
+A execução mede precisão e recall por **par (arquivo, tipo de defeito)**, incluindo
+controles negativos: labels corretas, tabIndex zero/negativo/dinâmico e código comentado.
 
 ```bash
-npm install --no-save --no-package-lock typescript@5.9.3
-python scripts/run_benchmark.py --min-precision 0.90 --min-recall 0.85 --out reports/benchmark-stacks.json
-python scripts/run_scenario_benchmark.py --out reports/benchmark-scenarios.json
-python -m unittest discover -s tests -v
+python scripts/run_accessibility_benchmark.py --out reports/benchmark-accessibility.json
+python scripts/run_accessibility_benchmark.py --no-ast --min-recall 0.75 --out reports/benchmark-accessibility-fallback.json
+python scripts/run_structural_benchmark.py --out reports/benchmark-structural.json
+python scripts/run_structural_benchmark.py --browser --out reports/structural-browser.json
 ```
 
-A avaliação de `gold.json` possui duas divisões: `development` e `holdout`; ambas são explícitas e podem ser inspecionadas. Não trate `holdout` como cego, privado ou coletado independentemente.
+`structural/` é um conjunto separado de cinco fontes controladas (HTML, TSX,
+Vue, Astro e Svelte). Cada teste deve apresentar falha inicial, proposta, diff
+sem mutação, aplicação com teste de aceitação, ausência posterior do problema,
+preservação literal da identidade e conteúdo, mais dois casos negativos de
+hash desatualizado e rollback. Com `--browser`, só **HTML puro** recebe
+navegação real no Chromium nas três resoluções; não afirmar execução de apps
+compilados Vue/React/Astro/Svelte em navegador a partir desses resultados.
 
-- **TP:** detector indicou defeito esperado no gabarito.
-- **FP:** detector apontou defeito não rotulado (ainda pode ser defeito legítimo; revisar antes de alterar o gabarito).
-- **FN:** o gabarito esperava algo que o detector não encontrou.
-- **Precisão:** TP/(TP+FP). **Recall:** TP/(TP+FN).
-- Casos legítimos em `clean.*` verificam que a skill não penaliza automaticamente fontes, paletas ou bibliotecas aprovadas.
-
-## Para concluir o benchmark independente (pendente)
-
-1. Selecionar cinco projetos **independentes** (HTML, Next/React, Vue/Astro, e-commerce HTTPS, dashboard HTTPS) com permissão de auditoria e commits imutáveis.
-2. Criar inventário de defeitos por especialistas antes de executar o scanner; incluir casos negativos e justificar estética intencional.
-3. Comparar resultados com análise cega por ao menos dois revisores. Reportar discordâncias, precisão, recall e intervalo por stack.
-4. Registrar para os dois sites HTTPS: URL testada, SHA do commit, data, recursos críticos, screenshots, fluxos de autenticação e acesso permitido.
-5. Executar a skill sem acesso ao gabarito, preservar referências, executar correção + regressão e publicar **evidências reais**. Não preencher como aprovado quando estiver indisponível.
-
-O modelo para os sites externos fica em `external-targets.example.json` e não contém URLs inventadas.
+**Limitação metodológica:** todos os exemplos são sintéticos e rotulados pela
+equipe implementadora. A ausência de falsos positivos *nesses arquivos* não
+autoriza alegar falsos positivos zero em websites independentes. Testes HTTPS
+externos e revisão humana continuam necessários para meta global de 9,5/10.

@@ -1,0 +1,190 @@
+{
+  "benchmark": "anti-ai-slop/high-confidence-v2",
+  "provenance": "Author-controlled synthetic fixtures; not an independent external evaluation.",
+  "metrics": {
+    "tp": 15,
+    "fp": 0,
+    "fn": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "cases": [
+    {
+      "file": "html/broken.html",
+      "framework": "html",
+      "split": "development",
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "expected": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "observed": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "html/clean.html",
+      "framework": "html",
+      "split": "development",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "expected": [],
+      "observed": [],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "react/broken.tsx",
+      "framework": "react",
+      "split": "holdout",
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "expected": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "observed": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "other_candidates": [],
+      "ast_files_scanned": 1,
+      "read_errors": []
+    },
+    {
+      "file": "react/clean.tsx",
+      "framework": "react",
+      "split": "holdout",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "expected": [],
+      "observed": [],
+      "other_candidates": [],
+      "ast_files_scanned": 1,
+      "read_errors": []
+    },
+    {
+      "file": "vue/broken.vue",
+      "framework": "vue",
+      "split": "development",
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "expected": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "observed": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "vue/clean.vue",
+      "framework": "vue",
+      "split": "development",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "expected": [],
+      "observed": [],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "astro/broken.astro",
+      "framework": "astro",
+      "split": "holdout",
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "expected": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "observed": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "astro/clean.astro",
+      "framework": "astro",
+      "split": "holdout",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "expected": [],
+      "observed": [],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "svelte/broken.svelte",
+      "framework": "svelte",
+      "split": "development",
+      "tp": 3,
+      "fp": 0,
+      "fn": 0,
+      "expected": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "observed": [
+        "POSITIVE_TABINDEX",
+        "UNLABELED_SELECT",
+        "UNLABELED_TEXTAREA"
+      ],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    },
+    {
+      "file": "svelte/clean.svelte",
+      "framework": "svelte",
+      "split": "development",
+      "tp": 0,
+      "fp": 0,
+      "fn": 0,
+      "expected": [],
+      "observed": [],
+      "other_candidates": [],
+      "ast_files_scanned": 0,
+      "read_errors": []
+    }
+  ],
+  "frameworks": 5,
+  "limitations": [
+    "Synthetic and authored by the implementation team; not independent external evaluation.",
+    "Dynamic expressions require live browser review.",
+    "File/issue pair scoring is not an indication of all 228 catalog rules."
+  ]
+}

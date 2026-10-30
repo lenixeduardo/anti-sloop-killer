@@ -1,0 +1,1 @@
+export default function Portfolio(){return <><header data-brand="SEVEN"><h1>Engineering portfolio</h1></header><main><a id="cta" href="#">Ver projetos</a><section id="projects" aria-label="Projetos"><h2>Cases reais</h2><p>PORTUS, KAIROS e AVAL</p></section></main><footer data-asset="brand-logo.svg">Contato</footer></>;}

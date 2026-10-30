@@ -1,0 +1,71 @@
+{
+  "schema": "anti-ai-slop/structural-benchmark/v1",
+  "provenance": "Controlled benchmark: five independent fixture files authored for regression, not external production apps.",
+  "cases": [
+    {
+      "framework": "html",
+      "file": "html/index.html",
+      "id": "cta",
+      "old": "href=\"#\"",
+      "new": "href=\"#projects\"",
+      "finding": "PLACEHOLDER_HREF",
+      "preserve": [
+        "data-brand=\"SEVEN\"",
+        "data-asset=\"brand-logo.svg\"",
+        "PORTUS, KAIROS e AVAL"
+      ]
+    },
+    {
+      "framework": "react",
+      "file": "react/page.tsx",
+      "id": "cta",
+      "old": "href=\"#\"",
+      "new": "href=\"#projects\"",
+      "finding": "PLACEHOLDER_HREF",
+      "preserve": [
+        "data-brand=\"SEVEN\"",
+        "data-asset=\"brand-logo.svg\"",
+        "PORTUS, KAIROS e AVAL"
+      ]
+    },
+    {
+      "framework": "vue",
+      "file": "vue/Feature.vue",
+      "id": "cta",
+      "old": "href=\"#\"",
+      "new": "href=\"#projects\"",
+      "finding": "PLACEHOLDER_HREF",
+      "preserve": [
+        "data-brand=\"SEVEN\"",
+        "data-asset=\"brand-logo.svg\"",
+        "PORTUS, KAIROS e AVAL"
+      ]
+    },
+    {
+      "framework": "astro",
+      "file": "astro/index.astro",
+      "id": "cta",
+      "old": "href=\"#\"",
+      "new": "href=\"#projects\"",
+      "finding": "PLACEHOLDER_HREF",
+      "preserve": [
+        "data-brand=\"SEVEN\"",
+        "data-asset=\"brand-logo.svg\"",
+        "PORTUS, KAIROS e AVAL"
+      ]
+    },
+    {
+      "framework": "svelte",
+      "file": "svelte/App.svelte",
+      "id": "cta",
+      "old": "href=\"#\"",
+      "new": "href=\"#projects\"",
+      "finding": "PLACEHOLDER_HREF",
+      "preserve": [
+        "data-brand=\"SEVEN\"",
+        "data-asset=\"brand-logo.svg\"",
+        "PORTUS, KAIROS e AVAL"
+      ]
+    }
+  ]
+}

@@ -45,6 +45,12 @@ Transformar **um projeto web existente** em uma interface distintiva, funcional,
 - O scanner também usa parser de templates HTML/Vue/Astro/Svelte para candidatos de linguagem, título, viewport, IDs duplicados, labels, botões sem nome e elementos ocultos ainda focáveis. Casos com bindings dinâmicos precisam de inspeção DOM real.
 - Uma nota geral ≥9,5 só poderá ser homologada após benchmarks externos rotulados, execução em agentes e revisão visual independente, além das fixtures.
 
+### Benchmark de correções e detecção acessível (v1.8)
+
+- Executar `python scripts/run_accessibility_benchmark.py --out reports/accessibility-v18.json` para medir três defeitos objetivos (`POSITIVE_TABINDEX`, `UNLABELED_SELECT`, `UNLABELED_TEXTAREA`) com positivos e negativos nas cinco stacks. Caso TypeScript AST não esteja disponível, documentar queda de recall e **não** atribuir desempenho AST ao fallback.
+- Executar `python scripts/run_structural_benchmark.py --out reports/structural-v18.json` para evidência de correção precisa, preservação de conteúdo/identidade, testes de aceitação, rollback e baseline. Se houver Chromium/Playwright, acrescentar `--browser` para navegação efetiva do HTML em três viewports.
+- Os testes são controlados e sintéticos. Não são equivalentes a cinco aplicações externas nem aprovação estética da marca. Ver `benchmarks/README.md` e `evidence/QUALITY_V18.md`.
+
 ### Fase 1 — Inventário integral e triagem
 
 - Ler `references/catalogo-completo.md` por categoria e consultar `references/rules.json` para avaliar **todos os IDs aplicáveis**: `SA-001..087`, `IM-001..037`, `UH-001..013`, `UC-001..035`, `NX-001..056`, e paletas `P01..P14`.

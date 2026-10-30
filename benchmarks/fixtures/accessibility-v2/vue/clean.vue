@@ -1,0 +1,1 @@
+<template><main><label for="region">Região</label><select id="region"><option>BR</option></select><label>Bio<textarea id="bio"></textarea></label><a href="/ok" tabindex="0">Ir</a><a href="/dynamic" :tabindex="order">Dinâmico</a></main></template>
